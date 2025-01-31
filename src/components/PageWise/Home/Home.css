@@ -1,0 +1,33 @@
+.strokeText2 {
+  @apply text-transparent;
+  -webkit-text-stroke: 0.5px #efebeb;
+}
+.dark .strokeText2 {
+  -webkit-text-stroke: 0.5px #181818;
+}
+.strokeText {
+  @apply text-transparent;
+  -webkit-text-stroke: 1px #181818;
+}
+.dark .strokeText {
+  -webkit-text-stroke: 1px #efebeb;
+}
+.hoverStroke:hover {
+  @apply text-transparent transform duration-500;
+  -webkit-text-stroke: 1px #181818;
+}
+.dark .hoverStroke:hover {
+  -webkit-text-stroke: 1px #efebeb;
+}
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .clipPath {
+    border: 2px solid rgb(35, 35, 13);
+  }
+  .dark.clipPath {
+    border: 2px solid beige;
+  }
+}

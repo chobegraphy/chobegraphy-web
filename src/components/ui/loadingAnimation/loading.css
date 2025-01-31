@@ -1,0 +1,16 @@
+/* logo zoominout */
+.zoom-in-out {
+  animation: zoomInOut 3s infinite; /* Adjust the duration as needed */
+  transform-origin: center; /* Set the transform origin to the center for a smoother effect */
+}
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2); /* Zoom in */
+  }
+  100% {
+    transform: scale(1); /* Zoom out */
+  }
+}
