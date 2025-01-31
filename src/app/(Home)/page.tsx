@@ -1,6 +1,5 @@
 import AboutUs from "@/components/PageWise/Home/AboutUs";
 import Hero from "@/components/PageWise/Home/Hero";
-import Updates from "@/components/PageWise/Home/Updates";
 
 export default function Home() {
   return (
@@ -8,7 +7,6 @@ export default function Home() {
       <div className="max-w-7xl w-full mx-auto">
         <Hero />
         <AboutUs />
-        <Updates />
       </div>
     </main>
   );

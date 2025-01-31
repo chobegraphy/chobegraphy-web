@@ -27,6 +27,7 @@ module.exports = {
       fontFamily: {
         Bayon: ["var(--font-Bayon)", "sans-serif"],
         Space: ["Space Grotesk", "sans-serif"],
+        Righteous: ["Righteous", "sans-serif"],
       },
       colors: {
         "light-primary-color": "#181818",

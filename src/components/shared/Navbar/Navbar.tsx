@@ -66,43 +66,31 @@ const Navbar = () => {
         <CustomButton className={"border-e-2 border-[#575757]"} path="/">
           Home
         </CustomButton>
-        <CustomButton
-          className={"border-e-2 border-[#575757]"}
-          path="/GCamUpdates"
-        >
-          GCams
+        <CustomButton className={"border-e-2 border-[#575757]"} path="/Gallery">
+          Gallery
         </CustomButton>
-        <CustomButton
-          className={"border-e-2 border-[#575757]"}
-          path="/ConfigFiles"
-        >
-          Config Files
+        <CustomButton className={"border-e-2 border-[#575757]"} path="/Team">
+          Team
         </CustomButton>
-        <CustomButton
-          className={"border-e-2 border-[#575757]"}
-          path="/PhotoGallery"
-        >
-          Photo Gallery
+        <CustomButton className={"border-e-2 border-[#575757]"} path="/Event">
+          Event
         </CustomButton>
-        <CustomButton
-          className={"border-e-2 border-[#575757]"}
-          path="/PhotoGallery"
-        >
-          Devs
+        <CustomButton className={"border-e-2 border-[#575757]"} path="/Pages">
+          Pages
         </CustomButton>
-        <CustomButton
+        {/* <CustomButton
           className={"border-e-2 border-[#575757]"}
           path="/PhotoGallery"
         >
           LibPatcher
-        </CustomButton>
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/Contact">
+        </CustomButton> */}
+        {/* <CustomButton className={"border-e-2 border-[#575757]"} path="/Contact">
           Contact
-        </CustomButton>
+        </CustomButton> */}
         <CustomButton className={"border-e-2 border-[#575757]"} path="/About">
           About
         </CustomButton>
-        <CustomButton path="/About">Support/Help</CustomButton>
+        {/* <CustomButton path="/About">Support/Help</CustomButton> */}
         <div className="">
           <label className="switch">
             <span className="sun">
@@ -208,53 +196,36 @@ const Navbar = () => {
             </CustomButton>
             <CustomButton
               className={" hover:text-3xl text-2xl mb-1 px-0 "}
-              path="/GCamUpdates"
+              path="/Gallery"
             >
-              GCams
+              Gallery
             </CustomButton>
             <CustomButton
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/ConfigFiles"
+              path="/Team"
             >
-              Config Files
+              Team
             </CustomButton>
             <CustomButton
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/PhotoGallery"
+              path="/Event"
             >
-              Photo Gallery
+              Event
             </CustomButton>
             <CustomButton
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/Devs"
+              path="/Pages"
             >
-              Devs
+              Pages
             </CustomButton>
 
             <CustomButton
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/Contact"
-            >
-              LibPatcher
-            </CustomButton>
-            <CustomButton
-              className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/Contact"
-            >
-              Contact
-            </CustomButton>
-            <CustomButton
-              className={"px-0 hover:text-3xl text-2xl mb-1"}
               path="/About"
             >
               About
             </CustomButton>
-            <CustomButton
-              className={"px-0 hover:text-3xl text-2xl mb-1"}
-              path="/About"
-            >
-              Support/Help
-            </CustomButton>
+
             <button
               className={
                 "border-2 mt-5 py-1 xl:py-1.5  px-6  xl:text-lg hover:bg-black dark:hover:bg-dark-primary-color dark:hover:text-black dark:border-dark-primary-color hover:text-white dark:text-dark-primary-color transform duration-300 rounded text-black border-[#000000]"
