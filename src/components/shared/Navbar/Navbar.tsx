@@ -8,6 +8,7 @@ import { FaLanguage, FaMagnifyingGlass } from "react-icons/fa6";
 import { IoMenuSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setLanguage,
   SetLanguageBN,
   SetLanguageEN,
 } from "../../../../Redux/Features/Language/Language";
@@ -25,7 +26,16 @@ const Navbar = () => {
   const Language = useSelector((state: any) => state.Language.value);
   const dispatch = useDispatch();
   console.log(Language);
-
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedLanguage = localStorage.getItem("Language");
+      if (storedLanguage) {
+        dispatch(setLanguage(storedLanguage));
+      } else {
+        dispatch(setLanguage("BN"));
+      }
+    }
+  }, [dispatch]);
   useEffect(() => {
     if (!isOpen && !isOpen2) {
       return;
@@ -47,7 +57,6 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [divRef, isOpen, isOpen2]);
-  const storedTheme = localStorage.getItem("theme");
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");

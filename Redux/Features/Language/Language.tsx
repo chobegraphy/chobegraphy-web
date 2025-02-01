@@ -4,9 +4,8 @@ export interface LanguageSlice {
   value: string;
 }
 
-const storedLanguage = localStorage.getItem("Language");
 const initialState: LanguageSlice = {
-  value: storedLanguage ? storedLanguage : "BN", // Default to "BN" if not in localStorage
+  value: "",
 };
 
 export const LanguageSlice = createSlice({
