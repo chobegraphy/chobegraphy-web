@@ -41,7 +41,12 @@ const Hero = () => {
         <div className="ms-10 max-xl:mx-5 mt-7">
           <div className=" max-sm:h-fit lg:h-[115px] text-black max-sm:text-6xl text-8xl font-normal font-Bayon dark:text-dark-primary-color leading-[120px]">
             <span className="strokeText">
-              <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
+              <p
+                className={`${
+                  Language === "BN" &&
+                  "font-BanglaHeading text-[70px] md:text-[115px] "
+                }`}
+              >
                 {Language === "BN" ? "ছবিগ্রাফি" : "Chobegraphy"}
               </p>
             </span>
