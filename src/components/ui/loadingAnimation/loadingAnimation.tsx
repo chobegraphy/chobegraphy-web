@@ -8,21 +8,30 @@ const LoadingAnimation = () => {
   // Fetch localStorage data safely on client-side
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const language = localStorage.getItem("Language") ?? "BN";
-      setStoredLanguage(language);
+      if (
+        localStorage.getItem("Language") !== null &&
+        localStorage.getItem("Language") !== undefined &&
+        localStorage.getItem("Language") !== ""
+      ) {
+        setStoredLanguage(localStorage.getItem("Language") ?? "");
+      } else {
+        setStoredLanguage("BN");
+      }
     }
   }, []);
 
   return (
-    <div className="fixed example top-0 bottom-0 left-0 right-0 bg-black-100 w-full flex items-center justify-center z-30 h-full text-5xl">
+    <div className="fixed example top-0 bottom-0 left-0 right-0 bg-dark-primary-color dark:bg-light-primary-color w-full flex items-center justify-center z-30 h-full text-5xl">
       <div className="dark:hidden h-fit zoom-in-out">
         <p className={`${storedLanguage === "BN" ? "font-BanglaHeading" : ""}`}>
-          {storedLanguage === "BN" ? "ছবিগ্রাফি" : "Chobegraphy"}
+          {storedLanguage === "BN" && "ছবিগ্রাফি"}
+          {storedLanguage === "EN" && "Chobegraphy"}
         </p>
       </div>
       <div className="dark:block hidden h-fit zoom-in-out">
         <p className={`${storedLanguage === "BN" ? "font-BanglaHeading" : ""}`}>
-          {storedLanguage === "BN" ? "ছবিগ্রাফি" : "Chobegraphy"}
+          {storedLanguage === "BN" && "ছবিগ্রাফি"}
+          {storedLanguage === "EN" && "Chobegraphy"}
         </p>
       </div>
     </div>

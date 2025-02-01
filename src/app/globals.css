@@ -6,45 +6,66 @@
 @tailwind utilities;
 
 @layer utilities {
-  /* styles.css */
   :root {
     --background: #efebeb;
+    --foreground: #181818;
+    transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
     --background: #131619;
+    --foreground: #efebeb;
   }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Smooth Fade Effect */
+  .theme-transition {
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Scrollbar Styles */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
-  /* Track */
   ::-webkit-scrollbar-track {
     background: #f1f1f1;
+    transition: background 0.8s ease-in-out;
   }
+
   .dark ::-webkit-scrollbar-track {
     background: #181818;
   }
-  /* Handle */
+
   ::-webkit-scrollbar-thumb {
     background: #181818;
+    transition: background 0.8s ease-in-out;
   }
+
   .dark ::-webkit-scrollbar-thumb {
     background: #efebeb;
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+  /* Text Selection */
   *::selection {
     background: #181818;
-    backdrop-filter: blur;
     color: #efebeb;
+    transition: background 0.8s ease-in-out, color 0.8s ease-in-out;
   }
+
   .dark *::selection {
     background: #efebeb;
-    backdrop-filter: blur;
     color: #181818;
   }
 }
