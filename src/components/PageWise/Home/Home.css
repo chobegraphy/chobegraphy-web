@@ -7,10 +7,10 @@
 }
 .strokeText {
   @apply text-transparent;
-  -webkit-text-stroke: 1px #181818;
+  -webkit-text-stroke: 1px #2dab01;
 }
 .dark .strokeText {
-  -webkit-text-stroke: 1px #efebeb;
+  -webkit-text-stroke: 1px #2dab01;
 }
 .hoverStroke:hover {
   @apply text-transparent transform duration-500;
@@ -34,6 +34,6 @@
 @media screen and (min-width: 1000px) {
   .strokeText {
     @apply text-transparent;
-    -webkit-text-stroke: 2px #181818;
+    -webkit-text-stroke: 2px #23480f;
   }
 }

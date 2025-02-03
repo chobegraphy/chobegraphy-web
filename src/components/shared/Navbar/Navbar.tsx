@@ -12,8 +12,8 @@ import {
   SetLanguageBN,
   SetLanguageEN,
 } from "../../../../Redux/Features/Language/Language";
-import darklogo from "../../../Assets/logo/darklogo.svg";
-import logo from "../../../Assets/logo/logo.svg";
+import darklogo from "../../../Assets/logo/darklogo.png";
+import logo from "../../../Assets/logo/logo.png";
 import "./Nav.css";
 
 const Navbar = () => {
@@ -80,7 +80,7 @@ const Navbar = () => {
       <div className="transform duration-300  max-md:scale-90 dark:hidden max-md:-ms-4">
         <Image
           src={logo}
-          className="h-[90px] w-fit"
+          className="h-[50px] max-md:ms-0.5 -ms-2  w-fit"
           alt="logo"
           width={500}
           height={500}
@@ -89,7 +89,7 @@ const Navbar = () => {
       <div className="max-md:scale-90 dark:block z-50 hidden max-md:-ms-4">
         <Image
           src={darklogo}
-          className="h-[90px] w-fit"
+          className="h-[50px] max-md:ms-0.5 -ms-2  w-fit"
           alt="logo"
           width={500}
           height={500}
