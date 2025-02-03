@@ -43,7 +43,7 @@ const HomeGallery = () => {
     <div className="w-full bg-light-primary-color dark:bg-dark-primary-color sm:px-10 px-5 py-10">
       <h1
         id="title"
-        className="font-Righteous text-4xl text-center dark:text-light-primary-color text-dark-primary-color"
+        className="font-Righteous text-4xl max-xl:text-3xl text-center dark:text-light-primary-color text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
           {Language === "BN" && "ছবির গ্যালারি"}
@@ -52,7 +52,7 @@ const HomeGallery = () => {
       </h1>
       <h1
         id="title2"
-        className="font-Space mt-1 text-xl text-center dark:text-light-primary-color text-dark-primary-color"
+        className="font-Space mt-1 text-xl mx-auto max-lg:text-base w-2/3 text-center dark:text-light-primary-color text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
           {Language === "BN" &&
