@@ -9,7 +9,7 @@ const Info = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   return (
-    <div className="w-full   my-20 grid-cols-3 grid sm:px-10 relative max-md:grid-cols-1 px-5 gap-10 max-md:gap-5">
+    <div className="w-full   my-32 grid-cols-3 grid sm:px-10 relative max-md:grid-cols-1 px-5 gap-10 max-md:gap-5">
       <div className="absolute  -right-10 top-10 items-center gap-x-3 max-lg:-right-24 max-lg:scale-90  rotate-45 flex">
         <div className="bg-light-primary-color w-[100px] rounded-3xl h-[100px]  "></div>
       </div>
