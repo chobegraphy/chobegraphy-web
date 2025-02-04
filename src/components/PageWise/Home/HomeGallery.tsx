@@ -40,7 +40,7 @@ const HomeGallery = () => {
     "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3070&q=80",
   ];
   return (
-    <div className="w-full bg-light-primary-color dark:bg-dark-primary-color sm:px-10 px-5 py-10">
+    <div className="w-full bg-light-primary-color dark:bg-dark-primary-color xl:px-16 sm:px-10 px-5 py-10">
       <h1
         id="title"
         className="font-Righteous text-4xl max-xl:text-3xl text-center dark:text-light-primary-color text-dark-primary-color"
@@ -56,40 +56,17 @@ const HomeGallery = () => {
       >
         <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
           {Language === "BN" &&
-            "শিল্প হলো তুমি যা দেখো তা নয়, বরং তুমি যা অন্যদের দেখাও তা।"}
+            "ছবি সেটা নয় যা তুমি দেখো, ছবি সেটা যা তুমি অন্যদের দেখাও।"}
         </p>
         <p>
           {Language === "EN" &&
-            "Art is not what you see, but what you make others see"}
+            "Picture is not what you see, but what you make others see"}
         </p>
       </h1>
 
-      {/* <div className="grid grid-cols-7 gap-1 my-5 ">
-        <div className="bg-red-300 w-full h-[180px] rounded-3xl"></div>
-        <div
-          className="bg-red-300 w-full h-[180px]
-         rounded-3xl"
-        ></div>
-        <div
-          className="bg-red-300 w-full h-[180px]
-         rounded-3xl"
-        ></div>
-        <div
-          className="bg-red-300 w-full h-[180px]
-         rounded-3xl"
-        ></div>
-        <div
-          className="bg-red-300 w-full h-[180px]
-         rounded-3xl"
-        ></div>
-        <div
-          className="bg-red-300 w-full h-[180px]
-         rounded-3xl"
-        ></div>
-      </div> */}
-      <div className="my-10 max-sm:columns-2 max-md:columns-4 max-lg:columns-4 overflow-hidden lg:columns-5 gap-2 justify-center w-full ">
+      <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-6 max-xl:columns-4 gap-2 justify-center w-full ">
         {images.slice(0, 19).map((image, index) => (
-          <div key={index} className="relative">
+          <div key={index} className="relative ">
             <ImgCard img={image} i={index} />
           </div>
         ))}
@@ -97,7 +74,7 @@ const HomeGallery = () => {
       {images.length >= 19 && (
         <button
           className={
-            "border-2 py-1 max-lg:hidden xl:py-3 mt-6 px-6 mx-auto xl:text-lg dark:bg-light-primary-color bg-dark-primary-color text-light-primary-color dark:border-dark-primary-color   dark:hover:text-dark-primary-color transform duration-300 rounded-xl flex items-center font-Righteous gap-x-2 dark:text-dark-primary-color justify-center border-light-primary-color"
+            "border-2 py-3 mt-6 px-6 mx-auto xl:text-lg dark:bg-light-primary-color bg-dark-primary-color text-light-primary-color dark:border-dark-primary-color   dark:hover:text-dark-primary-color transform duration-300 rounded-xl flex items-center font-Righteous gap-x-2 dark:text-dark-primary-color justify-center border-light-primary-color"
           }
         >
           <span>
