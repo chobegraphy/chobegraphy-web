@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/shared/Footer/Footer";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import LoadingAnimation from "@/components/ui/loadingAnimation/loadingAnimation";
 import { usePathname } from "next/navigation";
@@ -21,8 +22,8 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
         {!loading && (
           <>
             {pathName !== "/SignUp" && pathName !== "/SignIn" && <Navbar />}
-
             {children}
+            <Footer />
             {/* {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />} */}
           </>
         )}

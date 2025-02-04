@@ -1,7 +1,6 @@
 import { ThemeProvider } from "@/components/ui/theme-provider/theme-provider";
 import localFont from "next/font/local";
 
-import type { Metadata } from "next";
 import { Bayon, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -34,9 +33,27 @@ const bayon = Bayon({
   weight: ["400"],
   variable: "--font-Bayon",
 });
-export const metadata: Metadata = {
-  title: "Chobegraphy",
-  description: "A photography site",
+export const metadata = {
+  title: "Chobegraphy | Best Bangladeshi Photography & Wallpapers",
+  description:
+    "Discover stunning Bangladeshi photography and high-quality wallpapers at Chobegraphy. Explore, download, and enjoy breathtaking images in HD & 4K resolution.",
+  keywords:
+    "Bangladeshi photography, HD wallpapers, 4K images, photography in Bangladesh, mobile wallpapers, nature photography, Chobegraphy, landscape photography, street photography ,bangladesh,photography,street photography,bangladesh street photography,wedding photography,bangladeshi,bangladesh | pov photography,wedding photography bangladesh,bangladeshi wedding,photographer bangladesh,sar wedding photography bangladesh,street photography of bangladesh,best wedding photography bangladesh,pov street photography of bangladesh,bangladeshi photographer,wedding photography course in bangladesh,wedding photography training in bangladesh",
+  openGraph: {
+    title: "Chobegraphy - Bangladeshi Photography & HD Wallpapers",
+    description:
+      "Chobegraphy offers high-quality Bangladeshi photography and HD wallpapers. Explore a stunning collection of nature, street, and artistic photography.",
+    url: "https://chobegraphy.vercel.app/",
+    type: "website",
+    images: [
+      {
+        url: "https://chobegraphy.vercel.app/cover-image.jpg", // Replace with your actual image
+        width: 1200,
+        height: 630,
+        alt: "Chobegraphy - Bangladeshi Photography",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
