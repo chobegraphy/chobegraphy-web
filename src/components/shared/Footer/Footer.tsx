@@ -1,6 +1,9 @@
 import { RiTelegram2Fill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
+  // redux writing
+  const Language = useSelector((state: any) => state.Language.value);
   return (
     <div className="h-[400px] bg-light-primary-color dark:bg-dark-primary-color border-t-2 border-dark-primary-color/10 flex flex-col">
       <section className="relative  mt-auto">
@@ -69,16 +72,31 @@ const Footer = () => {
               <RiTelegram2Fill className="text-dark-primary-color dark:text-light-primary-color dark:hover:text-light-primary-color/60 hover:text-dark-primary-color/60" />
             </a>
           </div>
-          <p className="mt-8 text-base leading-6 text-center text-gray-400">
-            © 2025{" "}
-            <a
-              className="text-dark-primary-color dark:text-light-primary-color underline"
-              href="https://chobegraphy.vercel.app/"
-            >
-              Chobegraphy
-            </a>
-            , Inc. All rights reserved.
-          </p>
+
+          {Language === "BN" && (
+            <p className="mt-8 text-base font-BanglaSubHeading leading-6 text-center text-gray-400">
+              © ২০২৫ &nbsp;
+              <a
+                className="text-dark-primary-color font-BanglaHeading dark:text-light-primary-color underline"
+                href="https://chobegraphy.vercel.app/"
+              >
+                ছবিগ্রাফি
+              </a>{" "}
+              &nbsp; ইনকর্পোরেটেড। সর্বস্বত্ব সংরক্ষিত।
+            </p>
+          )}
+          {Language === "EN" && (
+            <p className="mt-8 text-base leading-6 text-center text-gray-400">
+              © 2025{" "}
+              <a
+                className="text-dark-primary-color dark:text-light-primary-color underline"
+                href="https://chobegraphy.vercel.app/"
+              >
+                Chobegraphy
+              </a>{" "}
+              Inc. All rights reserved.
+            </p>
+          )}
         </div>
       </section>
     </div>
