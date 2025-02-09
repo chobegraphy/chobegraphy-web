@@ -525,6 +525,15 @@ const DistrictGallery = () => {
       photoCount: 10,
     },
   ];
+  const convertToBangla = (num: any) => {
+    const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+    return num
+      .toString()
+      .split("")
+      .map((digit: any) => banglaDigits[parseInt(digit)])
+      .join("");
+  };
+
   const [showAllDistrict, setShowAllDistrict] = useState(false);
 
   return (
@@ -538,7 +547,7 @@ const DistrictGallery = () => {
       />
 
       {/* card */}
-      <div className="grid max-xl:grid-cols-4 grid-cols-5 mt-10 max-lg:grid-cols-3 max-md:grid-cols-1 gap-2">
+      <div className="grid max-xl:grid-cols-4 grid-cols-5 mt-10 max-lg:grid-cols-3 max-md:grid-cols-1 gap-2 transform duration-300">
         {showAllDistrict ? (
           <>
             {zilaPhotos?.map((x) => (
@@ -573,7 +582,10 @@ const DistrictGallery = () => {
                 </Swiper>
                 <div className="bg-black/30 absolute w-full h-full top-0 z-40 ">
                   <h2 className="absolute right-3 top-3 text-xl text-dark-primary-color">
-                    {x?.photoCount}{" "}
+                    <span className="font-BanglaHeading">
+                      {Language === "BN" && convertToBangla(x?.photoCount)}
+                    </span>{" "}
+                    {Language === "EN" && x?.photoCount}
                     <span className="font-BanglaSubHeading text-base">
                       {Language === "BN" && <>টি ছবি</>}
                       <span className="font-Space">
@@ -625,7 +637,10 @@ const DistrictGallery = () => {
                 </Swiper>
                 <div className="bg-black/30 absolute w-full h-full top-0 z-40 ">
                   <h2 className="absolute right-3 top-3 text-xl text-dark-primary-color">
-                    {x?.photoCount}{" "}
+                    <span className="font-BanglaHeading">
+                      {Language === "BN" && convertToBangla(x?.photoCount)}
+                    </span>{" "}
+                    {Language === "EN" && x?.photoCount}
                     <span className="font-BanglaSubHeading text-base">
                       {Language === "BN" && <>টি ছবি</>}
                       <span className="font-Space">
