@@ -47,7 +47,7 @@ const FilterSearch = () => {
           </button>
         </div>
 
-        <div
+        <button
           onClick={() => {
             setIsOpen(!isOpen);
             setIsOpen2(!isOpen2);
@@ -59,7 +59,7 @@ const FilterSearch = () => {
             {Language === "BN" && "ফিল্টার"}
             {Language === "EN" && "Filter"}
           </p>
-        </div>
+        </button>
       </div>
 
       <div

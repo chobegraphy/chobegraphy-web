@@ -1,3 +1,4 @@
+import DistrictGallery from "@/components/PageWise/Home/DistrictGallery";
 import Hero from "@/components/PageWise/Home/Hero";
 import HomeGallery from "@/components/PageWise/Home/HomeGallery";
 import Info from "@/components/PageWise/Home/Info";
@@ -14,6 +15,7 @@ export default function Home() {
 
       <div className="max-w-7xl w-full mx-auto ">
         <HomeGallery />
+        <DistrictGallery />
       </div>
     </main>
   );

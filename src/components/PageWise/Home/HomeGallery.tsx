@@ -41,7 +41,7 @@ const HomeGallery = () => {
     "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3070&q=80",
   ];
   return (
-    <div className="w-full bg-light-primary-color dark:bg-dark-primary-color xl:px-16 sm:px-10 px-5 py-10">
+    <div className="w-full bg-light-primary-color dark:bg-dark-primary-color xl:px-16 sm:px-10 px-5 pt-10 pb-20">
       <h1
         id="title"
         className="font-Righteous text-4xl max-xl:text-3xl text-center dark:text-light-primary-color text-dark-primary-color"
