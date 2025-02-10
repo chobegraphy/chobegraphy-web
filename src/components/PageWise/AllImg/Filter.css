@@ -1,0 +1,41 @@
+.clear {
+  clear: both;
+}
+
+.checkBox {
+  display: block;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+
+  border-radius: 7px;
+  position: relative;
+  overflow: hidden;
+  @apply w-4 h-4 border-[1.5px] border-light-primary-color dark:border-dark-primary-color;
+}
+
+.checkBox div {
+  width: 60px;
+  height: 60px;
+  top: -52px;
+  left: -52px;
+  position: absolute;
+  transform: rotateZ(45deg);
+  z-index: 100;
+  @apply bg-light-primary-color  dark:bg-dark-primary-color;
+}
+
+.checkBox input[type="checkbox"]:checked + div {
+  left: -10px;
+  top: -10px;
+}
+
+.checkBox input[type="checkbox"] {
+  position: absolute;
+  left: 50px;
+  visibility: hidden;
+}
+
+.transition {
+  transition: 300ms ease;
+}

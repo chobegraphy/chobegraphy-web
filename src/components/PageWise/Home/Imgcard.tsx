@@ -1,5 +1,6 @@
 import { Skeleton } from "@/components/ui/Skeleton/Skeleton";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
@@ -11,7 +12,7 @@ const ImgCard = ({ img, i }: any) => {
   if (!img) return null;
 
   return (
-    <div className={`${i !== 0 && "my-2"}`}>
+    <Link href={`AllImg/${i}`} className={`${i !== 0 && "my-2"}`}>
       {!loadedImg ? (
         <Skeleton className="h-full absolute w-full rounded" />
       ) : null}
@@ -36,7 +37,7 @@ const ImgCard = ({ img, i }: any) => {
           </div>
         </div>
       )}
-    </div>
+    </Link>
   );
 };
 

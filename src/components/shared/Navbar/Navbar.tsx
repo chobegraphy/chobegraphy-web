@@ -57,7 +57,20 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [divRef, isOpen, isOpen2]);
+  useEffect(() => {
+    if (isOpen2) {
+      // Disable scroll on the body when the sidebar is open
+      document.body.style.overflow = "hidden";
+    } else {
+      // Enable scroll again when the sidebar is closed
+      document.body.style.overflow = "auto";
+    }
 
+    // Clean up to reset body overflow when the component unmounts or sidebar closes
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen2]);
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
 
