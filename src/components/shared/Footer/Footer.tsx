@@ -5,14 +5,14 @@ const Footer = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   return (
-    <div className="h-[400px] bg-light-primary-color dark:bg-dark-primary-color border-t-2 border-dark-primary-color/10 flex flex-col">
+    <div className="h-[400px] bg-[#0c0c0c]  border-dark-primary-color/10 flex flex-col">
       <section className="relative  mt-auto">
         <div className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
           <div className="flex justify-center mt-8 space-x-4 scale-125">
             <a href="#" className="text-gray-400 hover:text-gray-500">
               <span className="sr-only">Facebook</span>
               <svg
-                className="w-6 h-6 fill-dark-primary-color dark:fill-light-primary-color dark:hover:fill-light-primary-color/60 hover:fill-dark-primary-color/60"
+                className="w-6 h-6 fill-dark-primary-color  hover:fill-dark-primary-color/60"
                 aria-hidden="true"
                 viewBox="0 0 24 24"
               >
@@ -26,7 +26,7 @@ const Footer = () => {
             <a href="#" className="text-gray-400 hover:text-gray-500">
               <span className="sr-only">Instagram</span>
               <svg
-                className="w-6 h-6 fill-dark-primary-color dark:fill-light-primary-color dark:hover:fill-light-primary-color/60 hover:fill-dark-primary-color/60"
+                className="w-6 h-6 fill-dark-primary-color  hover:fill-dark-primary-color/60"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -41,7 +41,7 @@ const Footer = () => {
             <a href="#" className="text-gray-400 hover:text-gray-500">
               <span className="sr-only">Twitter</span>
               <svg
-                className="w-6 h-6 fill-dark-primary-color dark:fill-light-primary-color dark:hover:fill-light-primary-color/60 hover:fill-dark-primary-color/60"
+                className="w-6 h-6 fill-dark-primary-color  hover:fill-dark-primary-color/60"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -52,7 +52,7 @@ const Footer = () => {
             <a href="#" className="text-gray-400 hover:text-gray-500 ">
               <span className="sr-only">GitHub</span>
               <svg
-                className="w-6 h-6 fill-dark-primary-color dark:fill-light-primary-color dark:hover:fill-light-primary-color/60 hover:fill-dark-primary-color/60"
+                className="w-6 h-6 fill-dark-primary-color  hover:fill-dark-primary-color/60"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 24 24"
@@ -69,7 +69,7 @@ const Footer = () => {
               className="text-gray-400 hover:text-gray-500 text-2xl  flex items-center justify-center "
             >
               <span className="sr-only ">Telegram</span>
-              <RiTelegram2Fill className="text-dark-primary-color dark:text-light-primary-color dark:hover:text-light-primary-color/60 hover:text-dark-primary-color/60" />
+              <RiTelegram2Fill className="text-dark-primary-color  hover:text-dark-primary-color/60" />
             </a>
           </div>
 
@@ -77,7 +77,7 @@ const Footer = () => {
             <p className="mt-8 text-base font-BanglaSubHeading leading-6 text-center text-gray-400">
               © ২০২৫ &nbsp;
               <a
-                className="text-dark-primary-color font-BanglaHeading dark:text-light-primary-color underline"
+                className="text-dark-primary-color font-BanglaHeading underline"
                 href="https://chobegraphy.vercel.app/"
               >
                 ছবিগ্রাফি
@@ -89,7 +89,7 @@ const Footer = () => {
             <p className="mt-8 text-base leading-6 text-center text-gray-400">
               © 2025{" "}
               <a
-                className="text-dark-primary-color dark:text-light-primary-color underline"
+                className="text-dark-primary-color underline"
                 href="https://chobegraphy.vercel.app/"
               >
                 Chobegraphy
