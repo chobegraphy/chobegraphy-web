@@ -114,7 +114,7 @@ const Navbar = () => {
             {Language === "BN" ? "হোম" : "Home"}
           </p>
         </CustomButton>
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/Gallery">
+        <CustomButton className={"border-e-2 border-[#575757]"} path="/AllImg">
           <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
             {Language === "BN" ? "গ্যালারি" : "Gallery"}
           </p>

@@ -1,11 +1,243 @@
+import Image from "next/image";
 import { RiTelegram2Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
-
+import darklogo from "../../../Assets/logo/darklogo.png";
 const Footer = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   return (
-    <div className="h-[400px] bg-[#0c0c0c]  border-dark-primary-color/10 flex flex-col">
+    <div className="h-full bg-[#0c0c0c]  border-dark-primary-color/10 flex flex-col">
+      <footer className="footer bg-base-200 text-base-content flex items-center justify-around max-md:flex-col max-md:justify-start md:flex-wrap pt-10 px-10">
+        <aside className="max-md:w-full">
+          <div className="transform duration-300   dark:hidden max-md:-ms-0">
+            <Image
+              src={darklogo}
+              className="h-[70px] max-md:-ms-3 -ms-2  w-fit"
+              alt="logo"
+              width={500}
+              height={500}
+            />
+          </div>
+          <div className="dark:block z-50 hidden max-md:-ms-4">
+            <Image
+              src={darklogo}
+              className="h-[70px] max-md:ms-0.5 -ms-2  w-fit"
+              alt="logo"
+              width={500}
+              height={500}
+            />
+          </div>
+          <p className="text-dark-primary-color mt-1">
+            <span className="font-BanglaHeading text-3xl">
+              {Language === "BN" && "ছবিগ্রাফি"}
+              <span className="font-Righteous text-3xl">
+                {Language === "EN" && "Chobegraphy"}
+              </span>
+            </span>
+            <br />
+            <span className="font-BanglaSubHeading text-lg ">
+              {Language === "BN" && (
+                <>
+                  ২০২৫ জানুয়ারী থেকে নির্ভরযোগ্য <br />
+                  পরিষেবা প্রদান করা হচ্ছে
+                </>
+              )}
+              <span className="font-Space ">
+                {Language === "EN" && (
+                  <>
+                    Providing reliable service <br /> since 2025 January
+                  </>
+                )}
+              </span>
+            </span>
+          </p>
+        </aside>
+        <nav className="max-md:w-full h-full ">
+          <h6 className="text-xl mt-10">
+            <span className="font-BanglaHeading">
+              {Language === "BN" && "গুরুত্বপূর্ণ লিঙ্ক"}
+            </span>
+            {Language === "EN" && "Important links"} :
+          </h6>
+          <div className="flex flex-col font-Space">
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "আমাদের সম্পর্কে"}
+              </span>
+              {Language === "EN" && "About us"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "টীম "}
+              </span>
+              {Language === "EN" && "Team"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "টার্মস এন্ড কন্ডিশনস"}
+              </span>
+              {Language === "EN" && "Terms and conditions"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "প্রাইভেসি পলিসি"}
+              </span>
+              {Language === "EN" && "Privacy Policy"}
+            </a>
+          </div>
+        </nav>
+        <nav className="max-md:w-full h-full ">
+          <h6 className="text-xl mt-10">
+            <span className="font-BanglaHeading">
+              {Language === "BN" && "সামাজিক লিঙ্ক"}
+            </span>
+            {Language === "EN" && "Social links"} :
+          </h6>
+          <div className="flex flex-col font-Space">
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "ফেসবুক পেজ"}
+              </span>
+              {Language === "EN" && "Facebook page"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "ইনস্টাগ্রাম পেজ"}
+              </span>
+              {Language === "EN" && "Instagram page"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "টেলিগ্রাম চ্যানেল"}
+              </span>
+              {Language === "EN" && "Telegram Channel"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "টেলিগ্রাম গ্রুপ"}
+              </span>
+              {Language === "EN" && " Telegram Group"}
+            </a>
+          </div>
+        </nav>
+        <nav className="max-md:w-full h-full ">
+          <h6 className="text-xl mt-10">
+            <span className="font-BanglaHeading">
+              {Language === "BN" && "ফটোগ্রাফি"}
+            </span>
+            {Language === "EN" && "Photography"} :
+          </h6>
+          <div className="flex flex-col font-Space">
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "ছবির গ্যালারি"}
+              </span>
+              {Language === "EN" && "Image Gallery"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "সর্বাধিক ডাউনলোড করা ছবি"}
+              </span>
+              {Language === "EN" && "Most Downloaded Images"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "সর্বাধিক দেখা ছবি"}
+              </span>
+              {Language === "EN" && "Most Viewed Images"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "জেলা ছবি"}
+              </span>
+              {Language === "EN" && "District Photos"}
+            </a>
+          </div>
+        </nav>
+        <nav className="max-md:w-full h-full ">
+          <h6 className="text-xl mt-10">
+            <span className="font-BanglaHeading">
+              {Language === "BN" && "অন্যান্য"}
+            </span>
+            {Language === "EN" && "Other"} :
+          </h6>
+          <div className="flex flex-col font-Space">
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "কন্টাক্ট"}
+              </span>
+              {Language === "EN" && "Contact"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "ফটোগ্রাফি টিপস"}
+              </span>
+              {Language === "EN" && "Photography Tips"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "গুগল ক্যামেরা"}
+              </span>
+              {Language === "EN" && "Google Camera"}
+            </a>
+            <a
+              href="jadu"
+              className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
+            >
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && "এডবি লাইটরুম প্রিমিয়াম"}
+              </span>
+              {Language === "EN" && "Adobe Lightroom Premium"}
+            </a>
+          </div>
+        </nav>
+      </footer>
+
       <section className="relative  mt-auto">
         <div className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
           <div className="flex justify-center mt-8 space-x-4 scale-125">
