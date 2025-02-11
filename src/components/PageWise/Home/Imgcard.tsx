@@ -1,18 +1,22 @@
 import { Skeleton } from "@/components/ui/Skeleton/Skeleton";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 
 const ImgCard = ({ img, i }: any) => {
   const [loadedImg, setLoadedImg] = useState(false);
-
+  const pathName = usePathname();
   // If img is empty, do not render anything
   if (!img) return null;
 
   return (
-    <Link href={`AllImg/${i}`} className={`${i !== 0 && "my-2"}`}>
+    <Link
+      href={pathName.includes("AllImg") ? ` /AllImg/${i}` : `/AllImg/${i}`}
+      className={`${i !== 0 && "my-2"}`}
+    >
       {!loadedImg ? (
         <Skeleton className="h-full absolute w-full rounded" />
       ) : null}

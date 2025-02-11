@@ -17,6 +17,26 @@ import { useSelector } from "react-redux";
 const Banner = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
+  // Share function
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: Language === "EN" ? "Image Name" : "ছবির নাম",
+          text:
+            Language === "EN"
+              ? "Check out this amazing image!"
+              : "এই চমৎকার ছবিটি দেখুন!",
+          url: window.location.href,
+        });
+        console.log("Share was successful.");
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      alert("Share API is not supported on this device/browser.");
+    }
+  };
   return (
     <div className="w-full relative h-full col-span-6">
       <div>
@@ -39,7 +59,7 @@ const Banner = () => {
           </h1>
           <div className="text-3xl flex gap-x-5 cursor-pointer ">
             <FaRegHeart />
-            <PiShareNetworkBold />
+            <PiShareNetworkBold onClick={handleShare} id="share" />
           </div>
         </div>
         <h2 className="font-Space mt-2 max-md:text-base text-xl">
