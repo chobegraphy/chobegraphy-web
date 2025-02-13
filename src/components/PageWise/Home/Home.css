@@ -37,3 +37,17 @@
     -webkit-text-stroke: 2px #23480f;
   }
 }
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: var(--swiper-pagination-bullet-border-radius, 50%);
+  @apply border-2 border-light-primary-color dark:border-light-secondary-color m-0.5 transform duration-300;
+}
+
+.swiper-pagination-bullet-active {
+  width: 15px;
+  height: 15px;
+
+  @apply flex items-center justify-center bg-light-primary-color dark:bg-dark-primary-color transform duration-300;
+}
