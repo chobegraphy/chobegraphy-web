@@ -3,11 +3,12 @@ import HeadingAndSubHeading from "@/components/shared/HeadingAndSubHeading/Headi
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import Image from "next/image";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "swiper/css";
-import { Autoplay, EffectFade, Pagination } from "swiper/modules";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 interface ZilaPhoto {
@@ -383,6 +384,12 @@ const DistrictGallery = () => {
     setSearchQuery(query);
   };
   const [hovered, SetHovered] = useState<number | null>(null);
+  const ItemsPerPage = 6;
+  const [currentPage, setCurrentPage] = useState(0);
+  const navigationPrevRef = React.useRef<HTMLButtonElement | null>(null);
+  const navigationNextRef = React.useRef<HTMLButtonElement | null>(null);
+  const totalItemsPage = Math.ceil(64 / ItemsPerPage);
+  const pageNumber = [...Array(totalItemsPage).keys()];
   return (
     <div className="xl:px-16 sm:px-10 px-5 py-14 ">
       <HeadingAndSubHeading
@@ -397,7 +404,7 @@ const DistrictGallery = () => {
           placeholder={
             Language === "BN" ? "জেলা অনুসন্ধান করুন" : "Search district"
           }
-          className={` max-md:my-2 my-4 max-md:mb-3 mx-auto max-md:w-[200px] p-2 px-2  font-Space text-center  outline-none rounded-lg border-2 border-light-secondary-color ${
+          className={` max-md:my-2 my-4 max-md:mb-3 mx-auto max-md:w-[200px] p-2 px-2  font-Space text-center  outline-none rounded-lg border-2 border-light-primary-color ${
             Language === "BN" && "font-BanglaSubHeading"
           }`}
           type="text"
@@ -499,22 +506,22 @@ const DistrictGallery = () => {
         )}
 
         {!showAllDistrict && searchQuery === "" && (
-          <div
+          <button
             onClick={() => {
               setShowAllDistrict(true);
             }}
-            className={`bg-dark-primary-color h-[200px] max-md:h-full max-md:py-2  max-md:mx-auto max-md:px-4 max-md:rounded max-md:mt-5 max-md:w-fit max-md:rounded-2xl max-md:overflow-hidden flex justify-center items-center text-light-primary-color text-xl font-Righteous cursor-pointer relative w-full`}
+            className={`dark:bg-dark-primary-color h-[200px] bg-light-primary-color max-md:h-full max-md:py-2  max-md:mx-auto max-md:px-4 max-md:rounded max-md:mt-5 max-md:w-fit max-md:rounded-2xl max-md:overflow-hidden flex justify-center items-center text-dark-primary-color dark:text-light-primary-color text-xl font-Righteous cursor-pointer relative w-full`}
           >
             {Language === "EN" && <h1>View All District</h1>}
             {Language === "BN" && (
               <h1 className="font-BanglaHeading">সকল জেলা দেখুন</h1>
             )}
-          </div>
+          </button>
         )}
       </div>
 
       {/* mobile device swiper */}
-      <div className="relative md:hidden">
+      <div className="relative  md:hidden">
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
@@ -523,17 +530,27 @@ const DistrictGallery = () => {
             delay: 10000,
             disableOnInteraction: false,
           }}
-          pagination={{
-            el: ".custom-pagination", // Link to external pagination div
-            clickable: true,
+          navigation={{
+            prevEl: navigationPrevRef.current,
+            nextEl: navigationNextRef.current,
           }}
-          modules={[Autoplay, EffectFade, Pagination]}
-          className="mySwiper"
+          onBeforeInit={(swiper) => {
+            if (
+              typeof swiper.params.navigation !== "boolean" &&
+              swiper.params.navigation
+            ) {
+              const nav = swiper.params.navigation;
+              nav.prevEl = navigationPrevRef.current;
+              nav.nextEl = navigationNextRef.current;
+            }
+          }}
+          modules={[Autoplay, EffectFade, Pagination, Navigation]}
+          className="mySwiper  max-md:h-[250px]"
         >
           {filteredDistricts?.map((x) => (
             <SwiperSlide
               key={x?.name?.english}
-              className="h-[200px] rounded max-md:h-[150px] border-light-primary-color border-2 overflow-hidden relative w-full"
+              className="h-[200px]  rounded-3xl max-md:h-[150px]  overflow-hidden relative w-full"
             >
               <Image
                 src={x?.photo}
@@ -567,9 +584,20 @@ const DistrictGallery = () => {
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* External Pagination Dots */}
-        <div className="custom-pagination flex justify-center lg:hidden  mt-4 w-[95%] items-center flex-wrap mx-auto"></div>
+        <div className=" ms-5 mt-2 gap-x-1 flex">
+          <button
+            ref={navigationPrevRef}
+            className="border-2 dark:border-dark-primary-color border-light-primary-color text-light-primary-color dark:text-dark-primary-color dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color hover:bg-light-primary-color hover:text-dark-primary-color p-2 rounded-xl"
+          >
+            <FaAngleLeft />
+          </button>
+          <button
+            ref={navigationNextRef}
+            className="border-2 dark:border-dark-primary-color border-light-primary-color text-light-primary-color dark:text-dark-primary-color dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color hover:bg-light-primary-color hover:text-dark-primary-color p-2 rounded-xl"
+          >
+            <FaAngleRight />
+          </button>
+        </div>
       </div>
     </div>
   );

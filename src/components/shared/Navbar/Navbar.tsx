@@ -87,7 +87,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`flex  xl:backdrop-blur bg-dark-primary-color/80 dark:bg-light-primary-color/80 z-50 bg-black-100 justify-between w-full items-center overflow-hidden sticky -top-0.5 mx-auto  sm:p-5 p-5 h-[65px] `}
+      className={`flex  xl:backdrop-blur bg-dark-primary-color/80 dark:bg-black/80 z-50 bg-black-100 justify-between w-full items-center overflow-hidden sticky -top-0.5 mx-auto  sm:p-5 p-5 h-[65px] `}
     >
       {/*-> Rahat code */}
       <div className="transform duration-300  max-md:scale-90 dark:hidden max-md:-ms-4">

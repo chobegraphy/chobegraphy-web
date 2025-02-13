@@ -44,7 +44,7 @@ const HomeGallery = () => {
     <div className="w-full bg-light-primary-color dark:bg-dark-primary-color xl:px-16 sm:px-10 px-5 pt-10 pb-20">
       <h1
         id="title"
-        className="font-Righteous text-4xl max-xl:text-3xl text-center dark:text-light-primary-color text-dark-primary-color"
+        className="font-Righteous text-5xl max-xl:text-3xl text-center dark:text-black text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
           {Language === "BN" && "ছবির গ্যালারি"}
