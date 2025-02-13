@@ -36,7 +36,7 @@ const Hero = () => {
         <div className="bg-light-primary-color w-[100px] rounded-3xl h-[100px]  "></div>
         <div className="bg-light-primary-color w-[150px] rounded-3xl h-[150px]  "></div>
       </div> */}
-        <div className="grid max-xl:grid-cols-1 grid-cols-2 max-md:h-[1200px] w-full pb-7">
+        <div className="grid max-xl:grid-cols-1 grid-cols-2 max-md:h-[1250px] w-full pb-7">
           <div className="ms-10 max-xl:mx-5 z-20 mt-7">
             <div className=" max-sm:h-fit lg:h-[115px] max-sm:text-6xl text-8xl font-normal text-light-primary-color font-Bayon dark:text-dark-primary-color   leading-[120px]">
               <span className="">
@@ -143,8 +143,12 @@ const Hero = () => {
               </div>
             </div>
           </div>
-          <div className="mt-10 relative flex justify-center">
-            <div className="absolute w-[100px] rounded-3xl rotate-45 h-[100px] bg-green-700 top-[5px] max-md:top-[770px] max-lg:top-[230px] max-lg:right-[210px] max-md:w-[70px] max-md:h-[70px] right-[323px] max-md:right-[270px] max-xl:top-[-505px] max-lg:hidden max-md:block"></div>
+          <div
+            className={`mt-10 relative flex justify-center ${
+              window.screen.width === 360 && "left-2.5"
+            } `}
+          >
+            <div className="absolute w-[100px] rounded-3xl rotate-45 h-[100px] bg-green-700 max-md:hidden top-[5px] max-md:top-[770px] max-lg:top-[230px] max-lg:right-[210px] max-md:w-[70px] max-md:h-[70px] right-[323px] max-md:right-[270px] max-xl:top-[-505px] max-lg:hidden "></div>
 
             <div className="absolute  -right-10 top-0.5 items-center gap-x-3 max-lg:-right-24 max-lg:scale-75 max-md:-right-14 max-md:scale-75 max-md:top-[-192px] max-xl:top-[-510px] max-lg:top-[-550px] rotate-45 flex">
               <div className="bg-gray-500 w-[100px] rounded-3xl h-[100px] relative top-8 "></div>
