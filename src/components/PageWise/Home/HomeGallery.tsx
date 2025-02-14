@@ -41,10 +41,10 @@ const HomeGallery = () => {
     "https://images.unsplash.com/photo-1505144808419-1957a94ca61e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3070&q=80",
   ];
   return (
-    <div className="w-full bg-light-primary-color dark:bg-dark-primary-color xl:px-16 sm:px-10 px-5 pt-10 pb-20">
+    <div className="w-full dark:bg-light-primary-color bg-dark-primary-color xl:px-16 sm:px-10 px-5 pt-10 pb-20">
       <h1
         id="title"
-        className="font-Righteous text-5xl max-xl:text-3xl text-center dark:text-black text-dark-primary-color"
+        className="font-Righteous text-5xl max-xl:text-3xl text-center text-black dark:text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
           {Language === "BN" && "ছবির গ্যালারি"}
@@ -53,7 +53,7 @@ const HomeGallery = () => {
       </h1>
       <h1
         id="title2"
-        className="font-Space mt-1 text-xl mx-auto max-lg:text-base w-2/3 text-center dark:text-light-primary-color text-dark-primary-color"
+        className="font-Space mt-1 text-xl mx-auto max-lg:text-base w-2/3 text-center text-light-primary-color dark:text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
           {Language === "BN" &&
@@ -76,7 +76,7 @@ const HomeGallery = () => {
         <Link href={"/AllImg"}>
           <button
             className={
-              "border-2 py-3 mt-6 px-6 mx-auto xl:text-lg dark:bg-light-primary-color bg-dark-primary-color text-light-primary-color dark:border-dark-primary-color   dark:hover:text-dark-primary-color transform duration-300 rounded-xl flex items-center font-Righteous gap-x-2 dark:text-dark-primary-color justify-center border-light-primary-color"
+              "border-2 py-3 mt-6 px-6 mx-auto xl:text-lg bg-light-primary-color dark:bg-dark-primary-color dark:text-light-primary-color dark:hover:bg-dark-primary-color/40   dark:hover:text-dark-primary-color transform duration-300 rounded-xl flex items-center font-Righteous gap-x-2 text-dark-primary-color justify-center border-light-primary-color"
             }
           >
             <span>

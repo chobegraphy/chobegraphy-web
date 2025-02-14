@@ -16,7 +16,7 @@ const ViewWise = () => {
   ];
 
   return (
-    <div>
+    <div className="pb-10">
       <div className="-mt-2 pb-3 flex  items-start flex-col w-full">
         <h1 className="mb-2">
           <span className="font-BanglaSubHeading text-xl">

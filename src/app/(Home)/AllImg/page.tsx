@@ -5,7 +5,7 @@ import Pagination from "@/components/PageWise/AllImg/Pagination";
 import Title from "@/components/PageWise/AllImg/Title";
 const AllImgPage = () => {
   return (
-    <div className="w-full dark:bg-light-primary-color bg-dark-primary-color xl:px-16 sm:px-10 px-5 py-10">
+    <div className="w-full dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color xl:px-16 sm:px-10 px-5 py-10">
       {/* title component */}
       <Title />
       {/* filter search button components */}

@@ -95,7 +95,7 @@ const DistrictWise = () => {
     }
   };
   return (
-    <div>
+    <div className="">
       <div className="mt-3 pb-3 flex  items-start flex-col w-full">
         <h1 className="mb-2">
           <span className="font-BanglaSubHeading text-xl">

@@ -391,7 +391,7 @@ const DistrictGallery = () => {
   const totalItemsPage = Math.ceil(64 / ItemsPerPage);
   const pageNumber = [...Array(totalItemsPage).keys()];
   return (
-    <div className="xl:px-16 sm:px-10 px-5 py-14 ">
+    <div className="xl:px-16 sm:px-10 px-5 py-20 ">
       <HeadingAndSubHeading
         heading="District Photo Gallery
 "

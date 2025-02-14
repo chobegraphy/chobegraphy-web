@@ -32,7 +32,7 @@ module.exports = {
         BanglaSubHeading: ["var(--font-BanglaSubHeading)", "sans-serif"],
       },
       colors: {
-        "light-primary-color": "#181818",
+        "light-primary-color": "#03140a",
         "dark-primary-color": "#efebeb",
         "light-secondary-color": "#575757",
         background: "var(--background)",

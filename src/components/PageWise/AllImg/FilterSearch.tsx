@@ -95,11 +95,11 @@ const FilterSearch = () => {
           ref={divRef}
           className={`${
             isOpen ? "right-0" : "-right-[120%]"
-          } absolute transform duration-500 bg-background w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
+          } absolute transform duration-500 bg-dark-primary-color  dark:bg-gradient-to-br from-black to-light-primary-color w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
         >
           <div className="w-full flex flex-col h-full overflow-y-scroll example">
             {/* title and close */}
-            <div className="border-b-2 dark:border-[#575757] pb-3 flex justify-between border-light-primary-color items-center sticky top-0 bg-dark-primary-color dark:bg-light-primary-color z-30 w-full">
+            <div className="border-b-2 dark:border-[#575757] pb-3 flex justify-between border-light-primary-color items-center sticky top-0 bg-dark-primary-color dark:bg-black z-30 w-full">
               {/* title */}
               <h1 className="">
                 <span className="font-BanglaSubHeading text-xl">
@@ -127,7 +127,10 @@ const FilterSearch = () => {
             <ViewWise />
 
             {/* bottom buttons */}
-            <div className="flex items-center gap-x-2 bg-dark-primary-color dark:bg-light-primary-color sticky bottom-0 pt-2">
+            <div
+              className="flex items-center gap-x-2 bg-dark-primary-color rounded-xl dark:bg-black
+             fixed bottom-2 p-2"
+            >
               <button className="p-2 bg-dark-primary-color text-light-primary-color rounded-xl">
                 <GrPowerReset />
               </button>

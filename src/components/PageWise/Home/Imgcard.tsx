@@ -28,7 +28,7 @@ const ImgCard = ({ img, i }: any) => {
           loading="lazy"
           src={img}
           alt={`Gallery ${i}`}
-          className="w-full mb-1 h-auto rounded-2xl border-2 border-dark-primary-color/10 dark:border-light-primary-color/10 shadow-lg"
+          className="w-full mb-1 h-auto rounded-2xl border-2 border-light-primary-color/10 dark:border-light-primary-color/10 shadow-lg"
         />
       </div>
       {loadedImg && (

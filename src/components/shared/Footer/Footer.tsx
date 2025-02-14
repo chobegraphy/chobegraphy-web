@@ -6,7 +6,7 @@ const Footer = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   return (
-    <div className="h-full bg-[#0c0c0c]  border-dark-primary-color/10 flex flex-col">
+    <div className="h-full bg-black  border-light-primary-color flex flex-col">
       <footer className="footer bg-base-200 text-base-content flex items-center justify-around max-md:flex-col max-md:justify-start md:flex-wrap pt-10 px-10">
         <aside className="max-md:w-full">
           <div className="transform duration-300   dark:hidden max-md:-ms-0">
@@ -53,7 +53,7 @@ const Footer = () => {
           </p>
         </aside>
         <nav className="max-md:w-full h-full ">
-          <h6 className="text-xl mt-10">
+          <h6 className="text-xl text-dark-primary-color mt-10">
             <span className="font-BanglaHeading">
               {Language === "BN" && "গুরুত্বপূর্ণ লিঙ্ক"}
             </span>
@@ -99,7 +99,7 @@ const Footer = () => {
           </div>
         </nav>
         <nav className="max-md:w-full h-full ">
-          <h6 className="text-xl mt-10">
+          <h6 className="text-xl  text-dark-primary-color mt-10">
             <span className="font-BanglaHeading">
               {Language === "BN" && "সামাজিক লিঙ্ক"}
             </span>
@@ -145,7 +145,7 @@ const Footer = () => {
           </div>
         </nav>
         <nav className="max-md:w-full h-full ">
-          <h6 className="text-xl mt-10">
+          <h6 className="text-xl  text-dark-primary-color mt-10">
             <span className="font-BanglaHeading">
               {Language === "BN" && "ফটোগ্রাফি"}
             </span>
@@ -191,7 +191,7 @@ const Footer = () => {
           </div>
         </nav>
         <nav className="max-md:w-full h-full ">
-          <h6 className="text-xl mt-10">
+          <h6 className="text-xl  text-dark-primary-color mt-10">
             <span className="font-BanglaHeading">
               {Language === "BN" && "অন্যান্য"}
             </span>

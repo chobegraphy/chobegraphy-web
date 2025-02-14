@@ -23,8 +23,8 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
           <>
             {pathName !== "/SignUp" && pathName !== "/SignIn" && <Navbar />}
             {children}
-            <Footer />
-            {/* {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />} */}
+
+            {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />}
           </>
         )}
       </div>

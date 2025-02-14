@@ -241,7 +241,7 @@ const Navbar = () => {
           ref={divRef}
           className={`${
             isOpen ? "right-0" : "-right-[120%]"
-          } absolute transform duration-500 bg-background w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
+          } absolute transform duration-500 bg-dark-primary-color dark:bg-gradient-to-br from-black to-light-primary-color w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
         >
           <div className="w-full flex flex-col h-full ">
             <div className="w-full h-[60px] dark:bg-dark-primary-color flex mb-5 bg-black rounded">
