@@ -10,7 +10,7 @@ const Hero = () => {
   const Language = useSelector((state: any) => state.Language.value);
 
   return (
-    <div>
+    <div className="">
       <div className="h-full   dark:border-light-secondary-color w-full my-5 relative mt-10  border-[#B8B8B8]">
         {/*-> Rahat code */}
         <div className="absolute -top-1.5 -left-1.5 text-3xl">
