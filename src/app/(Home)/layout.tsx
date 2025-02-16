@@ -5,6 +5,7 @@ import LoadingAnimation from "@/components/ui/loadingAnimation/loadingAnimation"
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
+import AuthProvider from "../../../Provider/AuthProvider";
 import { store } from "../../../Redux/Store";
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {
@@ -17,7 +18,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   }, []);
   return (
     <Provider store={store}>
-      <div>
+      <AuthProvider>
         {loading && <LoadingAnimation />}
         {!loading && (
           <>
@@ -27,7 +28,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
             {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />}
           </>
         )}
-      </div>
+      </AuthProvider>
     </Provider>
   );
 };

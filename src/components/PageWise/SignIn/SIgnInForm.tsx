@@ -1,3 +1,4 @@
+import useAuthData from "@/ExportedFunctions/useAuthData";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -5,6 +6,7 @@ import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const SignInForm = () => {
+  const { GoogleSignIn } = useAuthData();
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
@@ -21,7 +23,18 @@ const SignInForm = () => {
     setbuttonLoading(true);
   };
   // DONE:GOOGLE LOGIN::>
-  const handleGoogleLogin = () => {};
+  const handleGoogleLogin = () => {
+    setGbuttonLoadin(true);
+    GoogleSignIn()
+      .then((data) => {
+        console.log(data);
+        setGbuttonLoadin(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setGbuttonLoadin(false);
+      });
+  };
   return (
     <div className="">
       <div className="flex flex-shrink-0 w-full justify-center   py-5">
@@ -48,16 +61,16 @@ const SignInForm = () => {
             {Language === "EN" && "Enter your credentials to sign in"}
           </p>
           <section>
-            <div className="form-control flex justify-center mt-0">
+            <div
+              id="goodleButton"
+              className="form-control flex justify-center mt-0"
+            >
               {gbuttonLoading === true ? (
                 <div>
-                  <button className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider rounded-xl py-4 px-7">
-                    <div className="loader">
-                      <div className="circle"></div>
-                      <div className="circle"></div>
-                      <div className="circle"></div>
-                      <div className="circle"></div>
-                    </div>
+                  <button
+                    type="button"
+                    className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider rounded-xl py-4 px-7"
+                  >
                     <div className="mt-0.5">
                       <span className="font-BanglaHeading">
                         {Language === "BN" && "লোডিং"}

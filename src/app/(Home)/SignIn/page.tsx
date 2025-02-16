@@ -1,8 +1,10 @@
 "use client";
 
 import SignInForm from "@/components/PageWise/SignIn/SIgnInForm";
+import useAuthData from "@/ExportedFunctions/useAuthData";
 import { MdOutlineCamera } from "react-icons/md";
 const SignInPage = () => {
+  const { GoogleSignIn } = useAuthData();
   return (
     <div>
       <div className="  min-h-screen dark:bg-gradient-to-br from-black to-light-primary-color h-full flex justify-center items-center">

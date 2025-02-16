@@ -1,3 +1,6 @@
+import { BaseApiUrl } from "@/ExportedFunctions/BaseApiUrl";
+import useAuthData from "@/ExportedFunctions/useAuthData";
+import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -5,6 +8,7 @@ import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import "./SignUp.css";
 const RegisterForm = () => {
+  const { GoogleSignIn, EmailPassWordSignUp } = useAuthData();
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
@@ -19,9 +23,81 @@ const RegisterForm = () => {
 
   const onSubmit = (data: any) => {
     setbuttonLoading(true);
+    EmailPassWordSignUp(data?.email, data?.password)
+      .then(async (firebaseData) => {
+        console.log(firebaseData);
+
+        // Firebase registration success, now send data to your backend
+        const userData = {
+          name: data.name,
+          email: data.email,
+          picture: "",
+        };
+
+        try {
+          const response = await axios.post(
+            BaseApiUrl + "/add-user",
+            userData,
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          // Handle response from the backend if needed (e.g., saving additional data)
+          console.log(
+            "User registered successfully on backend:",
+            response.data
+          );
+        } catch (error) {
+          console.error("Error during backend registration:", error);
+        }
+
+        setbuttonLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setbuttonLoading(false);
+      });
+    console.log(data);
   };
   // DONE:GOOGLE LOGIN::>
-  const handleGoogleLogin = () => {};
+  const handleGoogleLogin = () => {
+    setGbuttonLoadin(true);
+    GoogleSignIn()
+      .then(async (firebaseData) => {
+        console.log(firebaseData);
+
+        const userData = {
+          name: firebaseData.user.displayName || "Unknown",
+          email: firebaseData.user.email,
+          picture: firebaseData.user.photoURL || "",
+        };
+
+        try {
+          const response = await axios.post(
+            BaseApiUrl + "/add-user",
+            userData,
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          console.log(
+            "User registered successfully on backend:",
+            response.data
+          );
+        } catch (error) {
+          console.error("Error during backend registration:", error);
+        }
+
+        setGbuttonLoadin(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setGbuttonLoadin(false);
+      });
+  };
+
   return (
     <div className="">
       <div className="flex flex-shrink-0 w-full justify-center   py-5">
@@ -52,13 +128,7 @@ const RegisterForm = () => {
             <div className="form-control flex justify-center mt-0">
               {gbuttonLoading === true ? (
                 <div>
-                  <button className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider rounded-xl py-4 px-7">
-                    <div className="loader">
-                      <div className="circle"></div>
-                      <div className="circle"></div>
-                      <div className="circle"></div>
-                      <div className="circle"></div>
-                    </div>
+                  <button className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider flex items-center rounded-xl py-4 px-7">
                     <div className="mt-0.5">
                       <span className="font-BanglaHeading">
                         {Language === "BN" && "লোডিং"}
@@ -172,7 +242,7 @@ const RegisterForm = () => {
           <div className="form-control mt-6">
             {buttonLoading === true ? (
               <div>
-                <button className="btn btn-primary dark:text-light-primary-color dark:bg-dark-primary-color border-none flex flex-row-reverse items-center gap-x-2  tracking-wider rounded-xl py-4 px-7">
+                <button className="btn btn-primary dark:text-light-primary-color dark:bg-dark-primary-color border-none flex bg-light-primary-color text-dark-primary-color flex-row-reverse items-center gap-x-2  tracking-wider rounded-xl py-4 px-7">
                   <div className="loader">
                     <div className="circle"></div>
                     <div className="circle"></div>
