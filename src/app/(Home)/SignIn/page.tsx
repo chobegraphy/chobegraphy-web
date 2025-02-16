@@ -1,8 +1,8 @@
 "use client";
 
-import RegisterForm from "@/components/PageWise/SignUp/RegisterForm";
+import SignInForm from "@/components/PageWise/SignIn/SIgnInForm";
 import { MdOutlineCamera } from "react-icons/md";
-const SignUpPage = () => {
+const SignInPage = () => {
   return (
     <div>
       <div className="  min-h-screen dark:bg-gradient-to-br from-black to-light-primary-color h-full flex justify-center items-center">
@@ -36,11 +36,11 @@ const SignUpPage = () => {
           </div>
 
           {/* Register Form */}
-          <RegisterForm />
+          <SignInForm />
         </div>
       </div>
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignInPage;

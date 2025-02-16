@@ -2,6 +2,7 @@
 import CustomButton from "@/components/ui/CustomButton/CustomButton";
 import { useTheme } from "next-themes";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FaSignInAlt } from "react-icons/fa";
 import { FaLanguage, FaMagnifyingGlass } from "react-icons/fa6";
@@ -21,59 +22,94 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const [languageOpen, setLanguageOpen] = useState(false);
+
+  // Location states
+  const [country, setCountry] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const { setTheme } = useTheme();
-  // redux writing
+
+  // Redux
   const Language = useSelector((state: any) => state.Language.value);
   const dispatch = useDispatch();
   console.log(Language);
+
+  // Set language from local storage (on mount)
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storedLanguage = localStorage.getItem("Language");
+
       if (storedLanguage) {
         dispatch(setLanguage(storedLanguage));
-      } else {
-        dispatch(setLanguage("BN"));
       }
     }
   }, [dispatch]);
+
+  // Fetch location and set country
   useEffect(() => {
-    if (!isOpen && !isOpen2) {
-      return;
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const response = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+            );
+            const data = await response.json();
+            setCountry(data.address?.country || "Country not found");
+          } catch (err) {
+            setError("Failed to fetch location details.");
+          }
+        },
+        (error) => {
+          setError(error.message);
+        }
+      );
+    } else {
+      setError("Geolocation is not supported by this browser.");
     }
+  }, []);
+
+  // Set language based on country when country updates
+  useEffect(() => {
+    if (country) {
+      const storedLanguage = localStorage.getItem("Language");
+
+      if (!storedLanguage) {
+        if (country === "Bangladesh") {
+          dispatch(setLanguage("BN"));
+        } else {
+          dispatch(setLanguage("EN"));
+        }
+      }
+    }
+  }, [country, dispatch]);
+
+  // Handle click outside to close menu
+  useEffect(() => {
+    if (!isOpen && !isOpen2) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (divRef.current && !divRef.current.contains(event.target as Node)) {
         setIsOpen(false);
-        setTimeout(() => {
-          setIsOpen2(false);
-        }, 200);
+        setTimeout(() => setIsOpen2(false), 200);
       }
     };
 
-    // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [divRef, isOpen, isOpen2]);
-  useEffect(() => {
-    if (isOpen2) {
-      // Disable scroll on the body when the sidebar is open
-      document.body.style.overflow = "hidden";
-    } else {
-      // Enable scroll again when the sidebar is closed
-      document.body.style.overflow = "auto";
-    }
 
-    // Clean up to reset body overflow when the component unmounts or sidebar closes
+  // Disable scrolling when sidebar is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen2 ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [isOpen2]);
+
+  // Set theme from local storage or system preference
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-
     if (storedTheme) {
       setTheme(storedTheme);
     } else {
@@ -245,7 +281,10 @@ const Navbar = () => {
         >
           <div className="w-full flex flex-col h-full ">
             <div className="w-full h-[60px] dark:bg-dark-primary-color flex mb-5 bg-black rounded">
-              <div className="w-3/4 h-full flex items-center ps-3">
+              <Link
+                href="/SignIn"
+                className="w-3/4 h-full flex items-center ps-3"
+              >
                 <div className="text-2xl flex items-center gap-x-2 dark:text-black text-white">
                   <FaSignInAlt />
                   <p
@@ -256,7 +295,7 @@ const Navbar = () => {
                     {Language === "BN" ? "সাইন ইন" : "Sign In"}
                   </p>
                 </div>
-              </div>
+              </Link>
               <div className="flex-grow mt-1.5 h-full ">
                 <FaMagnifyingGlass className="text-white dark:text-black text-lg text-center w-full" />
                 <label className="switch">

@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import "./SignUp.css";
-const RegisterForm = () => {
+
+const SignInForm = () => {
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
@@ -32,21 +32,20 @@ const RegisterForm = () => {
           <h1 className="text-center font-KaushanScript font-bold dark:text-dark-primary-color  text-3xl">
             {Language === "BN" && (
               <span className="font-BanglaHeading">
-                ছবিগ্রাফিতে সাইন আপ করুন
+                ছবিগ্রাফিতে সাইন ইন করুন
               </span>
             )}
             {Language === "EN" && (
               <span>
-                Sign Up to <span className=" ">Chobegraphy</span>
+                Sign In to <span className=" ">Chobegraphy</span>
               </span>
             )}
           </h1>
           <p className="font-Space text-center text-light-primary-color dark:text-dark-primary-color/70 mb-6">
             <span className="font-BanglaSubHeading mt-2">
-              {Language === "BN" &&
-                "একটি অ্যাকাউন্ট তৈরি করতে আপনার বিবরণ লিখুন"}
+              {Language === "BN" && "সাইন ইন করতে আপনার তথ্য দিন।"}
             </span>
-            {Language === "EN" && "Enter your details to create an account"}
+            {Language === "EN" && "Enter your credentials to sign in"}
           </p>
           <section>
             <div className="form-control flex justify-center mt-0">
@@ -82,34 +81,13 @@ const RegisterForm = () => {
             <div className="mt-7 gap-x-5 items-center justify-center flex mb-5">
               <div className="divider  text-2xl  text-light-primary-color dark:text-dark-primary-color/90">
                 <span className="font-BanglaHeading">
-                  {Language === "BN" && "অথবা সাইন আপ করুন"}
+                  {Language === "BN" && "অথবা সাইন ইন করুন"}
                 </span>
-                {Language === "EN" && "Or Sign up with"}
+                {Language === "EN" && "Or Sign in with"}
               </div>
             </div>
           </section>
-          <div className="form-control flex flex-col">
-            <label htmlFor="name" className="label ">
-              <span className="text-xl text-light-primary-color dark:text-dark-primary-color font-Righteous font-bold">
-                <span className="font-BanglaHeading">
-                  {Language === "BN" && "নাম"}
-                </span>
-                {Language === "EN" && "Name"}
-              </span>
-            </label>
-            <input
-              id="name"
-              type="text"
-              {...register("name")}
-              placeholder={
-                Language === "BN" ? "আপনার নাম লিখুন" : "Enter your name"
-              }
-              className={`${
-                Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
-              } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
-              required
-            />
-          </div>
+
           <div className="form-control mt-3.5 flex flex-col">
             <label htmlFor="email" className="label ">
               <span className="text-xl text-light-primary-color dark:text-dark-primary-color font-Righteous font-bold">
@@ -148,8 +126,8 @@ const RegisterForm = () => {
                 {...register("password")}
                 placeholder={
                   Language === "BN"
-                    ? "নতুন পাসওয়ার্ড লিখুন"
-                    : "Enter new password"
+                    ? "আপনার পাসওয়ার্ড লিখুন"
+                    : "Enter your password"
                 }
                 className={`${
                   Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
@@ -180,12 +158,10 @@ const RegisterForm = () => {
                     <div className="circle"></div>
                   </div>
                   <div className="mt-0.5">
-                    <div className="mt-0.5">
-                      <span className="font-BanglaHeading">
-                        {Language === "BN" && "লোডিং"}
-                      </span>
-                      {Language === "EN" && "Loading"}
-                    </div>
+                    <span className="font-BanglaHeading">
+                      {Language === "BN" && "লোডিং"}
+                    </span>
+                    {Language === "EN" && "Loading"}
                   </div>
                 </button>
               </div>
@@ -193,9 +169,9 @@ const RegisterForm = () => {
               <div>
                 <button className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider rounded-xl py-4 px-7">
                   <span className="font-BanglaHeading">
-                    {Language === "BN" && "সাইন আপ"}
+                    {Language === "BN" && "সাইন ইন"}
                   </span>
-                  {Language === "EN" && "Sign up"}
+                  {Language === "EN" && "Sign in"}
                 </button>
               </div>
             )}
@@ -204,17 +180,17 @@ const RegisterForm = () => {
           <div className="form-control mt-6 max-lg:mt-10 text-center lg:text-[18px] font-VarelaRound  dark:text-dark-primary-color/70 text-light-secondary-color">
             <h1>
               <span className="font-BanglaHeading">
-                {Language === "BN" && "ইতিমধ্যে নিবন্ধিত?"}
+                {Language === "BN" && "নতুন এখানে?"}
               </span>
-              {Language === "EN" && "Already registered?"}{" "}
+              {Language === "EN" && "New here?"}{" "}
               <Link
-                href="/SignIn"
+                href="/SignUp"
                 className="dark:text-dark-primary-color text-light-primary-color underline underline-offset-2"
               >
                 <span className="font-BanglaHeading ">
-                  {Language === "BN" && "সাইন ইন"}
+                  {Language === "BN" && "সাইন আপ "}
                 </span>
-                {Language === "EN" && "Sign In"}
+                {Language === "EN" && "Sign Up"}
               </Link>
             </h1>
           </div>
@@ -224,4 +200,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default SignInForm;

@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { FaSignInAlt } from "react-icons/fa";
 import { MdOutlineCamera, MdOutlineTipsAndUpdates } from "react-icons/md";
 import { RiBox3Fill } from "react-icons/ri";
@@ -61,9 +62,10 @@ const Hero = () => {
                   : "Photography isn’t just about pictures— It’s about feelings, stories,            and emotions. A single frame can hold a thousand memories. Moments            fade, but images keep them alive. Through the lens, time stands            still forever."}
               </p>
             </div>
-            <button
+            <Link
+              href="/SignIn"
               className={
-                "border-2 py-1 max-lg:hidden xl:py-1.5 mt-6 px-6  xl:text-lg bg-light-primary-color dark:bg-dark-primary-color dark:text-light-primary-color dark:border-dark-primary-color   hover:text-dark-primary-color transform duration-300 rounded flex items-center gap-x-2 text-dark-primary-color justify-center border-light-primary-color"
+                "border-2 py-1 max-lg:hidden xl:py-1.5 mt-6 px-6  xl:text-lg bg-light-primary-color dark:bg-dark-primary-color dark:text-light-primary-color dark:border-dark-primary-color   hover:text-dark-primary-color transform duration-300 rounded flex items-center gap-x-2 text-dark-primary-color w-fit justify-center border-light-primary-color"
               }
             >
               <FaSignInAlt className="text-xl" />{" "}
@@ -72,7 +74,7 @@ const Hero = () => {
                   {Language === "BN" ? "সাইন ইন" : "Sign In"}
                 </p>
               </span>
-            </button>
+            </Link>
             <button
               className={
                 "border-2 py-1 xl:py-1.5 max-lg:flex hidden mt-6 px-6  xl:text-lg bg-light-primary-color dark:bg-dark-primary-color dark:text-light-primary-color dark:border-dark-primary-color   hover:text-dark-primary-color transform duration-300 rounded  items-center gap-x-2 text-dark-primary-color justify-center border-light-primary-color"
