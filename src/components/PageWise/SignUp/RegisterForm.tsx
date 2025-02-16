@@ -13,7 +13,11 @@ const RegisterForm = () => {
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
   // redux writing
-  const Language = localStorage?.getItem("Language") ?? "BN";
+  const Language =
+    typeof window !== "undefined"
+      ? localStorage.getItem("Language") ?? "BN"
+      : "BN";
+
   const {
     register,
     handleSubmit,
