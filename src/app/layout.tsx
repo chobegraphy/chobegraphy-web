@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@/components/ui/theme-provider/theme-provider";
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 
 import { Bayon, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
@@ -74,6 +75,13 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster
+            toastOptions={{
+              className: "ToastClass",
+            }}
+            position="bottom-center"
+            reverseOrder={false}
+          />
         </ThemeProvider>
       </body>
     </html>

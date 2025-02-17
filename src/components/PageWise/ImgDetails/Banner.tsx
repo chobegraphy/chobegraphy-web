@@ -1,5 +1,7 @@
 "use client";
-import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineCopyrightCircle } from "react-icons/ai";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
@@ -13,10 +15,44 @@ import {
   RiDownloadCloud2Fill,
 } from "react-icons/ri";
 import { TbCopy } from "react-icons/tb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
+import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
+import BannerImgCard from "./BannerImgCard";
 const Banner = () => {
+  const pictureId = useParams()?.id;
+  console.log(pictureId);
   // redux writing
+  const dispatch = useDispatch();
   const Language = useSelector((state: any) => state.Language.value);
+  // imgDetailsData
+  const ImgDetailsData = useSelector(
+    (state: any) => state.StoreImgDetailsData.value
+  );
+
+  // State to store image details (if Redux data is empty)
+  const [DetailsData, setDetailsData] = useState(ImgDetailsData);
+
+  // Fetch image details if ImgDetailsData is empty
+  const { data, error, isLoading } = useGetSingleImgDetailsQuery(pictureId, {
+    skip: !pictureId || !ImgDetailsData, // Skip the API call if pictureId or ImgDetailsData is not available
+  });
+
+  useEffect(() => {
+    if (data) {
+      setDetailsData(data); // If data is fetched from the API, set it to the state
+      dispatch(SetImgDetailsData(data));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (ImgDetailsData) {
+      setDetailsData(ImgDetailsData); // Set state from Redux if data exists
+    }
+  }, [ImgDetailsData]);
+  // color copy state ->
+  const [copiedColor, setCopiedColor] = useState("");
+  console.log(ImgDetailsData);
   // Share function
   const handleShare = async () => {
     if (navigator.share) {
@@ -37,25 +73,84 @@ const Banner = () => {
       alert("Share API is not supported on this device/browser.");
     }
   };
+
+  // copy color function
+  const copyToClipboard = (hex: string) => {
+    navigator.clipboard.writeText(hex).then(() => {
+      setCopiedColor(hex);
+      setTimeout(() => setCopiedColor(""), 1500); // Reset message after 1.5s
+    });
+  };
+
+  // Function to handle image download
+  const handleDownload = async () => {
+    if (!DetailsData?.url) {
+      toast.error("Image URL not found!");
+      return;
+    }
+
+    toast.loading(Language === "BN" ? "ডাউনলোড হচ্ছে.." : "Downloading...", {
+      id: "download",
+    });
+
+    try {
+      const response = await fetch(DetailsData.url);
+      const blob = await response.blob();
+      const link = document.createElement("a");
+
+      link.href = URL.createObjectURL(blob);
+      link.download = DetailsData?.name || "image.jpg";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast.dismiss("download");
+      toast.success(
+        Language === "EN" ? "Download Complete!" : "ডাউনলোড হয়েছে!"
+      );
+    } catch (error) {
+      toast.dismiss("download");
+      toast.error(
+        Language === "EN"
+          ? "Download failed! Try again."
+          : "ডাউনলোড ব্যর্থ হয়েছে! পুনরায় চেষ্টা করুন."
+      );
+      console.error("Download Error:", error);
+    }
+  };
+
+  // convert time format
+  const formatDateTime = (dateString: any) => {
+    const date = new Date(dateString);
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true, // This makes sure to display AM/PM
+    });
+  };
   return (
     <div className="w-full relative h-full col-span-6">
       <div>
-        <Image
-          width={500}
-          height={500}
-          src="https://images.unsplash.com/photo-1592492152545-9695d3f473f4?q=1000&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-          className="w-full 2xl:h-[550px]    border-dark-primary-color/10 dark:border-light-primary-color/10  object-cover h-full"
+        <BannerImgCard
+          mainImgLink={DetailsData?.url}
+          encodedUrl={DetailsData?.encodedUrl}
+          dimensions={DetailsData?.dimensions}
+          i={DetailsData?._id}
         />
       </div>
       {/* picture details */}
       <section className="lg:px-3 py-2 text-light-primary-color dark:text-dark-primary-color">
         <div className="flex max-md:mt-2 mt-5 justify-between items-center ">
-          <h1 className="font-Righteous max-md:text-3xl text-4xl ">
-            <span className="font-BanglaHeading">
+          <h1 className="font-Righteous max-md:text-2xl text-4xl ">
+            {DetailsData?.name}
+            {/* <span className="font-BanglaHeading">
               {Language === "BN" && "ছবির নাম"}
             </span>
-            {Language === "EN" && "Image name"}
+            {Language === "EN" && "Image name"} */}
           </h1>
           <div className="text-3xl flex gap-x-5 cursor-pointer ">
             <FaRegHeart />
@@ -81,7 +176,7 @@ const Banner = () => {
                 {Language === "BN" && "প্রকাশিত হয়েছে :"}
               </span>
               {Language === "EN" && "Published on :"}
-              June 18, 2020
+              {formatDateTime(DetailsData?.uploadedTime)}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -100,7 +195,7 @@ const Banner = () => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "রেজোলিউশন"}
               </span>{" "}
-              {Language === "EN" && "Resolution"} : 3180x2000
+              {Language === "EN" && "Resolution"} : {DetailsData?.dimensions}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -110,7 +205,7 @@ const Banner = () => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "ছবির সাইজ"}
               </span>{" "}
-              {Language === "EN" && "Picture Size"} : 9.5mb
+              {Language === "EN" && "Picture Size"} : {DetailsData?.fileSize}mb
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -120,7 +215,7 @@ const Banner = () => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "ছবি প্রণেতা"}
               </span>{" "}
-              {Language === "EN" && "Author"} : SifathKhan
+              {Language === "EN" && "Author"} : {DetailsData?.author}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -130,7 +225,8 @@ const Banner = () => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "ক্যাটাগরি "}
               </span>{" "}
-              {Language === "EN" && "Categories"} : Texture,Pattern,Gold,Brown
+              {Language === "EN" && "Categories"} :{" "}
+              {DetailsData?.collections?.map((item: any) => item)}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -140,7 +236,7 @@ const Banner = () => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট ডাউনলোড"}
               </span>{" "}
-              {Language === "EN" && "Total downloads"} : 3000
+              {Language === "EN" && "Total downloads"} : {DetailsData?.download}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -150,7 +246,7 @@ const Banner = () => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট ভিউ"}
               </span>{" "}
-              {Language === "EN" && "Total View"} : 1000
+              {Language === "EN" && "Total View"} : {DetailsData?.view}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -160,7 +256,7 @@ const Banner = () => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট রিয়েক্ট"}
               </span>{" "}
-              {Language === "EN" && "Total React"} : 100
+              {Language === "EN" && "Total React"} : {DetailsData?.react}
             </p>
           </h1>
           <div className="">
@@ -173,32 +269,38 @@ const Banner = () => {
                 {Language === "EN" && "Colors Presented"} :{" "}
               </p>
             </h1>
-            <div className="flex gap-x-1">
-              <div
-                className="bg-red-600 w-7 rounded
-            h-7"
-              ></div>
-              <div
-                className="bg-red-600 w-7 rounded
-            h-7"
-              ></div>
-              <div
-                className="bg-red-600 w-7 rounded
-            h-7"
-              ></div>
-              <div
-                className="bg-red-600 w-7 rounded
-            h-7"
-              ></div>
-              <div
-                className="bg-red-600 w-7 rounded
-            h-7"
-              ></div>
+            <div className="flex gap-x-1 ms-6">
+              {DetailsData?.colors?.map((item: any) => (
+                <button
+                  key={item?.hex}
+                  onClick={() => {
+                    copyToClipboard(item?.hex);
+                    toast.success(
+                      Language === "EN"
+                        ? "Color copied to clipboard"
+                        : "রং কপি করা হয়েছে",
+                      {
+                        id: "copy-color",
+                      }
+                    );
+                  }}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && copyToClipboard(item?.hex)
+                  }
+                  style={{ backgroundColor: item?.hex }}
+                  className="w-7 rounded h-7 "
+                  aria-label={`Copy color ${item?.hex}`}
+                ></button>
+              ))}
             </div>
           </div>
         </div>
       </section>
-      <div className="flex items-center absolute lg:right-20 right-3 max-md:scale-90 bottom-48 cursor-pointer">
+      <div
+        id="downloadButton"
+        onClick={handleDownload}
+        className="flex items-center absolute lg:right-20 right-3 max-md:scale-90 bottom-48 cursor-pointer"
+      >
         <svg
           className="w-20"
           viewBox="0 0 30 30"

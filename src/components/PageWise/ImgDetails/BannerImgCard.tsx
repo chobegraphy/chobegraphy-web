@@ -1,28 +1,16 @@
 import clsx from "clsx"; // Utility for conditional class names
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { FaRegHeart } from "react-icons/fa";
-import { FiEye } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 
-const ImgCard = ({ imgData, i }: any) => {
-  // Redux dispatch function
-  const dispatch = useDispatch();
+const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
   const [loadedImg, setLoadedImg] = useState(false);
-  const pathName = usePathname();
-
-  // Debugging: Check imgData in console
-  console.log("imgData:", imgData);
 
   // Ensure imgData exists before using it
-  if (!imgData) return null;
+  if (!dimensions) return null;
 
   // Extract width and height safely (default to 1920x1080 if missing)
-  const [width, height] = imgData.dimensions
-    ? imgData.dimensions.split(" x ").map((num: string) => parseInt(num, 10))
+  const [width, height] = dimensions
+    ? dimensions.split(" x ").map((num: string) => parseInt(num, 10))
     : [1920, 1080];
 
   // Calculate aspect ratio (default to 16:9)
@@ -36,9 +24,7 @@ const ImgCard = ({ imgData, i }: any) => {
   };
 
   return (
-    <Link
-      onClick={() => dispatch(SetImgDetailsData(imgData))}
-      href={`/AllImg/${imgData._id}`}
+    <div
       className={clsx(
         i !== 0 && "my-2",
         "block relative overflow-hidden rounded-2xl"
@@ -47,7 +33,7 @@ const ImgCard = ({ imgData, i }: any) => {
       {/* Blurred Low-Quality Background */}
       <div
         style={{
-          backgroundImage: `url(${imgData?.encodedUrl})`,
+          backgroundImage: `url(${encodedUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           filter: loadedImg ? "blur(0px)" : "blur(10px)",
@@ -62,8 +48,8 @@ const ImgCard = ({ imgData, i }: any) => {
           height={height}
           onLoad={() => setLoadedImg(true)}
           loading="lazy"
-          src={imgData?.thumbnail || "/placeholder.jpg"} // Fallback if missing
-          alt={imgData?.name || `Gallery ${i}`}
+          src={mainImgLink || "/placeholder.jpg"} // Fallback if missing
+          alt={`Gallery ${i}`}
           className={clsx(
             "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-light-primary-color/10 shadow-lg",
             loadedImg
@@ -72,24 +58,8 @@ const ImgCard = ({ imgData, i }: any) => {
           )}
         />
       </div>
-
-      {/* Overlay for Icons */}
-      {loadedImg && (
-        <div className="rounded-2xl max-lg:h-[30px] bg-gradient-to-t from-black/40 to-black/0 h-full absolute w-full bottom-0 p-2 flex items-center justify-between text-sm text-white">
-          <div className="flex items-center gap-x-3 absolute bottom-3 left-3">
-            <FaRegHeart />
-            <p className="font-Space text-xs -ms-2">
-              {formatNumber(imgData?.react || 0)}
-            </p>
-            <FiEye />
-            <p className="font-Space text-xs -ms-2">
-              {formatNumber(imgData?.view || 0)}
-            </p>
-          </div>
-        </div>
-      )}
-    </Link>
+    </div>
   );
 };
 
-export default ImgCard;
+export default BannerImgCard;

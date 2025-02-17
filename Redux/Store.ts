@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./Features/ApiSlice/ApiSlice";
 import LanguageReducer from "./Features/Language/Language";
+import StoreImgDetailsData from "./Features/StoreImgDetailsData/StoreImgDetailsData";
 export const store = configureStore({
   reducer: {
     Language: LanguageReducer,
+    StoreImgDetailsData: StoreImgDetailsData,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

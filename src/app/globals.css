@@ -69,3 +69,7 @@
     color: #181818;
   }
 }
+
+.ToastClass {
+  @apply font-Righteous bg-dark-primary-color text-light-primary-color dark:bg-light-primary-color dark:text-dark-primary-color shadow-none rounded-2xl border-2 border-light-secondary-color  !important;
+}
