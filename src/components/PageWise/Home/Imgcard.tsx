@@ -42,7 +42,7 @@ const ImgCard = ({ imgData, i }: any) => {
           transition: "filter 0.4s ease-in-out",
           aspectRatio: `${width}/${height}`, // Set aspect ratio dynamically
         }}
-        className="relative w-full rounded-2xl"
+        className="relative w-full rounded-2xl overflow-hidden"
       >
         {/* High-Quality Image */}
         <Image
