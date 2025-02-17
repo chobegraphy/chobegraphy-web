@@ -11,7 +11,13 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "i.ibb.co",
+        hostname: "i.ibb.co.com",
+        port: "",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
         port: "",
         pathname: "**",
       },

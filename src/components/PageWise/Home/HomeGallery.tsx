@@ -4,6 +4,7 @@ import "aos/dist/aos.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
 import ImgCard from "./Imgcard";
 const HomeGallery = () => {
   useEffect(() => {
@@ -11,6 +12,9 @@ const HomeGallery = () => {
   }, []);
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
+  // Fetch data using the RTK Query hook
+  const { data, error, isLoading } = useGetTopPicturesQuery([]);
+  console.log(data);
   const [hovered, SetHovered] = useState(false);
   const [hovered2, SetHovered2] = useState(false);
   const images = [
@@ -66,9 +70,9 @@ const HomeGallery = () => {
       </h1>
 
       <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-6 max-xl:columns-4 gap-2 justify-center w-full ">
-        {images.slice(0, 19).map((image, index) => (
-          <div key={index} className="relative ">
-            <ImgCard img={image} i={index} />
+        {data?.slice(0, 19).map((imgInfo: any, index: any) => (
+          <div key={imgInfo?._id} className="relative ">
+            <ImgCard imgData={imgInfo} i={index} />
           </div>
         ))}
       </div>

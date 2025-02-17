@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { apiSlice } from "./Features/ApiSlice/ApiSlice";
 import LanguageReducer from "./Features/Language/Language";
 export const store = configureStore({
   reducer: {
     Language: LanguageReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
