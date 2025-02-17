@@ -9,45 +9,51 @@ import { FiEye } from "react-icons/fi";
 const ImgCard = ({ imgData, i }: any) => {
   const [loadedImg, setLoadedImg] = useState(false);
   const pathName = usePathname();
-  // Helper function to format numbers
+
+  // Extract width and height from dimensions (format: "width x height")
+  const [width, height] = imgData.dimensions
+    .split(" x ")
+    .map((num: string) => parseInt(num, 10));
+
+  // Calculate aspect ratio
+  const aspectRatio = width && height ? width / height : 16 / 9; // Default to 16:9 if missing
+
+  // Format numbers for likes/views
   const formatNumber = (num: number) => {
-    if (num >= 1000000) return (num / 1000000).toFixed(1) + "M"; // 1M, 2.5M
-    if (num >= 1000) return (num / 1000).toFixed(1) + "k"; // 1k, 2.1k
-    return num.toString(); // Below 1000 stays as is
+    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
+    if (num >= 1_000) return (num / 1_000).toFixed(1) + "k";
+    return num.toString();
   };
-  // If imgData is empty, do not render anything
+
   if (!imgData) return null;
 
   return (
     <Link
-      href={
-        pathName.includes("AllImg")
-          ? `/AllImg/${imgData._id}`
-          : `/AllImg/${imgData._id}`
-      }
+      href={`/AllImg/${imgData._id}`}
       className={clsx(i !== 0 && "my-2", "block relative overflow-hidden")}
     >
-      {/* Low-quality encoded image as background */}
+      {/* Blurred Low-Quality Background */}
       <div
         style={{
           backgroundImage: `url(${imgData?.encodedUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: loadedImg ? "blur(0px)" : "blur(10px)", // Blur effect on encoded image
+          filter: loadedImg ? "blur(0px)" : "blur(10px)",
           transition: "filter 0.4s ease-in-out",
+          aspectRatio: `${width}/${height}`, // Set aspect ratio dynamically
         }}
-        className="relative w-full h-auto rounded-2xl"
+        className="relative w-full rounded-2xl"
       >
-        {/* High-resolution Image */}
+        {/* High-Quality Image */}
         <Image
-          width={500}
-          height={500}
+          width={width}
+          height={height}
           onLoad={() => setLoadedImg(true)}
           loading="lazy"
           src={imgData?.thumbnail}
-          alt={`Gallery ${i}`}
+          alt={imgData?.name || `Gallery ${i}`}
           className={clsx(
-            "w-full object-cover object-center h-auto rounded-2xl border-2 border-light-primary-color/10 dark:border-light-primary-color/10 shadow-lg",
+            "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-light-primary-color/10 shadow-lg",
             loadedImg
               ? "opacity-100 transition-opacity duration-500"
               : "opacity-0"
