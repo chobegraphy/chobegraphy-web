@@ -1,19 +1,27 @@
 import clsx from "clsx"; // Utility for conditional class names
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { useDispatch } from "react-redux";
+import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
 import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 
 const ImgCard = ({ imgData, i }: any) => {
   // Redux dispatch function
   const dispatch = useDispatch();
   const [loadedImg, setLoadedImg] = useState(false);
-  const pathName = usePathname();
-
+  // increase view count
+  const [
+    increaseViewCount,
+    {
+      data: updateViewCountData,
+      isLoading: updateViewCountLoading,
+      isError: updateViewCountError,
+      error: updateViewCountInitial,
+    },
+  ] = useIncreaseViewCountMutation();
   // Debugging: Check imgData in console
   console.log("imgData:", imgData);
 
@@ -25,19 +33,27 @@ const ImgCard = ({ imgData, i }: any) => {
     ? imgData.dimensions.split(" x ").map((num: string) => parseInt(num, 10))
     : [1920, 1080];
 
-  // Calculate aspect ratio (default to 16:9)
-  const aspectRatio = width / height || 16 / 9;
-
   // Format numbers for likes/views
   const formatNumber = (num: number) => {
     if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M";
     if (num >= 1_000) return (num / 1_000).toFixed(1) + "k";
     return num.toString();
   };
-
+  const handleClick = async () => {
+    // Trigger the view count update API when the image is clicked
+    if (imgData?._id) {
+      const UpdateViewCountResponse = await increaseViewCount({
+        id: imgData._id,
+      }).unwrap();
+      dispatch(SetImgDetailsData(UpdateViewCountResponse?.updatedData));
+      return;
+    }
+    dispatch(SetImgDetailsData(imgData));
+    // Dispatch the image details to the Redux store
+  };
   return (
     <Link
-      onClick={() => dispatch(SetImgDetailsData(imgData))}
+      onClick={handleClick}
       href={`/AllImg/${imgData._id}`}
       className={clsx(
         i !== 0 && "my-2",
