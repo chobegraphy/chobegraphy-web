@@ -7,6 +7,30 @@ import { SiBmcsoftware, SiProtools } from "react-icons/si";
 import { TbCamera, TbFocusCentered } from "react-icons/tb";
 import { useSelector } from "react-redux";
 const PhotoMetaData = ({ MetaData }: any) => {
+  const formatDateTime = (dateString: string) => {
+    // Extract year, month, day, hour, minute, second
+    const parts = dateString.match(
+      /^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})$/
+    );
+
+    if (!parts) return "Invalid Date"; // Ensure the format is correct
+
+    const [, year, month, day, hour, minute, second] = parts.map(Number);
+
+    // Create a valid Date object
+    const date = new Date(year, month - 1, day, hour, minute, second);
+
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      // hour: "numeric",
+      // minute: "numeric",
+      // second: "numeric",
+      // hour12: true,
+    });
+  };
+
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   return (
@@ -158,7 +182,7 @@ const PhotoMetaData = ({ MetaData }: any) => {
                   {Language === "BN" && "ক্যাপচারের তারিখ :"}
                 </span>
                 {Language === "EN" && "Capture Date :"}{" "}
-                {MetaData?.datetimeOriginal}
+                {formatDateTime(MetaData?.datetimeOriginal)}
               </p>
             </h1>
           </div>
