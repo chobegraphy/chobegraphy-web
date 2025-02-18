@@ -3,8 +3,6 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
-import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import "./Banner.css";
 import BannerImgCard from "./BannerImgCard";
 import PhotoDetails from "./PhotoDetails";
@@ -23,17 +21,17 @@ const Banner = () => {
   // State to store image details (if Redux data is empty)
   const [DetailsData, setDetailsData] = useState(ImgDetailsData);
 
-  // Fetch image details if ImgDetailsData is empty
-  const { data, error, isLoading } = useGetSingleImgDetailsQuery(pictureId, {
-    skip: !pictureId || !ImgDetailsData, // Skip the API call if pictureId or ImgDetailsData is not available
-  });
+  // // Fetch image details if ImgDetailsData is empty
+  // const { data, error, isLoading } = useGetSingleImgDetailsQuery(pictureId, {
+  //   skip: !pictureId || !ImgDetailsData, // Skip the API call if pictureId or ImgDetailsData is not available
+  // });
 
-  useEffect(() => {
-    if (data) {
-      setDetailsData(data); // If data is fetched from the API, set it to the state
-      dispatch(SetImgDetailsData(data));
-    }
-  }, [data]);
+  // useEffect(() => {
+  //   if (data) {
+  //     setDetailsData(data); // If data is fetched from the API, set it to the state
+  //     dispatch(SetImgDetailsData(data));
+  //   }
+  // }, [data]);
 
   useEffect(() => {
     if (ImgDetailsData) {

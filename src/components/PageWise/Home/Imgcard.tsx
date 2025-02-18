@@ -22,8 +22,6 @@ const ImgCard = ({ imgData, i }: any) => {
       error: updateViewCountInitial,
     },
   ] = useIncreaseViewCountMutation();
-  // Debugging: Check imgData in console
-  console.log("imgData:", imgData);
 
   // Ensure imgData exists before using it
   if (!imgData) return null;
@@ -46,11 +44,12 @@ const ImgCard = ({ imgData, i }: any) => {
         id: imgData._id,
       }).unwrap();
       dispatch(SetImgDetailsData(UpdateViewCountResponse?.updatedData));
-      return;
+      // return;
     }
-    dispatch(SetImgDetailsData(imgData));
+
     // Dispatch the image details to the Redux store
   };
+
   return (
     <Link
       onClick={handleClick}

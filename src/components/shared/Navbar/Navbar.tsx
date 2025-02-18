@@ -330,6 +330,10 @@ const Navbar = () => {
               </div>
             </div>
             <CustomButton
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => setIsOpen2(false), 200);
+              }}
               className={` text-2xl  hover:text-3xl my-1 px-0 `}
               path="/"
             >
@@ -338,6 +342,10 @@ const Navbar = () => {
               </p>
             </CustomButton>
             <CustomButton
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => setIsOpen2(false), 200);
+              }}
               className={" hover:text-3xl text-2xl mb-1 px-0 "}
               path="/Gallery"
             >
@@ -346,6 +354,10 @@ const Navbar = () => {
               </p>
             </CustomButton>
             <CustomButton
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => setIsOpen2(false), 200);
+              }}
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
               path="/Team"
             >
@@ -354,6 +366,10 @@ const Navbar = () => {
               </p>
             </CustomButton>
             <CustomButton
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => setIsOpen2(false), 200);
+              }}
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
               path="/Event"
             >
@@ -362,6 +378,10 @@ const Navbar = () => {
               </p>
             </CustomButton>
             <CustomButton
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => setIsOpen2(false), 200);
+              }}
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
               path="/Pages"
             >
@@ -371,6 +391,10 @@ const Navbar = () => {
             </CustomButton>
 
             <CustomButton
+              onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => setIsOpen2(false), 200);
+              }}
               className={" hover:text-3xl px-0 text-2xl mb-1 "}
               path="/About"
             >
