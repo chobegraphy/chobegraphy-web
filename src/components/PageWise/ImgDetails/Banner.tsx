@@ -1,26 +1,16 @@
 "use client";
+
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { AiOutlineCopyrightCircle } from "react-icons/ai";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-import { FaRegHeart } from "react-icons/fa";
-import { FiEye } from "react-icons/fi";
-import { IoPersonCircle } from "react-icons/io5";
-import { MdPublishedWithChanges } from "react-icons/md";
-import { PiShareNetworkBold } from "react-icons/pi";
-import {
-  RiColorFilterFill,
-  RiCustomSize,
-  RiDownloadCloud2Fill,
-} from "react-icons/ri";
-import { TbCopy } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
 import { useIncreaseDownloadCountMutation } from "../../../../Redux/Features/Apis/UpdateDownloadCount/ApiSlice";
 import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import "./Banner.css";
 import BannerImgCard from "./BannerImgCard";
+import PhotoDetails from "./PhotoDetails";
+import PhotoMetaData from "./PhotoMetaData";
 const Banner = () => {
   const pictureId = useParams()?.id;
   console.log(pictureId);
@@ -52,37 +42,6 @@ const Banner = () => {
       setDetailsData(ImgDetailsData); // Set state from Redux if data exists
     }
   }, [ImgDetailsData]);
-  // color copy state ->
-  const [copiedColor, setCopiedColor] = useState("");
-  console.log(ImgDetailsData);
-  // Share function
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: DetailsData?.name || "Image",
-          text:
-            Language === "EN"
-              ? "Check out this amazing image!"
-              : "এই চমৎকার ছবিটি দেখুন!",
-          url: window.location.href,
-        });
-        console.log("Share was successful.");
-      } catch (error) {
-        console.error("Error sharing:", error);
-      }
-    } else {
-      toast.error("Your browser doesn't support sharing.");
-    }
-  };
-
-  // copy color function
-  const copyToClipboard = (hex: string) => {
-    navigator.clipboard.writeText(hex).then(() => {
-      setCopiedColor(hex);
-      setTimeout(() => setCopiedColor(""), 1500); // Reset message after 1.5s
-    });
-  };
 
   // Function to handle image download
   // redux writing
@@ -134,20 +93,6 @@ const Banner = () => {
     }
   };
 
-  // convert time format
-  const formatDateTime = (dateString: any) => {
-    const date = new Date(dateString);
-    return date.toLocaleString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true, // This makes sure to display AM/PM
-    });
-  };
-  console.log(DetailsData);
   return (
     <div className="w-full relative h-full col-span-6">
       {!DetailsData || Object.keys(DetailsData).length === 0 ? (
@@ -169,169 +114,19 @@ const Banner = () => {
               i={DetailsData?._id}
             />
           </div>
-          {/* picture details */}
-          <section className="lg:px-3 py-2 text-light-primary-color dark:text-dark-primary-color">
-            <div className="flex max-md:mt-2 mt-5 justify-between items-center ">
-              <h1 className="font-Righteous max-md:text-2xl text-4xl ">
-                {DetailsData?.name}
-                {/* <span className="font-BanglaHeading">
-              {Language === "BN" && "ছবির নাম"}
-            </span>
-            {Language === "EN" && "Image name"} */}
-              </h1>
-              <div className="text-3xl flex gap-x-5 cursor-pointer ">
-                <FaRegHeart />
-                <PiShareNetworkBold onClick={handleShare} id="share" />
-              </div>
-            </div>
-            <h2 className="font-Space mt-2 max-md:text-base text-xl">
-              {/* <span className="font-BanglaSubHeading">
-                {Language === "BN" &&
-                  "প্রকৃতিতে থাকা, এমনকি প্রকৃতির দৃশ্য দেখা, রাগ, ভয় এবং চাপ কমায় এবং আনন্দদায়ক অনুভূতি বৃদ্ধি করে।"}
-              </span>
-              {Language === "EN" &&
-                "Image nameBeing in nature, or even viewing scenes of nature, reduces anger, fear, and stress and increases pleasant feelings"} */}
 
-              {DetailsData?.description}
-            </h2>
-          </section>
           {/* picture information */}
-          <section className="lg:px-3 text-light-primary-color dark:text-dark-primary-color mt-2">
-            <div className="flex flex-col gap-y-1">
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <MdPublishedWithChanges className="text-xl" />
-                <p>
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "প্রকাশিত হয়েছে :"}
-                  </span>
-                  {Language === "EN" && "Published on :"}
-                  {formatDateTime(DetailsData?.uploadedTime)}
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <AiOutlineCopyrightCircle className="text-xl" />
-                <p className="underline">
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "কপিরাইট তথ্য"}
-                  </span>{" "}
-                  {Language === "EN" && "Copy Right info"}
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <RiCustomSize className="text-xl" />
-                <p className="">
-                  {" "}
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "রেজোলিউশন"}
-                  </span>{" "}
-                  {Language === "EN" && "Resolution"} :{" "}
-                  {DetailsData?.dimensions}
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <TbCopy className="text-xl" />
-                <p className="">
-                  {" "}
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "ছবির সাইজ"}
-                  </span>{" "}
-                  {Language === "EN" && "Picture Size"} :{" "}
-                  {DetailsData?.fileSize}mb
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <IoPersonCircle className="text-xl" />
-                <p className="">
-                  {" "}
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "ছবি প্রণেতা"}
-                  </span>{" "}
-                  {Language === "EN" && "Author"} : {DetailsData?.author}
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <BiSolidCategoryAlt className="text-xl" />
-                <p className="">
-                  {" "}
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "ক্যাটাগরি "}
-                  </span>{" "}
-                  {Language === "EN" && "Categories"} :{" "}
-                  {DetailsData?.collections?.map((item: any) => item)}
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <RiDownloadCloud2Fill className="text-xl" />
-                <p>
-                  {" "}
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "মোট ডাউনলোড"}
-                  </span>{" "}
-                  {Language === "EN" && "Total downloads"} :{" "}
-                  {DetailsData?.download}
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <FiEye className="text-xl" />
-                <p className="">
-                  {" "}
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "মোট ভিউ"}
-                  </span>{" "}
-                  {Language === "EN" && "Total View"} : {DetailsData?.view}
-                </p>
-              </h1>
-              <h1 className="flex items-center gap-x-1 font-Space">
-                <FaRegHeart className="text-xl" />
-                <p className="">
-                  {" "}
-                  <span className="font-BanglaSubHeading">
-                    {Language === "BN" && "মোট রিয়েক্ট"}
-                  </span>{" "}
-                  {Language === "EN" && "Total React"} : {DetailsData?.react}
-                </p>
-              </h1>
-              <div className="">
-                <h1 className="flex items-center gap-x-1 font-Space">
-                  <RiColorFilterFill className="text-xl" />
-                  <p className="">
-                    <span className="font-BanglaSubHeading">
-                      {Language === "BN" && "ছবির মধ্যে যে রং গুলো আছে"}
-                    </span>{" "}
-                    {Language === "EN" && "Colors Presented"} :{" "}
-                  </p>
-                </h1>
-                <div className="flex gap-x-1 ms-6">
-                  {DetailsData?.colors?.map((item: any) => (
-                    <button
-                      key={item?.hex}
-                      onClick={() => {
-                        copyToClipboard(item?.hex);
-                        toast.success(
-                          Language === "EN"
-                            ? "Color copied to clipboard"
-                            : "রং কপি করা হয়েছে",
-                          {
-                            id: "copy-color",
-                          }
-                        );
-                      }}
-                      onKeyDown={(e) =>
-                        e.key === "Enter" && copyToClipboard(item?.hex)
-                      }
-                      style={{ backgroundColor: item?.hex }}
-                      className="w-7 rounded h-7 "
-                      aria-label={`Copy color ${item?.hex}`}
-                    ></button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-          <div
+          <PhotoDetails DetailsData={DetailsData} />
+          <div className="mt-3 h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
+
+          {/* Picture meta data */}
+          <PhotoMetaData MetaData={DetailsData?.exifData} />
+          <div className="mt-3 h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
+          {/* download button */}
+          <button
             id="downloadButton"
             onClick={handleDownload}
-            className="flex items-center absolute lg:right-20 right-3 max-md:scale-90 bottom-48 cursor-pointer"
+            className="flex items-center absolute lg:right-20 right-3 max-md:scale-90 top-80 cursor-pointer"
           >
             <svg
               className="w-20"
@@ -348,7 +143,44 @@ const Banner = () => {
               />
             </svg>
             {/* <span className="font-Righteous text-xl">Download</span> */}
-          </div>
+          </button>
+
+          {/* copyright info */}
+          <h1 className="flex flex-col  gap-x-1 font-Space mt-2">
+            <p className="font-Righteous">
+              <span className="font-BanglaHeading">
+                {Language === "BN" && "কপিরাইট তথ্য"}
+              </span>{" "}
+              {Language === "EN" && "Copy Right info"}
+            </p>
+            <p className="mt-1 text-justify">
+              <span className="font-BanglaSubHeading ">
+                {Language === "BN" && (
+                  <span>
+                    এই ছবি শুধুমাত্র ব্যক্তিগত ও ব্যবসায়িক ডিজাইনে ব্যবহারের
+                    জন্য অনুমোদিত, এক্ষেত্রে ব্যবহারকারীকে উক্ত কাজে এই ছবির
+                    ক্রেডিট{" "}
+                    <span className="font-BanglaHeading underline">
+                      ছবিগ্রাফি
+                    </span>{" "}
+                    কে দিতে হবে । তবে, ছবিটির ফাইল অন্য কোনো ওয়েবসাইট, ক্লাউড
+                    স্টোরেজ, সামাজিক যোগাযোগ মাধ্যম বা অন্য কোনো মাধ্যমে
+                    কোনোভাবেই বিতরণ করা যাবে না।
+                  </span>
+                )}
+              </span>{" "}
+              {Language === "EN" && (
+                <span>
+                  This image is only allowed for personal and commercial design
+                  use, in which case the user must give credit to{" "}
+                  <span className="font-Bayon underline">Chobegraphy</span> for
+                  the use of this image. However, the image file may not be
+                  distributed on any other website, cloud storage, social media,
+                  or any other means.
+                </span>
+              )}
+            </p>
+          </h1>
         </>
       )}
     </div>
