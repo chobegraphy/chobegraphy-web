@@ -2,11 +2,12 @@ import useAuthData from "@/ExportedFunctions/useAuthData";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const SignInForm = () => {
-  const { GoogleSignIn } = useAuthData();
+  const { GoogleSignIn, EmailPasswordLogin } = useAuthData();
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
@@ -25,6 +26,23 @@ const SignInForm = () => {
 
   const onSubmit = (data: any) => {
     setbuttonLoading(true);
+    EmailPasswordLogin(data?.email, data?.password)
+      .then(async (firebaseData) => {
+        console.log(firebaseData);
+
+        toast.success(
+          Language === "BN" ? "সাইন ইন সফল হয়েছে" : "Sign In Successfull"
+        );
+
+        setbuttonLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setbuttonLoading(false);
+        toast.error(error.message.split("Firebase:")[1], {
+          id: "5",
+        });
+      });
   };
   // DONE:GOOGLE LOGIN::>
   const handleGoogleLogin = () => {
@@ -33,10 +51,16 @@ const SignInForm = () => {
       .then((data) => {
         console.log(data);
         setGbuttonLoadin(false);
+        toast.success(
+          Language === "BN" ? "সাইন ইন সফল হয়েছে" : "Sign In Successfull"
+        );
       })
       .catch((error) => {
         console.log(error);
         setGbuttonLoadin(false);
+        toast.error(error.message.split("Firebase:")[1], {
+          id: "4",
+        });
       });
   };
   return (

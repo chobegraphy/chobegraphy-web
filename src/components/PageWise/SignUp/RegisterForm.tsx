@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import "./SignUp.css";
@@ -52,6 +53,11 @@ const RegisterForm = () => {
             "User registered successfully on backend:",
             response.data
           );
+          toast.success(
+            Language === "BN"
+              ? "নতুন ব্যবহারকারী যুক্ত হয়েছে"
+              : "New Users Added Successfully"
+          );
         } catch (error) {
           console.error("Error during backend registration:", error);
         }
@@ -61,6 +67,9 @@ const RegisterForm = () => {
       .catch((error) => {
         console.log(error);
         setbuttonLoading(false);
+        toast.error(error.message.split("Firebase:")[1], {
+          id: "5",
+        });
       });
     console.log(data);
   };
@@ -85,7 +94,11 @@ const RegisterForm = () => {
               headers: { "Content-Type": "application/json" },
             }
           );
-
+          toast.success(
+            Language === "BN"
+              ? "নতুন ব্যবহারকারী যুক্ত হয়েছে"
+              : "New Users Added Successfully"
+          );
           console.log(
             "User registered successfully on backend:",
             response.data
@@ -97,7 +110,9 @@ const RegisterForm = () => {
         setGbuttonLoadin(false);
       })
       .catch((error) => {
-        console.log(error);
+        toast.error(error.message.split("Firebase:")[1], {
+          id: "5",
+        });
         setGbuttonLoadin(false);
       });
   };

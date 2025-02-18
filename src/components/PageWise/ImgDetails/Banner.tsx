@@ -58,7 +58,7 @@ const Banner = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: Language === "EN" ? "Image Name" : "ছবির নাম",
+          title: DetailsData?.name || "Image",
           text:
             Language === "EN"
               ? "Check out this amazing image!"
@@ -70,7 +70,7 @@ const Banner = () => {
         console.error("Error sharing:", error);
       }
     } else {
-      alert("Share API is not supported on this device/browser.");
+      toast.error("Your browser doesn't support sharing.");
     }
   };
 
