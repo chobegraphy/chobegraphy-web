@@ -119,7 +119,7 @@ const Navbar = () => {
         : "light";
       setTheme(systemPreference);
     }
-  }, []);
+  }, [setTheme]);
 
   return (
     <div

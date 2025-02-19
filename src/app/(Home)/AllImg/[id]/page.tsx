@@ -23,7 +23,7 @@ const ImdDetailsPage = () => {
     if (data) {
       dispatch(SetImgDetailsData(data));
     }
-  }, [data]);
+  }, [data, dispatch]);
   // Reset ImgDetailsData when navigating away
   useEffect(() => {
     return () => {

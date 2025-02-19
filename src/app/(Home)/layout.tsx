@@ -14,7 +14,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 0);
   }, []);
   return (
     <Provider store={store}>
