@@ -33,8 +33,8 @@ const ImdDetailsPage = () => {
   return (
     <div>
       {!ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
-        <div className="w-full dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color h-screen">
-          <div className="h-screen  absolute z-50 left-1/2 flex justify-center items-center">
+        <div className="w-full   h-screen">
+          <div className="h-screen dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color w-full   z-50 top-0 bottom-0 flex fixed justify-center items-center">
             <div className="loader">
               <div className="circle"></div>
               <div className="circle"></div>

@@ -1,17 +1,35 @@
+import useAuthData from "@/ExportedFunctions/useAuthData";
 import clsx from "clsx"; // Utility for conditional class names
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { FaRegHeart } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { ImSpinner } from "react-icons/im";
+import { useDispatch, useSelector } from "react-redux";
 import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
+import {
+  usePictureLikeMutation,
+  usePictureUnLikeMutation,
+} from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
-
+import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const ImgCard = ({ imgData, i }: any) => {
+  const { user } = useAuthData();
+  console.log(user?._id);
+  const router = useRouter(); // Initialize router
+
   // Redux dispatch function
   const dispatch = useDispatch();
   const [loadedImg, setLoadedImg] = useState(false);
+  const [likeLoading, setLikeLoading] = useState(false);
+  const LikedPictureData = useSelector(
+    (state: any) => state.StoreLikedPictureData.value
+  );
+  const Language = useSelector((state: any) => state.Language.value);
+  console.log(LikedPictureData);
   // increase view count
   const [
     increaseViewCount,
@@ -22,6 +40,28 @@ const ImgCard = ({ imgData, i }: any) => {
       error: updateViewCountInitial,
     },
   ] = useIncreaseViewCountMutation();
+  const [
+    LikedData,
+    {
+      data: likedData,
+      isLoading: likedLoading,
+      isError: likedError,
+      error: likedInitial,
+    },
+  ] = usePictureLikeMutation();
+  const [
+    UnLikedData,
+    {
+      data: UnlikedData,
+      isLoading: UnlikedLoading,
+      isError: UnlikedError,
+      error: UnlikedInitial,
+    },
+  ] = usePictureUnLikeMutation();
+  // use effect for like unlike loading
+  useEffect(() => {
+    setLikeLoading(likedLoading || UnlikedLoading);
+  }, [likedLoading, UnlikedLoading]);
 
   // Ensure imgData exists before using it
   if (!imgData) return null;
@@ -49,18 +89,45 @@ const ImgCard = ({ imgData, i }: any) => {
 
     // Dispatch the image details to the Redux store
   };
+  const handleLike = async () => {
+    if (!user) {
+      router.push("/SignIn");
+      toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+    }
+    if (imgData?._id) {
+      const LikedResponse = await LikedData({
+        UserId: user?._id,
+        PictureId: imgData._id,
+      }).unwrap();
+      dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
+    }
+  };
+
+  const handleUnlike = async () => {
+    if (!user) {
+      router.push("/SignIn");
+      toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+    }
+    if (imgData?._id) {
+      const UnLikedResponse = await UnLikedData({
+        UserId: user?._id,
+        PictureId: imgData._id,
+      }).unwrap();
+      dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
+    }
+  };
 
   return (
-    <Link
-      onClick={handleClick}
-      href={`/AllImg/${imgData._id}`}
+    <div
       className={clsx(
         i !== 0 && "my-2",
         "block relative overflow-hidden rounded-2xl"
       )}
     >
       {/* Blurred Low-Quality Background */}
-      <div
+      <Link
+        onClick={handleClick}
+        href={`/AllImg/${imgData._id}`}
         style={{
           backgroundImage: `url(${imgData?.encodedUrl})`,
           backgroundSize: "cover",
@@ -86,13 +153,34 @@ const ImgCard = ({ imgData, i }: any) => {
               : "opacity-0"
           )}
         />
-      </div>
+        <div className="rounded-2xl h-full bg-gradient-to-t from-black/10 to-black/0  absolute w-full  bottom-0 p-2 flex items-center justify-between text-sm text-white"></div>
+      </Link>
 
       {/* Overlay for Icons */}
       {loadedImg && (
-        <div className="rounded-2xl max-lg:h-[30px] bg-gradient-to-t from-black/40 to-black/0 h-full absolute w-full bottom-0 p-2 flex items-center justify-between text-sm text-white">
+        <div className="rounded-2xl h-[30px]   absolute  bottom-0 p-2 flex items-center justify-between text-sm text-white">
           <div className="flex items-center gap-x-3 absolute bottom-3 left-3">
-            <FaRegHeart />
+            {likeLoading !== true && (
+              <span>
+                {LikedPictureData.includes(imgData?._id) ? (
+                  <FaHeart
+                    onClick={handleUnlike}
+                    className="text-pink-600 cursor-pointer"
+                  />
+                ) : (
+                  <FaRegHeart onClick={handleLike} className="cursor-pointer" />
+                )}
+              </span>
+            )}
+            {likeLoading === true && (
+              <ImSpinner
+                className={`${
+                  LikedPictureData.includes(imgData?._id)
+                    ? "text-pink-600"
+                    : "text-white"
+                } animate-spin `}
+              />
+            )}
             <p className="font-Space text-xs -ms-2">
               {formatNumber(imgData?.react || 0)}
             </p>
@@ -103,7 +191,7 @@ const ImgCard = ({ imgData, i }: any) => {
           </div>
         </div>
       )}
-    </Link>
+    </div>
   );
 };
 

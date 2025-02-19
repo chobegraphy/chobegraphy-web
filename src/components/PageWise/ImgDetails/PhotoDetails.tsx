@@ -1,9 +1,12 @@
-import { useState } from "react";
+import useAuthData from "@/ExportedFunctions/useAuthData";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-import { FaRegHeart } from "react-icons/fa";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FaMountainSun } from "react-icons/fa6";
 import { FiEye } from "react-icons/fi";
+import { ImSpinner } from "react-icons/im";
 import { IoPersonCircle } from "react-icons/io5";
 import { MdPublishedWithChanges } from "react-icons/md";
 import { PiShareNetworkBold } from "react-icons/pi";
@@ -14,14 +17,28 @@ import {
 } from "react-icons/ri";
 import { TbCopy } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  usePictureLikeMutation,
+  usePictureUnLikeMutation,
+} from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 import { useIncreaseDownloadCountMutation } from "../../../../Redux/Features/Apis/UpdateDownloadCount/ApiSlice";
+import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 
 const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
+  // auth data
+  const { user } = useAuthData();
+  const router = useRouter(); // Initialize router
+
   // states
   const [copiedColor, setCopiedColor] = useState("");
+  const [likeLoading, setLikeLoading] = useState(false);
+
   // redux writing
   const dispatch = useDispatch();
   const Language = useSelector((state: any) => state.Language.value);
+  const LikedPictureData = useSelector(
+    (state: any) => state.StoreLikedPictureData.value
+  );
   //  redux writing download
   const [
     increaseDownloadCount,
@@ -32,6 +49,30 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
       error: updateDownloadCountInitial,
     },
   ] = useIncreaseDownloadCountMutation();
+
+  // redux writing for like
+  const [
+    LikedData,
+    {
+      data: likedData,
+      isLoading: likedLoading,
+      isError: likedError,
+      error: likedInitial,
+    },
+  ] = usePictureLikeMutation();
+  const [
+    UnLikedData,
+    {
+      data: UnlikedData,
+      isLoading: UnlikedLoading,
+      isError: UnlikedError,
+      error: UnlikedInitial,
+    },
+  ] = usePictureUnLikeMutation();
+  // use effect for like unlike loading
+  useEffect(() => {
+    setLikeLoading(likedLoading || UnlikedLoading);
+  }, [likedLoading, UnlikedLoading]);
   // Share function
   const handleShare = async () => {
     if (navigator.share) {
@@ -114,6 +155,36 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
       console.error("Download Error:", error);
     }
   };
+
+  const handleLike = async () => {
+    if (!user) {
+      router.push("/SignIn");
+      toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+    }
+    if (DetailsData?._id) {
+      const LikedResponse = await LikedData({
+        UserId: user?._id,
+        PictureId: DetailsData._id,
+      }).unwrap();
+      dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
+    }
+  };
+
+  const handleUnlike = async () => {
+    if (!user) {
+      router.push("/SignIn");
+      toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+    }
+    if (DetailsData?._id) {
+      const UnLikedResponse = await UnLikedData({
+        UserId: user?._id,
+        PictureId: DetailsData._id,
+      }).unwrap();
+      dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
+    }
+  };
+
+  console.log(DetailsData);
   return (
     <div>
       <section className="lg:px-3  py-2 text-light-primary-color dark:text-dark-primary-color">
@@ -126,7 +197,27 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
                 {Language === "EN" && "Image name"} */}
           </h1>
           <div className="text-3xl flex gap-x-5 cursor-pointer ">
-            <FaRegHeart />
+            {likeLoading !== true && (
+              <span>
+                {LikedPictureData.includes(DetailsData?._id) ? (
+                  <FaHeart
+                    onClick={handleUnlike}
+                    className="text-pink-600 cursor-pointer"
+                  />
+                ) : (
+                  <FaRegHeart onClick={handleLike} className="cursor-pointer" />
+                )}
+              </span>
+            )}
+            {likeLoading === true && (
+              <ImSpinner
+                className={`${
+                  LikedPictureData.includes(DetailsData?._id)
+                    ? "text-pink-600"
+                    : "text-white"
+                } animate-spin `}
+              />
+            )}
             <PiShareNetworkBold onClick={handleShare} id="share" />
           </div>
         </div>

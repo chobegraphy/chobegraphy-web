@@ -2,11 +2,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const CustomButton = ({ children, className, path }: any) => {
+const CustomButton = ({ children, className, path, onClick }: any) => {
   const classes = " lg:px-4 text-md  font-Bayon transform duration-500";
   const pathName = usePathname();
   return (
     <Link
+      onClick={onClick ? onClick : () => {}}
       href={path}
       className={`${classes} ${
         pathName === path
