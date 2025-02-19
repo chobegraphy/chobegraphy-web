@@ -160,6 +160,7 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
     if (!user) {
       router.push("/SignIn");
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+      return;
     }
     if (DetailsData?._id) {
       const LikedResponse = await LikedData({
@@ -174,6 +175,7 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
     if (!user) {
       router.push("/SignIn");
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+      return;
     }
     if (DetailsData?._id) {
       const UnLikedResponse = await UnLikedData({

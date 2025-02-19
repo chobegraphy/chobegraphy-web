@@ -93,6 +93,7 @@ const ImgCard = ({ imgData, i }: any) => {
     if (!user) {
       router.push("/SignIn");
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+      return;
     }
     if (imgData?._id) {
       const LikedResponse = await LikedData({
@@ -107,6 +108,7 @@ const ImgCard = ({ imgData, i }: any) => {
     if (!user) {
       router.push("/SignIn");
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
+      return;
     }
     if (imgData?._id) {
       const UnLikedResponse = await UnLikedData({
