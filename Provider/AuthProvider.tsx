@@ -20,6 +20,9 @@ import {
 } from "react";
 
 import { BaseApiUrl } from "@/ExportedFunctions/BaseApiUrl";
+import { useDispatch } from "react-redux";
+import { useGetPictureLikeDataQuery } from "../Redux/Features/Apis/PictureLike/ApiSlice";
+import { SetPictureLikeIds } from "../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 import app from "../src/Firebase/Firebase.config";
 
 interface AuthProviderDataProps {
@@ -73,7 +76,25 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
   });
   const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(true);
+  // redux writing for picture like data
+  const dispatch = useDispatch();
+  const {
+    data: PictureLikedData,
+    error: PictureLikedError,
+    isLoading: PictureLikedLoading,
+  } = useGetPictureLikeDataQuery(
+    { id: user?._id },
+    {
+      skip: !user || Object.keys(user).length === 0,
+    }
+  );
 
+  // use effect for picture liked data
+  useEffect(() => {
+    if (PictureLikedData) {
+      dispatch(SetPictureLikeIds(PictureLikedData?.likedPictures));
+    }
+  }, [PictureLikedData]);
   // Sign up with email and password (no backend post)
   const EmailPassWordSignUp = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -169,7 +190,7 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
       return () => unSub();
     }
   }, []);
-
+  console.log(user);
   return (
     <AuthContext.Provider
       value={{

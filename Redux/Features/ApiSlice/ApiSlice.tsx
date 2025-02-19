@@ -8,6 +8,9 @@ export const apiSlice = createApi({
     "Suggestions",
     "UpdateDownloadCount",
     "IncreaseViewCount",
+    "PictureLikeData",
+    "PictureLike",
+    "PictureUnLike",
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://chobegraphy-server.vercel.app/api/",
