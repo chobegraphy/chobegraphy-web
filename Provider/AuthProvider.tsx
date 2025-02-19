@@ -34,8 +34,6 @@ interface LanguageState {
 }
 
 interface AuthContextData {
-  OverAllLanguage: LanguageState;
-  setOverAllLanguage: (language: LanguageState) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
   EmailPassWordSignUp: (email: string, password: string) => Promise<any>;
@@ -50,8 +48,6 @@ interface AuthContextData {
 }
 
 const defaultValue: AuthContextData = {
-  OverAllLanguage: { language: "English" },
-  setOverAllLanguage: () => {},
   open: false,
   setOpen: () => {},
   EmailPassWordSignUp: () => Promise.resolve(),
@@ -71,9 +67,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }: AuthProviderDataProps) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
-  const [OverAllLanguage, setOverAllLanguage] = useState<LanguageState>({
-    language: "English",
-  });
+
   const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(true);
   // redux writing for picture like data
@@ -194,8 +188,6 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
   return (
     <AuthContext.Provider
       value={{
-        OverAllLanguage,
-        setOverAllLanguage,
         open,
         setOpen,
         EmailPasswordLogin,
