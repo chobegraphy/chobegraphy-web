@@ -1,7 +1,6 @@
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import clsx from "clsx"; // Utility for conditional class names
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -122,8 +121,10 @@ const ImgCard = ({ imgData, i }: any) => {
       )}
     >
       {/* Blurred Low-Quality Background */}
-      <Link
-        href={`/AllImg/${imgData._id}`}
+      <button
+        onClick={() => {
+          router.push(`/AllImg/${imgData._id}`);
+        }}
         style={{
           backgroundImage: `url(${imgData?.encodedUrl})`,
           backgroundSize: "cover",
@@ -150,7 +151,7 @@ const ImgCard = ({ imgData, i }: any) => {
           )}
         />
         <div className="rounded-2xl h-full bg-gradient-to-t from-black/10 to-black/0  absolute w-full  bottom-0 p-2 flex items-center justify-between text-sm text-white"></div>
-      </Link>
+      </button>
 
       {/* Overlay for Icons */}
       {loadedImg && (
