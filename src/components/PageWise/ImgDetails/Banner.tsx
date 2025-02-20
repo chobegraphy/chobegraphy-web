@@ -8,7 +8,7 @@ import BannerImgCard from "./BannerImgCard";
 import PhotoDetails from "./PhotoDetails";
 import PhotoMetaData from "./PhotoMetaData";
 const Banner = () => {
-  const pictureId = useParams()?.id;
+  const pictureId = useParams()?.ImgDetails;
   console.log(pictureId);
   // redux writing
   const dispatch = useDispatch();

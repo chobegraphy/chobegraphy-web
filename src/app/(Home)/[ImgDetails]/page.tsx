@@ -4,12 +4,12 @@ import RelatedImages from "@/components/PageWise/ImgDetails/RelatedImages";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useIncreaseViewCountMutation } from "../../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
-import { useGetSingleImgDetailsQuery } from "../../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
-import { SetImgDetailsData } from "../../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
+import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
+import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
+import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 
 const ImdDetailsPage = () => {
-  const pictureId = useParams()?.id;
+  const pictureId = useParams()?.ImgDetails;
   const dispatch = useDispatch();
   const pathName = usePathname();
   // imgDetailsData
