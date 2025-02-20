@@ -78,6 +78,8 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
   useEffect(() => {
     if (pathName !== "/ImgDetails") {
       dispatch(SetImgDetailsId(""));
+
+      typeof window !== "undefined" && localStorage.removeItem("ImgDetailsId");
     }
   }, [pathName]);
   const {
