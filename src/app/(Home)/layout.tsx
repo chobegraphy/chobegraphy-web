@@ -12,10 +12,13 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const pathName = usePathname();
   useEffect(() => {
+    if (!pathName.includes("AllImg")) {
+      typeof window !== "undefined" && localStorage.removeItem(`viewed`);
+    }
     setTimeout(() => {
       setLoading(false);
     }, 0);
-  }, []);
+  }, [pathName]);
   return (
     <Provider store={store}>
       <AuthProvider>

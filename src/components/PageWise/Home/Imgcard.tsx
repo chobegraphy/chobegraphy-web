@@ -9,7 +9,6 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
 import {
   usePictureLikeMutation,
   usePictureUnLikeMutation,
@@ -19,7 +18,6 @@ import {
   usePictureLikeCountIncreaseMutation,
 } from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
 import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
-import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const ImgCard = ({ imgData, i }: any) => {
   const { user } = useAuthData();
@@ -37,16 +35,7 @@ const ImgCard = ({ imgData, i }: any) => {
   const { data, error, isLoading, refetch } = useGetTopPicturesQuery([]);
 
   console.log(LikedPictureData);
-  // increase view count
-  const [
-    increaseViewCount,
-    {
-      data: updateViewCountData,
-      isLoading: updateViewCountLoading,
-      isError: updateViewCountError,
-      error: updateViewCountInitial,
-    },
-  ] = useIncreaseViewCountMutation();
+
   const [
     LikedData,
     {
@@ -86,18 +75,7 @@ const ImgCard = ({ imgData, i }: any) => {
     if (num >= 1_000) return (num / 1_000).toFixed(1) + "k";
     return num.toString();
   };
-  const handleClick = async () => {
-    // Trigger the view count update API when the image is clicked
-    if (imgData?._id) {
-      const UpdateViewCountResponse = await increaseViewCount({
-        id: imgData._id,
-      }).unwrap();
-      dispatch(SetImgDetailsData(UpdateViewCountResponse?.updatedData));
-      // return;
-    }
 
-    // Dispatch the image details to the Redux store
-  };
   const handleLike = async () => {
     if (!user) {
       router.push("/SignIn");
@@ -145,7 +123,6 @@ const ImgCard = ({ imgData, i }: any) => {
     >
       {/* Blurred Low-Quality Background */}
       <Link
-        onClick={handleClick}
         href={`/AllImg/${imgData._id}`}
         style={{
           backgroundImage: `url(${imgData?.encodedUrl})`,

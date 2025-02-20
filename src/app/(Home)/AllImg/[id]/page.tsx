@@ -4,6 +4,7 @@ import RelatedImages from "@/components/PageWise/ImgDetails/RelatedImages";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useIncreaseViewCountMutation } from "../../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
 import { useGetSingleImgDetailsQuery } from "../../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
 import { SetImgDetailsData } from "../../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 
@@ -15,6 +16,16 @@ const ImdDetailsPage = () => {
   const ImgDetailsData = useSelector(
     (state: any) => state.StoreImgDetailsData.value
   );
+  // increase view count
+  const [
+    increaseViewCount,
+    {
+      data: updateViewCountData,
+      isLoading: updateViewCountLoading,
+      isError: updateViewCountError,
+      error: updateViewCountInitial,
+    },
+  ] = useIncreaseViewCountMutation();
   // Fetch image details if ImgDetailsData is empty
   const { data, error, isLoading } = useGetSingleImgDetailsQuery(pictureId, {
     skip: !pictureId || !ImgDetailsData, // Skip the API call if pictureId or ImgDetailsData is not available
@@ -30,6 +41,24 @@ const ImdDetailsPage = () => {
       dispatch(SetImgDetailsData({})); // Clear the data on unmount or navigation
     };
   }, [pathName, dispatch]);
+
+  const updateViewCount = async () => {
+    if (pictureId) {
+      const UpdateViewCountResponse = await increaseViewCount({
+        id: pictureId,
+      }).unwrap();
+      console.log(UpdateViewCountResponse);
+      dispatch(SetImgDetailsData(UpdateViewCountResponse?.updatedData));
+    }
+  };
+  useEffect(() => {
+    const hasViewed =
+      typeof window !== "undefined" && localStorage.getItem(`viewed`);
+    if (!hasViewed && typeof window !== "undefined" && pictureId) {
+      updateViewCount();
+      localStorage.setItem(`viewed`, pictureId.toString());
+    }
+  }, [pictureId]);
   return (
     <div>
       {!ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
