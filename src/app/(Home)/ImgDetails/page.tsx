@@ -1,7 +1,7 @@
 "use client";
 import Banner from "@/components/PageWise/ImgDetails/Banner";
 import RelatedImages from "@/components/PageWise/ImgDetails/RelatedImages";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
@@ -9,7 +9,7 @@ import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/Sin
 import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 
 const ImdDetailsPage = () => {
-  const pictureId = useParams()?.ImgDetails;
+  const pictureId = useSelector((state: any) => state.StoreImgDetailsId.value);
   const dispatch = useDispatch();
   const pathName = usePathname();
   // imgDetailsData

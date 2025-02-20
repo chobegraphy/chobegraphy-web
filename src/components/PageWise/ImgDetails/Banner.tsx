@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Banner.css";
@@ -8,7 +7,7 @@ import BannerImgCard from "./BannerImgCard";
 import PhotoDetails from "./PhotoDetails";
 import PhotoMetaData from "./PhotoMetaData";
 const Banner = () => {
-  const pictureId = useParams()?.ImgDetails;
+  const pictureId = useSelector((state: any) => state.StoreImgDetailsId.value);
   console.log(pictureId);
   // redux writing
   const dispatch = useDispatch();

@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./Features/ApiSlice/ApiSlice";
 import LanguageReducer from "./Features/Language/Language";
 import StoreImgDetailsData from "./Features/StoreImgDetailsData/StoreImgDetailsData";
+import StoreImgDetailsId from "./Features/StoreImgDetailsId/StoreImgDetailsId";
 import StoreLikedPictureData from "./Features/StoreLikedPictureData/StoreLikedPictureData";
 export const store = configureStore({
   reducer: {
     Language: LanguageReducer,
     StoreImgDetailsData: StoreImgDetailsData,
     StoreLikedPictureData: StoreLikedPictureData,
+    StoreImgDetailsId: StoreImgDetailsId,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

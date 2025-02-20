@@ -18,6 +18,7 @@ import {
   usePictureLikeCountIncreaseMutation,
 } from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
 import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
+import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const ImgCard = ({ imgData, i }: any) => {
   const { user } = useAuthData();
@@ -123,7 +124,8 @@ const ImgCard = ({ imgData, i }: any) => {
     >
       {/* Blurred Low-Quality Background */}
       <Link
-        href={`/${imgData._id}`}
+        href={`/ImgDetails`}
+        onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
         style={{
           backgroundImage: `url(${imgData?.encodedUrl})`,
           backgroundSize: "cover",
