@@ -1,3 +1,4 @@
+"use client";
 import DistrictGallery from "@/components/PageWise/Home/DistrictGallery";
 import Featured from "@/components/PageWise/Home/Featured";
 import Hero from "@/components/PageWise/Home/Hero";

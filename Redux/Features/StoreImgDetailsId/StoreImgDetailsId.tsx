@@ -13,6 +13,8 @@ export const StoreImgDetailsId = createSlice({
   initialState,
   reducers: {
     SetImgDetailsId: (state, action) => {
+      typeof window !== "undefined" &&
+        localStorage.setItem("ImgDetailsId", action.payload);
       state.value = action.payload;
     },
   },

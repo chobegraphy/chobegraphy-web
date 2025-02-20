@@ -12,7 +12,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const pathName = usePathname();
   useEffect(() => {
-    if (!pathName.includes("AllImg")) {
+    if (pathName !== "/ImgDetails") {
       typeof window !== "undefined" && localStorage.removeItem(`viewed`);
     }
     setTimeout(() => {

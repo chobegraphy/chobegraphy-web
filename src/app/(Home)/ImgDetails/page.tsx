@@ -7,9 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
 import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
 import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
+import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 
 const ImdDetailsPage = () => {
   const pictureId = useSelector((state: any) => state.StoreImgDetailsId.value);
+  useEffect(() => {
+    const pictureId =
+      typeof window !== "undefined" && localStorage.getItem("ImgDetailsId");
+    dispatch(SetImgDetailsId(pictureId));
+  }, []);
   const dispatch = useDispatch();
   const pathName = usePathname();
   // imgDetailsData
@@ -28,7 +34,7 @@ const ImdDetailsPage = () => {
   ] = useIncreaseViewCountMutation();
   // Fetch image details if ImgDetailsData is empty
   const { data, error, isLoading } = useGetSingleImgDetailsQuery(pictureId, {
-    skip: !pictureId || !ImgDetailsData, // Skip the API call if pictureId or ImgDetailsData is not available
+    skip: !pictureId, // Skip the API call if pictureId or ImgDetailsData is not available
   });
   useEffect(() => {
     if (data) {
@@ -59,6 +65,7 @@ const ImdDetailsPage = () => {
       localStorage.setItem(`viewed`, pictureId.toString());
     }
   }, [pictureId]);
+
   return (
     <div>
       {!ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (

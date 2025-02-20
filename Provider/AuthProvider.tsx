@@ -20,8 +20,10 @@ import {
 } from "react";
 
 import { BaseApiUrl } from "@/ExportedFunctions/BaseApiUrl";
+import { usePathname } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { useGetPictureLikeDataQuery } from "../Redux/Features/Apis/PictureLike/ApiSlice";
+import { SetImgDetailsId } from "../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 import app from "../src/Firebase/Firebase.config";
 
@@ -67,11 +69,17 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }: AuthProviderDataProps) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
-
+  const pathName = usePathname();
   const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(true);
   // redux writing for picture like data
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (pathName !== "/ImgDetails") {
+      dispatch(SetImgDetailsId(""));
+    }
+  }, [pathName]);
   const {
     data: PictureLikedData,
     error: PictureLikedError,
