@@ -16,4 +16,5 @@ export const SingleImgDetailsApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetSingleImgDetailsQuery } = SingleImgDetailsApiSlice;
+export const { useGetSingleImgDetailsQuery, useLazyGetSingleImgDetailsQuery } =
+  SingleImgDetailsApiSlice;

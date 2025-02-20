@@ -14,6 +14,11 @@ import {
   usePictureLikeMutation,
   usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
+import {
+  usePictureLikeCountDecreaseMutation,
+  usePictureLikeCountIncreaseMutation,
+} from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
+import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
 import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const ImgCard = ({ imgData, i }: any) => {
@@ -29,6 +34,8 @@ const ImgCard = ({ imgData, i }: any) => {
     (state: any) => state.StoreLikedPictureData.value
   );
   const Language = useSelector((state: any) => state.Language.value);
+  const { data, error, isLoading, refetch } = useGetTopPicturesQuery([]);
+
   console.log(LikedPictureData);
   // increase view count
   const [
@@ -58,6 +65,8 @@ const ImgCard = ({ imgData, i }: any) => {
       error: UnlikedInitial,
     },
   ] = usePictureUnLikeMutation();
+  const [LikedCountData] = usePictureLikeCountIncreaseMutation();
+  const [UnLikedCountData] = usePictureLikeCountDecreaseMutation();
   // use effect for like unlike loading
   useEffect(() => {
     setLikeLoading(likedLoading || UnlikedLoading);
@@ -100,6 +109,10 @@ const ImgCard = ({ imgData, i }: any) => {
         UserId: user?._id,
         PictureId: imgData._id,
       }).unwrap();
+      LikedCountData({
+        PictureId: imgData._id,
+      }).unwrap();
+      refetch();
       dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
     }
   };
@@ -115,6 +128,10 @@ const ImgCard = ({ imgData, i }: any) => {
         UserId: user?._id,
         PictureId: imgData._id,
       }).unwrap();
+      UnLikedCountData({
+        PictureId: imgData._id,
+      }).unwrap();
+      refetch();
       dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
     }
   };

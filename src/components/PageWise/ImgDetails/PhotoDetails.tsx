@@ -1,6 +1,6 @@
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -21,7 +21,13 @@ import {
   usePictureLikeMutation,
   usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
+import {
+  usePictureLikeCountDecreaseMutation,
+  usePictureLikeCountIncreaseMutation,
+} from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
+import { useLazyGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
 import { useIncreaseDownloadCountMutation } from "../../../../Redux/Features/Apis/UpdateDownloadCount/ApiSlice";
+import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 
 const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
@@ -39,6 +45,8 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
   const LikedPictureData = useSelector(
     (state: any) => state.StoreLikedPictureData.value
   );
+  const [fetchImageDetails, { data, error, isLoading }] =
+    useLazyGetSingleImgDetailsQuery();
   //  redux writing download
   const [
     increaseDownloadCount,
@@ -69,10 +77,9 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
       error: UnlikedInitial,
     },
   ] = usePictureUnLikeMutation();
-  // use effect for like unlike loading
-  useEffect(() => {
-    setLikeLoading(likedLoading || UnlikedLoading);
-  }, [likedLoading, UnlikedLoading]);
+  const [LikedCountData] = usePictureLikeCountIncreaseMutation();
+  const [UnLikedCountData] = usePictureLikeCountDecreaseMutation();
+
   // Share function
   const handleShare = async () => {
     if (navigator.share) {
@@ -163,11 +170,19 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
       return;
     }
     if (DetailsData?._id) {
+      setLikeLoading(true);
       const LikedResponse = await LikedData({
         UserId: user?._id,
         PictureId: DetailsData._id,
       }).unwrap();
+      const liked = await LikedCountData({
+        PictureId: DetailsData._id,
+      }).unwrap();
+      const fetchData = await fetchImageDetails(DetailsData._id).unwrap();
+      console.log(liked);
+      dispatch(SetImgDetailsData(fetchData));
       dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
+      setLikeLoading(false);
     }
   };
 
@@ -178,11 +193,19 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
       return;
     }
     if (DetailsData?._id) {
+      setLikeLoading(true);
       const UnLikedResponse = await UnLikedData({
         UserId: user?._id,
         PictureId: DetailsData._id,
       }).unwrap();
+      const unliked = await UnLikedCountData({
+        PictureId: DetailsData._id,
+      }).unwrap();
+      const fetchData = await fetchImageDetails(DetailsData._id).unwrap();
+      // dispatch(SetImgDetailsData(fetchData));
+      console.log(fetchData);
       dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
+      setLikeLoading(false);
     }
   };
 
