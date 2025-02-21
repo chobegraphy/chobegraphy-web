@@ -385,11 +385,10 @@ const DistrictGallery = () => {
   };
   const [hovered, SetHovered] = useState<number | null>(null);
   const ItemsPerPage = 6;
-  const [currentPage, setCurrentPage] = useState(0);
+
   const navigationPrevRef = React.useRef<HTMLButtonElement | null>(null);
   const navigationNextRef = React.useRef<HTMLButtonElement | null>(null);
-  const totalItemsPage = Math.ceil(64 / ItemsPerPage);
-  const pageNumber = [...Array(totalItemsPage).keys()];
+
   return (
     <div className="xl:px-16 sm:px-10 px-5 py-20 ">
       <HeadingAndSubHeading
@@ -412,7 +411,7 @@ const DistrictGallery = () => {
         />
       </div>
       {/* card */}
-      <div className="grid max-xl:grid-cols-4 grid-cols-5 mt-3 max-lg:grid-cols-3 max-md:grid-cols-1  transform duration-300 max-md:hidden">
+      <div className="grid max-xl:grid-cols-4 grid-cols-4 mt-3 max-lg:grid-cols-3 max-md:grid-cols-1 gap-2 transform duration-300 max-md:hidden">
         {showAllDistrict ? (
           <>
             {filteredDistricts?.map((x, i) => (
@@ -422,7 +421,7 @@ const DistrictGallery = () => {
                 onMouseOver={() => SetHovered(i)}
                 onMouseLeave={() => SetHovered(null)}
                 onFocus={() => SetHovered(i)}
-                className={`border dark:border-light-primary-color h-[200px] max-md:h-[150px]  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full`}
+                className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full text-dark-primary-color `}
               >
                 <Image
                   src={x?.photo}
@@ -433,26 +432,31 @@ const DistrictGallery = () => {
                   width={500}
                   height={500}
                   loading="lazy"
-                />
+                />{" "}
+                <div className="rounded-2xl h-full bg-gradient-to-t from-black/70 via-black/20 to-black/0  absolute w-full z-30  -bottom-5 p-2 flex items-center justify-between text-sm text-white"></div>
                 <div className={`  absolute w-full h-full top-0 z-40 `}>
-                  <h2 className="absolute right-0 top-0 px-2 dark:bg-light-primary-color font-Space text-sm bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color">
-                    <span className="font-BanglaHeading">
-                      {Language === "BN" && convertToBangla(x?.photoCount)}
-                    </span>{" "}
-                    {Language === "EN" && x?.photoCount}
-                    <span className="font-BanglaSubHeading text-base">
-                      {Language === "BN" && <>টি ছবি</>}
-                      <span className="font-Space text-sm">
-                        {" "}
-                        {Language === "EN" && <>Img</>}
+                  <h1 className="font-BanglaHeading  absolute px-4 p-2   bottom-2 left-0 right-0">
+                    {Language === "BN" && <>{x?.name?.bangla}</>}
+                    <span className="font-Righteous">
+                      {Language === "EN" && <>{x?.name?.english}</>}
+                    </span>
+                    <span>
+                      {" "}
+                      -{" "}
+                      <span className="font-BanglaHeading">
+                        {Language === "BN" && convertToBangla(x?.photoCount)}
+                      </span>{" "}
+                      <span className="font-Righteous">
+                        {Language === "EN" && x?.photoCount}
+                      </span>
+                      <span className="font-BanglaSubHeading text-base">
+                        {Language === "BN" && <>টি ছবি</>}
+                        <span className="font-Righteous text-sm">
+                          {" "}
+                          {Language === "EN" && <>Img</>}
+                        </span>
                       </span>
                     </span>
-                  </h2>
-                  <h1 className="font-BanglaHeading  absolute px-4 p-2  dark:bg-light-primary-color dark:text-dark-primary-color bottom-0 bg-dark-primary-color text-light-primary-color left-0">
-                    {Language === "BN" && <>{x?.name?.bangla}</>}
-                  </h1>
-                  <h1 className="font-Space uppercase text-sm  absolute px-4 p-2 bg-dark-primary-color text-light-primary-color dark:bg-light-primary-color dark:text-dark-primary-color bottom-0 left-0">
-                    {Language === "EN" && <>{x?.name?.english}</>}
                   </h1>
                 </div>
               </button>
@@ -467,7 +471,7 @@ const DistrictGallery = () => {
                 onMouseOver={() => SetHovered(i)}
                 onMouseLeave={() => SetHovered(null)}
                 onFocus={() => SetHovered(i)}
-                className={`border dark:border-light-primary-color h-[200px] max-md:h-[150px]  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full`}
+                className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full text-dark-primary-color `}
               >
                 <Image
                   src={x?.photo}
@@ -478,26 +482,31 @@ const DistrictGallery = () => {
                   width={500}
                   height={500}
                   loading="lazy"
-                />
+                />{" "}
+                <div className="rounded-2xl h-full bg-gradient-to-t from-black/70 via-black/20 to-black/0  absolute w-full z-30  -bottom-5 p-2 flex items-center justify-between text-sm text-white"></div>
                 <div className={`  absolute w-full h-full top-0 z-40 `}>
-                  <h2 className="absolute right-0 top-0 px-2 dark:bg-light-primary-color font-Space text-sm bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color">
-                    <span className="font-BanglaHeading">
-                      {Language === "BN" && convertToBangla(x?.photoCount)}
-                    </span>{" "}
-                    {Language === "EN" && x?.photoCount}
-                    <span className="font-BanglaSubHeading text-base">
-                      {Language === "BN" && <>টি ছবি</>}
-                      <span className="font-Space text-sm">
-                        {" "}
-                        {Language === "EN" && <>Img</>}
+                  <h1 className="font-BanglaHeading  absolute px-4 p-2   bottom-2 left-0 right-0">
+                    {Language === "BN" && <>{x?.name?.bangla}</>}
+                    <span className="font-Righteous">
+                      {Language === "EN" && <>{x?.name?.english}</>}
+                    </span>
+                    <span>
+                      {" "}
+                      -{" "}
+                      <span className="font-BanglaHeading">
+                        {Language === "BN" && convertToBangla(x?.photoCount)}
+                      </span>{" "}
+                      <span className="font-Righteous">
+                        {Language === "EN" && x?.photoCount}
+                      </span>
+                      <span className="font-BanglaSubHeading text-base">
+                        {Language === "BN" && <>টি ছবি</>}
+                        <span className="font-Righteous text-sm">
+                          {" "}
+                          {Language === "EN" && <>Img</>}
+                        </span>
                       </span>
                     </span>
-                  </h2>
-                  <h1 className="font-BanglaHeading  absolute px-4 p-2  dark:bg-light-primary-color dark:text-dark-primary-color bottom-0 bg-dark-primary-color text-light-primary-color left-0">
-                    {Language === "BN" && <>{x?.name?.bangla}</>}
-                  </h1>
-                  <h1 className="font-Space uppercase text-sm  absolute px-4 p-2 bg-dark-primary-color text-light-primary-color dark:bg-light-primary-color dark:text-dark-primary-color bottom-0 left-0">
-                    {Language === "EN" && <>{x?.name?.english}</>}
                   </h1>
                 </div>
               </button>
@@ -510,7 +519,7 @@ const DistrictGallery = () => {
             onClick={() => {
               setShowAllDistrict(true);
             }}
-            className={`dark:bg-dark-primary-color h-[200px] bg-light-primary-color max-md:h-full max-md:py-2  max-md:mx-auto max-md:px-4 max-md:rounded max-md:mt-5 max-md:w-fit max-md:rounded-2xl max-md:overflow-hidden flex justify-center items-center text-dark-primary-color dark:text-light-primary-color text-xl font-Righteous cursor-pointer relative w-full`}
+            className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer bg-light-primary-color text-dark-primary-color dark:bg-dark-primary-color dark:text-light-primary-color  max-md:overflow-hidden overflow-hidden relative w-full`}
           >
             {Language === "EN" && <h1>View All District</h1>}
             {Language === "BN" && (
@@ -547,38 +556,49 @@ const DistrictGallery = () => {
           modules={[Autoplay, EffectFade, Pagination, Navigation]}
           className="mySwiper  max-md:h-[250px]"
         >
-          {filteredDistricts?.map((x) => (
+          {filteredDistricts?.map((x, i) => (
             <SwiperSlide
               key={x?.name?.english}
-              className="h-[200px]  rounded-3xl max-md:h-[150px]  overflow-hidden relative w-full"
+              onMouseEnter={() => SetHovered(i)}
+              onMouseOver={() => SetHovered(i)}
+              onMouseLeave={() => SetHovered(null)}
+              onFocus={() => SetHovered(i)}
+              className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full text-dark-primary-color `}
             >
               <Image
                 src={x?.photo}
                 alt="h"
-                className="w-full rounded h-full object-cover"
+                className={`${
+                  hovered === i ? "scale-110" : "scale-100"
+                } w-full h-full object-cover transform duration-300`}
                 width={500}
                 height={500}
                 loading="lazy"
-              />
+              />{" "}
+              <div className="rounded-2xl h-full bg-gradient-to-t from-black/70 via-black/20 to-black/0  absolute w-full z-30  -bottom-5 p-2 flex items-center justify-between text-sm text-white"></div>
               <div className={`  absolute w-full h-full top-0 z-40 `}>
-                <h2 className="absolute right-3 top-3 rounded px-2 dark:bg-light-primary-color font-Space text-sm bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color">
-                  <span className="font-BanglaHeading">
-                    {Language === "BN" && convertToBangla(x?.photoCount)}
-                  </span>{" "}
-                  {Language === "EN" && x?.photoCount}
-                  <span className="font-BanglaSubHeading text-base">
-                    {Language === "BN" && <>টি ছবি</>}
-                    <span className="font-Space text-sm">
-                      {" "}
-                      {Language === "EN" && <>Img</>}
+                <h1 className="font-BanglaHeading  absolute px-4 p-2   bottom-2 left-0 right-0">
+                  {Language === "BN" && <>{x?.name?.bangla}</>}
+                  <span className="font-Righteous">
+                    {Language === "EN" && <>{x?.name?.english}</>}
+                  </span>
+                  <span>
+                    {" "}
+                    -{" "}
+                    <span className="font-BanglaHeading">
+                      {Language === "BN" && convertToBangla(x?.photoCount)}
+                    </span>{" "}
+                    <span className="font-Righteous">
+                      {Language === "EN" && x?.photoCount}
+                    </span>
+                    <span className="font-BanglaSubHeading text-base">
+                      {Language === "BN" && <>টি ছবি</>}
+                      <span className="font-Righteous text-sm">
+                        {" "}
+                        {Language === "EN" && <>Img</>}
+                      </span>
                     </span>
                   </span>
-                </h2>
-                <h1 className="font-BanglaHeading  absolute rounded px-4 p-2  dark:bg-light-primary-color dark:text-dark-primary-color bottom-3 bg-dark-primary-color text-light-primary-color left-3">
-                  {Language === "BN" && <>{x?.name?.bangla}</>}
-                </h1>
-                <h1 className="font-Space uppercase  rounded absolute px-4 p-2 bg-dark-primary-color text-light-primary-color dark:bg-light-primary-color dark:text-dark-primary-color bottom-3 left-3">
-                  {Language === "EN" && <>{x?.name?.english}</>}
                 </h1>
               </div>
             </SwiperSlide>
