@@ -403,130 +403,126 @@ const DistrictGallery = () => {
           placeholder={
             Language === "BN" ? "জেলা অনুসন্ধান করুন" : "Search district"
           }
-          className={` max-md:my-2 my-4 max-md:mb-3 mx-auto max-md:w-[200px] p-2 px-2  font-Space text-center  outline-none rounded-lg border-2 border-light-primary-color ${
-            Language === "BN" && "font-BanglaSubHeading"
-          }`}
+          className={` max-md:my-2 my-4 max-md:mb-3 mx-auto max-md:w-[200px] p-2 px-2  font-Space text-center  outline-none rounded-lg border-2 border-light-primary-color ${Language === "BN" && "font-BanglaSubHeading"
+            }`}
           type="text"
           onChange={(e) => handleSearch(e.target.value)}
         />
       </div>
       {/* card */}
-      <div className="grid max-xl:grid-cols-4 grid-cols-4 mt-3 max-lg:grid-cols-3 max-md:grid-cols-1 gap-2 transform duration-300 max-md:hidden">
-        {showAllDistrict ? (
-          <>
-            {filteredDistricts?.map((x, i) => (
-              <button
-                key={x?.name?.english}
-                onMouseEnter={() => SetHovered(i)}
-                onMouseOver={() => SetHovered(i)}
-                onMouseLeave={() => SetHovered(null)}
-                onFocus={() => SetHovered(i)}
-                className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full text-dark-primary-color `}
-              >
-                <Image
-                  src={x?.photo}
-                  alt="h"
-                  className={`${
-                    hovered === i ? "scale-110" : "scale-100"
-                  } w-full h-full object-cover transform duration-300`}
-                  width={500}
-                  height={500}
-                  loading="lazy"
-                />{" "}
-                <div className="rounded-2xl h-full bg-gradient-to-t from-black/70 via-black/20 to-black/0  absolute w-full z-30  -bottom-5 p-2 flex items-center justify-between text-sm text-white"></div>
-                <div className={`  absolute w-full h-full top-0 z-40 `}>
-                  <h1 className="font-BanglaHeading  absolute px-4 p-2   bottom-2 left-0 right-0">
-                    {Language === "BN" && <>{x?.name?.bangla}</>}
-                    <span className="font-Righteous">
-                      {Language === "EN" && <>{x?.name?.english}</>}
-                    </span>
-                    <span>
-                      {" "}
-                      -{" "}
-                      <span className="font-BanglaHeading">
-                        {Language === "BN" && convertToBangla(x?.photoCount)}
-                      </span>{" "}
-                      <span className="font-Righteous">
-                        {Language === "EN" && x?.photoCount}
-                      </span>
-                      <span className="font-BanglaSubHeading text-base">
-                        {Language === "BN" && <>টি ছবি</>}
-                        <span className="font-Righteous text-sm">
-                          {" "}
-                          {Language === "EN" && <>Img</>}
-                        </span>
-                      </span>
-                    </span>
-                  </h1>
-                </div>
-              </button>
-            ))}
-          </>
-        ) : (
-          <>
-            {filteredDistricts?.slice(0, 19).map((x, i) => (
-              <button
-                key={x?.name?.english}
-                onMouseEnter={() => SetHovered(i)}
-                onMouseOver={() => SetHovered(i)}
-                onMouseLeave={() => SetHovered(null)}
-                onFocus={() => SetHovered(i)}
-                className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full text-dark-primary-color `}
-              >
-                <Image
-                  src={x?.photo}
-                  alt="h"
-                  className={`${
-                    hovered === i ? "scale-110" : "scale-100"
-                  } w-full h-full object-cover transform duration-300`}
-                  width={500}
-                  height={500}
-                  loading="lazy"
-                />{" "}
-                <div className="rounded-2xl h-full bg-gradient-to-t from-black/70 via-black/20 to-black/0  absolute w-full z-30  -bottom-5 p-2 flex items-center justify-between text-sm text-white"></div>
-                <div className={`  absolute w-full h-full top-0 z-40 `}>
-                  <h1 className="font-BanglaHeading  absolute px-4 p-2   bottom-2 left-0 right-0">
-                    {Language === "BN" && <>{x?.name?.bangla}</>}
-                    <span className="font-Righteous">
-                      {Language === "EN" && <>{x?.name?.english}</>}
-                    </span>
-                    <span>
-                      {" "}
-                      -{" "}
-                      <span className="font-BanglaHeading">
-                        {Language === "BN" && convertToBangla(x?.photoCount)}
-                      </span>{" "}
-                      <span className="font-Righteous">
-                        {Language === "EN" && x?.photoCount}
-                      </span>
-                      <span className="font-BanglaSubHeading text-base">
-                        {Language === "BN" && <>টি ছবি</>}
-                        <span className="font-Righteous text-sm">
-                          {" "}
-                          {Language === "EN" && <>Img</>}
-                        </span>
-                      </span>
-                    </span>
-                  </h1>
-                </div>
-              </button>
-            ))}
-          </>
-        )}
+      <div className="relative">
 
-        {!showAllDistrict && searchQuery === "" && (
-          <button
-            onClick={() => {
-              setShowAllDistrict(true);
-            }}
-            className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer bg-light-primary-color text-dark-primary-color dark:bg-dark-primary-color dark:text-light-primary-color  max-md:overflow-hidden overflow-hidden relative w-full`}
-          >
-            {Language === "EN" && <h1>View All District</h1>}
-            {Language === "BN" && (
-              <h1 className="font-BanglaHeading">সকল জেলা দেখুন</h1>
-            )}
+        <div className="grid max-xl:grid-cols-4 grid-cols-4 mt-3 max-lg:grid-cols-3 max-md:grid-cols-1 gap-2 transform duration-300 max-md:hidden">
+          {showAllDistrict ? (
+            <>
+              {filteredDistricts?.map((x, i) => (
+                <button
+                  key={x?.name?.english}
+                  onMouseEnter={() => SetHovered(i)}
+                  onMouseOver={() => SetHovered(i)}
+                  onMouseLeave={() => SetHovered(null)}
+                  onFocus={() => SetHovered(i)}
+                  className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full text-dark-primary-color `}
+                >
+                  <Image
+                    src={x?.photo}
+                    alt="h"
+                    className={`${hovered === i ? "scale-110" : "scale-100"
+                      } w-full h-full object-cover transform duration-300`}
+                    width={500}
+                    height={500}
+                    loading="lazy"
+                  />{" "}
+                  <div className="rounded-2xl h-full bg-gradient-to-t from-black/70 via-black/20 to-black/0  absolute w-full z-30  -bottom-5 p-2 flex items-center justify-between text-sm text-white"></div>
+                  <div className={`  absolute w-full h-full top-0 z-40 `}>
+                    <h1 className="font-BanglaHeading  absolute px-4 p-2   bottom-2 left-0 right-0">
+                      {Language === "BN" && <>{x?.name?.bangla}</>}
+                      <span className="font-Righteous">
+                        {Language === "EN" && <>{x?.name?.english}</>}
+                      </span>
+                      <span>
+                        {" "}
+                        -{" "}
+                        <span className="font-BanglaHeading">
+                          {Language === "BN" && convertToBangla(x?.photoCount)}
+                        </span>{" "}
+                        <span className="font-Righteous">
+                          {Language === "EN" && x?.photoCount}
+                        </span>
+                        <span className="font-BanglaSubHeading text-base">
+                          {Language === "BN" && <>টি ছবি</>}
+                          <span className="font-Righteous text-sm">
+                            {" "}
+                            {Language === "EN" && <>Img</>}
+                          </span>
+                        </span>
+                      </span>
+                    </h1>
+                  </div>
+                </button>
+              ))}
+            </>
+          ) : (
+            <>
+              {filteredDistricts?.slice(0, 12).map((x, i) => (
+                <button
+                  key={x?.name?.english}
+                  onMouseEnter={() => SetHovered(i)}
+                  onMouseOver={() => SetHovered(i)}
+                  onMouseLeave={() => SetHovered(null)}
+                  onFocus={() => SetHovered(i)}
+                  className={`border-2 dark:border-light-primary-color h-[220px] max-md:h-[150px] rounded-3xl  cursor-pointer  max-md:overflow-hidden overflow-hidden relative w-full text-dark-primary-color `}
+                >
+                  <Image
+                    src={x?.photo}
+                    alt="h"
+                    className={`${hovered === i ? "scale-110" : "scale-100"
+                      } w-full h-full object-cover transform duration-300`}
+                    width={500}
+                    height={500}
+                    loading="lazy"
+                  />{" "}
+                  <div className="rounded-2xl h-full bg-gradient-to-t from-black/70 via-black/20 to-black/0  absolute w-full z-30  -bottom-5 p-2 flex items-center justify-between text-sm text-white"></div>
+                  <div className={`  absolute w-full h-full top-0 z-40 `}>
+                    <h1 className="font-BanglaHeading  absolute px-4 p-2   bottom-2 left-0 right-0">
+                      {Language === "BN" && <>{x?.name?.bangla}</>}
+                      <span className="font-Righteous">
+                        {Language === "EN" && <>{x?.name?.english}</>}
+                      </span>
+                      <span>
+                        {" "}
+                        -{" "}
+                        <span className="font-BanglaHeading">
+                          {Language === "BN" && convertToBangla(x?.photoCount)}
+                        </span>{" "}
+                        <span className="font-Righteous">
+                          {Language === "EN" && x?.photoCount}
+                        </span>
+                        <span className="font-BanglaSubHeading text-base">
+                          {Language === "BN" && <>টি ছবি</>}
+                          <span className="font-Righteous text-sm">
+                            {" "}
+                            {Language === "EN" && <>Img</>}
+                          </span>
+                        </span>
+                      </span>
+                    </h1>
+                  </div>
+                </button>
+              ))}
+            </>
+          )}
+        </div>
+        {
+          !showAllDistrict && searchQuery === "" && <button onClick={() => {
+            setShowAllDistrict(true);
+          }} className=" h-[50%] bg-gradient-to-t from-dark-primary-color dark:from-light-primary-color dark:via-black/80 via-dark-primary-color/80 to-dark-primary-color/0 dark:to-black/10 dark:rounded-2xl   absolute w-full z-30  bottom-0 p-2 flex items-center justify-center text-3xl text-light-primary-color dark:text-dark-primary-color">
+            <span className="mt-20">{Language === "EN" && <h1>View All District</h1>}
+              {Language === "BN" && (
+                <h1 className="font-BanglaHeading">সকল জেলা দেখুন</h1>
+              )}</span>
           </button>
-        )}
+        }
       </div>
 
       {/* mobile device swiper */}
@@ -568,9 +564,8 @@ const DistrictGallery = () => {
               <Image
                 src={x?.photo}
                 alt="h"
-                className={`${
-                  hovered === i ? "scale-110" : "scale-100"
-                } w-full h-full object-cover transform duration-300`}
+                className={`${hovered === i ? "scale-110" : "scale-100"
+                  } w-full h-full object-cover transform duration-300`}
                 width={500}
                 height={500}
                 loading="lazy"

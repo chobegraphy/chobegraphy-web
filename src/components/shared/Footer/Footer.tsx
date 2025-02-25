@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { RiTelegram2Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import darklogo from "../../../Assets/logo/darklogo.png";
@@ -60,42 +61,42 @@ const Footer = () => {
             {Language === "EN" && "Important links"} :
           </h6>
           <div className="flex flex-col font-Space">
-            <a
-              href="jadu"
+            <Link
+              href="/AboutUs"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "আমাদের সম্পর্কে"}
               </span>
               {Language === "EN" && "About us"}
-            </a>
-            <a
-              href="jadu"
+            </Link>
+            <Link
+              href="/Team"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "টীম "}
               </span>
               {Language === "EN" && "Team"}
-            </a>
-            <a
-              href="jadu"
+            </Link>
+            <Link
+              href="/TermsAndCondition"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "টার্মস এন্ড কন্ডিশনস"}
               </span>
               {Language === "EN" && "Terms and conditions"}
-            </a>
-            <a
-              href="jadu"
+            </Link>
+            <Link
+              href="/PrivacyPolicy"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "প্রাইভেসি পলিসি"}
               </span>
               {Language === "EN" && "Privacy Policy"}
-            </a>
+            </Link>
           </div>
         </nav>
         <nav className="max-md:w-full h-full ">
@@ -106,15 +107,17 @@ const Footer = () => {
             {Language === "EN" && "Social links"} :
           </h6>
           <div className="flex flex-col font-Space">
-            <a
-              href="jadu"
+            <Link
+              href="https://www.facebook.com/chobegraphy/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "ফেসবুক পেজ"}
               </span>
               {Language === "EN" && "Facebook page"}
-            </a>
+            </Link>
             <a
               href="jadu"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
@@ -124,15 +127,17 @@ const Footer = () => {
               </span>
               {Language === "EN" && "Instagram page"}
             </a>
-            <a
-              href="jadu"
+            <Link
+              href="https://t.me/chobegraphy"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "টেলিগ্রাম চ্যানেল"}
               </span>
               {Language === "EN" && "Telegram Channel"}
-            </a>
+            </Link>
             <a
               href="jadu"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
@@ -152,42 +157,42 @@ const Footer = () => {
             {Language === "EN" && "Photography"} :
           </h6>
           <div className="flex flex-col font-Space">
-            <a
-              href="jadu"
+            <Link
+              href="/AllImg"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "ছবির গ্যালারি"}
               </span>
               {Language === "EN" && "Image Gallery"}
-            </a>
-            <a
-              href="jadu"
+            </Link>
+            <Link
+              href="/AllImg"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "সর্বাধিক ডাউনলোড করা ছবি"}
               </span>
               {Language === "EN" && "Most Downloaded Images"}
-            </a>
-            <a
-              href="jadu"
+            </Link>
+            <Link
+              href="/AllImg"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "সর্বাধিক দেখা ছবি"}
               </span>
               {Language === "EN" && "Most Viewed Images"}
-            </a>
-            <a
-              href="jadu"
+            </Link>
+            <Link
+              href="/DistrictPicture"
               className="hover:underline cursor-pointer text-dark-primary-color/70 hover:text-dark-primary-color transform duration-300"
             >
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "জেলা ছবি"}
               </span>
               {Language === "EN" && "District Photos"}
-            </a>
+            </Link>
           </div>
         </nav>
         <nav className="max-md:w-full h-full ">
