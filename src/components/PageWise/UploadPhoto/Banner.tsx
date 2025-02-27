@@ -21,8 +21,7 @@ const Banner = () => {
     focalLength: "",
     creatorTool: "",
     subjectDistance: "",
-    imageHeight: "",
-    imageWidth: "",
+
   });
   const [dimensions, setDimensions] = useState("");
   const [fileSize, setFileSize] = useState<string | number>(0);
@@ -50,6 +49,7 @@ const Banner = () => {
         focalLength: exif.FocalLength?.description || "",
         creatorTool: exif.CreatorTool?.description || "",
         subjectDistance: exif.SubjectDistance?.description || "",
+
       };
 
       // Save EXIF data to state
