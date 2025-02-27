@@ -516,7 +516,7 @@ const DistrictGallery = () => {
         {
           !showAllDistrict && searchQuery === "" && <button onClick={() => {
             setShowAllDistrict(true);
-          }} className=" h-[50%] bg-gradient-to-t from-dark-primary-color dark:from-light-primary-color dark:via-black/80 via-dark-primary-color/80 to-dark-primary-color/0 dark:to-black/10 dark:rounded-2xl   absolute w-full z-30  bottom-0 p-2 flex items-center justify-center text-3xl text-light-primary-color dark:text-dark-primary-color">
+          }} className=" max-md:hidden h-[50%] bg-gradient-to-t from-dark-primary-color dark:from-light-primary-color dark:via-black/80 via-dark-primary-color/80 to-dark-primary-color/0 dark:to-black/10 dark:rounded-2xl   absolute w-full z-30  bottom-0 p-2 flex items-center justify-center text-3xl text-light-primary-color dark:text-dark-primary-color">
             <span className="mt-20">{Language === "EN" && <h1>View All District</h1>}
               {Language === "BN" && (
                 <h1 className="font-BanglaHeading">সকল জেলা দেখুন</h1>
