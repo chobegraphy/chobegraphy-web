@@ -194,27 +194,24 @@ const Navbar = () => {
             <FaLanguage className="text-3xl" />
           </button>
           <div
-            className={`${
-              languageOpen ? "w-full " : "w-0 -z-30 opacity-0"
-            } transform duration-300 flex scale-90 items-center bg-light-primary-color p-0.5 rounded`}
+            className={`${languageOpen ? "w-full " : "w-0 -z-30 opacity-0"
+              } transform duration-300 flex scale-90 items-center bg-light-primary-color p-0.5 rounded`}
           >
             <button
               onClick={() => dispatch(SetLanguageBN())}
-              className={`${
-                Language === "BN"
+              className={`${Language === "BN"
                   ? "text-light-primary-color bg-dark-primary-color"
                   : "bg-light-primary-color text-dark-primary-color"
-              } text-sm font-BanglaHeading px-2 py-1 transform duration-300 rounded-s`}
+                } text-sm font-BanglaHeading px-2 py-1 transform duration-300 rounded-s`}
             >
               বাংলা
             </button>
             <button
               onClick={() => dispatch(SetLanguageEN())}
-              className={`${
-                Language === "EN"
+              className={`${Language === "EN"
                   ? "text-light-primary-color bg-dark-primary-color"
                   : "bg-light-primary-color text-dark-primary-color"
-              } text-sm px-2 py-1 transform duration-300 rounded-e`}
+                } text-sm px-2 py-1 transform duration-300 rounded-e`}
             >
               English
             </button>
@@ -246,7 +243,7 @@ const Navbar = () => {
           </label>
         </div>
 
-        <button
+        <Link href="/UploadPhoto"
           className={
             "border-2 py-1 xl:py-1.5 ms-5 px-6  xl:text-lg hover:bg-light-primary-color dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color dark:border-dark-primary-color  dark:text-dark-primary-color hover:text-dark-primary-color transform duration-300 rounded text-light-primary-color border-light-primary-color"
           }
@@ -254,7 +251,7 @@ const Navbar = () => {
           <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
             {Language === "BN" ? "আপলোড" : "Upload"}
           </p>
-        </button>
+        </Link>
       </div>
 
       {/* mobile Navebar */}
@@ -269,15 +266,13 @@ const Navbar = () => {
         <IoMenuSharp className="text-4xl" />
       </div>
       <div
-        className={`${
-          isOpen2 ? "h-screen w-screen opacity-100 " : "opacity-0"
-        } fixed z-50 overflow-hidden top-0 left-0 bg-black/90`}
+        className={`${isOpen2 ? "h-screen w-screen opacity-100 " : "opacity-0"
+          } fixed z-50 overflow-hidden top-0 left-0 bg-black/90`}
       >
         <div
           ref={divRef}
-          className={`${
-            isOpen ? "right-0" : "-right-[120%]"
-          } absolute transform duration-500 bg-dark-primary-color dark:bg-gradient-to-br from-black to-light-primary-color w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
+          className={`${isOpen ? "right-0" : "-right-[120%]"
+            } absolute transform duration-500 bg-dark-primary-color dark:bg-gradient-to-br from-black to-light-primary-color w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
         >
           <div className="w-full flex flex-col h-full ">
             <div className="w-full h-[60px] dark:bg-dark-primary-color flex mb-5 bg-black rounded">
@@ -288,9 +283,8 @@ const Navbar = () => {
                 <div className="text-2xl flex items-center gap-x-2 dark:text-black text-white">
                   <FaSignInAlt />
                   <p
-                    className={`${
-                      Language === "BN" && "font-BanglaSubHeading"
-                    }`}
+                    className={`${Language === "BN" && "font-BanglaSubHeading"
+                      }`}
                   >
                     {Language === "BN" ? "সাইন ইন" : "Sign In"}
                   </p>
@@ -417,33 +411,30 @@ const Navbar = () => {
                 </p> */}
               </button>
               <div
-                className={`${
-                  languageOpen ? " " : " -z-30 opacity-0"
-                } transform duration-300 flex scale-90 items-center bg-light-primary-color p-0.5 rounded`}
+                className={`${languageOpen ? " " : " -z-30 opacity-0"
+                  } transform duration-300 flex scale-90 items-center bg-light-primary-color p-0.5 rounded`}
               >
                 <button
                   onClick={() => dispatch(SetLanguageBN())}
-                  className={`${
-                    Language === "BN"
+                  className={`${Language === "BN"
                       ? "text-light-primary-color bg-dark-primary-color"
                       : "bg-light-primary-color text-dark-primary-color"
-                  } text-sm font-BanglaHeading px-2 py-1 transform duration-300 rounded-s`}
+                    } text-sm font-BanglaHeading px-2 py-1 transform duration-300 rounded-s`}
                 >
                   বাংলা
                 </button>
                 <button
                   onClick={() => dispatch(SetLanguageEN())}
-                  className={`${
-                    Language === "EN"
+                  className={`${Language === "EN"
                       ? "text-light-primary-color bg-dark-primary-color"
                       : "bg-light-primary-color text-dark-primary-color"
-                  } text-sm px-2 py-1 transform duration-300 rounded-e`}
+                    } text-sm px-2 py-1 transform duration-300 rounded-e`}
                 >
                   English
                 </button>
               </div>
             </div>
-            <button
+            <Link href="/UploadPhoto"
               className={
                 "border-2 mt-5 py-1 xl:py-1.5  px-6  xl:text-lg hover:bg-black dark:hover:bg-dark-primary-color dark:hover:text-black dark:border-dark-primary-color hover:text-white dark:text-dark-primary-color transform duration-300 rounded text-black border-[#000000]"
               }
@@ -451,7 +442,7 @@ const Navbar = () => {
               <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
                 {Language === "BN" ? "আপলোড" : "Upload"}
               </p>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
