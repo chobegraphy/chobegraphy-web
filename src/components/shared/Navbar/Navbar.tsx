@@ -200,8 +200,8 @@ const Navbar = () => {
             <button
               onClick={() => dispatch(SetLanguageBN())}
               className={`${Language === "BN"
-                  ? "text-light-primary-color bg-dark-primary-color"
-                  : "bg-light-primary-color text-dark-primary-color"
+                ? "text-light-primary-color bg-dark-primary-color"
+                : "bg-light-primary-color text-dark-primary-color"
                 } text-sm font-BanglaHeading px-2 py-1 transform duration-300 rounded-s`}
             >
               বাংলা
@@ -209,8 +209,8 @@ const Navbar = () => {
             <button
               onClick={() => dispatch(SetLanguageEN())}
               className={`${Language === "EN"
-                  ? "text-light-primary-color bg-dark-primary-color"
-                  : "bg-light-primary-color text-dark-primary-color"
+                ? "text-light-primary-color bg-dark-primary-color"
+                : "bg-light-primary-color text-dark-primary-color"
                 } text-sm px-2 py-1 transform duration-300 rounded-e`}
             >
               English
@@ -417,8 +417,8 @@ const Navbar = () => {
                 <button
                   onClick={() => dispatch(SetLanguageBN())}
                   className={`${Language === "BN"
-                      ? "text-light-primary-color bg-dark-primary-color"
-                      : "bg-light-primary-color text-dark-primary-color"
+                    ? "text-light-primary-color bg-dark-primary-color"
+                    : "bg-light-primary-color text-dark-primary-color"
                     } text-sm font-BanglaHeading px-2 py-1 transform duration-300 rounded-s`}
                 >
                   বাংলা
@@ -426,21 +426,24 @@ const Navbar = () => {
                 <button
                   onClick={() => dispatch(SetLanguageEN())}
                   className={`${Language === "EN"
-                      ? "text-light-primary-color bg-dark-primary-color"
-                      : "bg-light-primary-color text-dark-primary-color"
+                    ? "text-light-primary-color bg-dark-primary-color"
+                    : "bg-light-primary-color text-dark-primary-color"
                     } text-sm px-2 py-1 transform duration-300 rounded-e`}
                 >
                   English
                 </button>
               </div>
             </div>
-            <Link href="/UploadPhoto"
+            <Link onClick={() => {
+              setIsOpen(false);
+              setTimeout(() => setIsOpen2(false), 200);
+            }} href="/UploadPhoto"
               className={
-                "border-2 mt-5 py-1 xl:py-1.5  px-6  xl:text-lg hover:bg-black dark:hover:bg-dark-primary-color dark:hover:text-black dark:border-dark-primary-color hover:text-white dark:text-dark-primary-color transform duration-300 rounded text-black border-[#000000]"
+                "border-2 mt-5 py-1 xl:py-1.5  px-6  xl:text-lg hover:bg-black dark:hover:bg-dark-primary-color dark:hover:text-black dark:border-dark-primary-color hover:text-white dark:text-dark-primary-color transform duration-300 rounded text-black border-[#000000] text-center"
               }
             >
               <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "আপলোড" : "Upload"}
+                {Language === "BN" ? "ছবি আপলোড করুন" : "Upload Picture"}
               </p>
             </Link>
           </div>

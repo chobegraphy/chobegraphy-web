@@ -1,5 +1,6 @@
 "use client";
 
+import { BaseApiUrl } from "@/ExportedFunctions/BaseApiUrl";
 import axios from "axios";
 import ExifReader from "exifreader";
 import { extractColors } from "extract-colors";
@@ -32,6 +33,7 @@ const Banner = () => {
   const [react] = useState(0);
   const [download] = useState(0);
   const [uploadedTime, setUploadedTime] = useState<string>('');
+  const [district, setDistrict] = useState<object>({});
   // get EXIF data from image
   const extractExifData = (file: any) => {
     // Extract EXIF data
@@ -186,62 +188,61 @@ const Banner = () => {
           filename: "image.jpg",
         }
       );
-      const formData1 = new FormData();
-      if (encodedPhoto) {
-        formData1.append("image", encodedPhoto);
-      }
-      const imgbbResponse1 = await axios.post(
-        "https://api.imgbb.com/1/upload?key=eada499cd6dc5e09c832c88531a41acb",
-        formData1
+
+      const encodedImgUpload = await axios.post(
+        BaseApiUrl + `/uploadEncodedPhoto`,
+        encodedPhoto
       );
-      const imgbbData1 = imgbbResponse1.data.data;
-      if (imgbbData1.display_url) {
-        const formData = new FormData();
-        formData.append("image", Base64photo);
-        const imgbbResponse = await axios.post(
-          "https://api.imgbb.com/1/upload?key=eada499cd6dc5e09c832c88531a41acb",
-          formData
-        );
-        const imgbbData = imgbbResponse.data.data;
-        const thumbnail = imgbbData.medium.url;
-        console.log(uploadResponse.data.imageUrl);
-        const uploadedUrl = uploadResponse.data.imageUrl;
+      const encodedImgUploadData = encodedImgUpload.data.data;
+      console.log(encodedImgUploadData)
+      // if (encodedImgUploadData) {
+      //   const formData = new FormData();
+      //   formData.append("image", Base64photo);
+      //   const imgbbResponse = await axios.post(
+      //     "https://api.imgbb.com/1/upload?key=eada499cd6dc5e09c832c88531a41acb",
+      //     formData
+      //   );
+      //   const imgbbData = imgbbResponse.data.data;
+      //   const thumbnail = imgbbData.medium.url;
+      //   console.log(uploadResponse.data.imageUrl);
+      //   const uploadedUrl = uploadResponse.data.imageUrl;
 
-        const metadata = {
-          name: "Name",
-          author: "author", // Replace with actual author
-          url: uploadedUrl,
-          dimensions,
-          collections: "",
-          copyright: "",
-          downloadable: false,
-          thumbnail,
-          encodedUrl: imgbbData1.display_url,
-          exifData,
-          fileSize,
-          colors,
-        };
+      //   const metadata = {
+      //     name: "Name",
+      //     author: "author", // Replace with actual author
+      //     url: uploadedUrl,
+      //     dimensions,
+      //     collections: "",
+      //     copyright: "",
+      //     downloadable: false,
+      //     thumbnail,
+      //     encodedUrl: imgbbData1.display_url,
+      //     exifData,
+      //     fileSize,
+      //     colors,
+      //   };
 
-        // Send metadata to a secondary API
-        const metadataResponse = await axios.post(
-          "https://chobegraphy-server.vercel.app/api/add-data",
-          metadata
-        );
-        console.log(metadataResponse.data);
-        if (metadataResponse.data.message) {
-          // setUploadStatus("Success! File uploaded ");
+      //   // Send metadata to a secondary API
+      //   const metadataResponse = await axios.post(
+      //     "https://chobegraphy-server.vercel.app/api/add-data",
+      //     metadata
+      //   );
+      //   console.log(metadataResponse.data);
+      //   if (metadataResponse.data.message) {
+      //     // setUploadStatus("Success! File uploaded ");
 
-        } else {
-          // setUploadStatus("File upload failed.");
-        }
-        // setLoading(false);
-      }
+      //   } else {
+      //     // setUploadStatus("File upload failed.");
+      //   }
+      //   // setLoading(false);
+      // }
     } catch (error) {
       console.error("Upload failed:", error);
       // setUploadStatus("An error occurred while uploading.");
       // setLoading(false);
     }
   };
+  console.log(district)
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full h-full col-span-6">
       <div
@@ -266,12 +267,13 @@ const Banner = () => {
       {errors.image && <p className="text-red-500">Image is required</p>}
 
       {/* Picture information */}
-      <PhotoDetails uploadedTime={uploadedTime} colors={colors} fileSize={fileSize} dimensions={dimensions} />
+      <PhotoDetails district={district} setDistrict1={setDistrict} view={view} download={download} react={react} register={register} uploadedTime={uploadedTime} colors={colors} fileSize={fileSize} dimensions={dimensions} />
       <div className="mt-3 h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
 
       {/* Picture meta data */}
       <PhotoMetaData type="button" MetaData={exifData} />
       <div className="mt-3 h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
+
     </form>
   );
 };
