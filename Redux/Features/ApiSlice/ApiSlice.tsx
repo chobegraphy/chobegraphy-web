@@ -13,6 +13,7 @@ export const apiSlice = createApi({
     "PictureUnLike",
     "PictureIncreaseLikeCount",
     "PictureDecreaseLikeCount",
+    "UploadProfilePicture", "UploadUsingImgBB"
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: "https://chobegraphy-server.vercel.app/api/",

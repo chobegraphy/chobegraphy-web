@@ -2,22 +2,60 @@ import { BaseApiUrl } from "@/ExportedFunctions/BaseApiUrl";
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { LuPlus } from "react-icons/lu";
+import { useUploadProfilePictureMutation, useUploadUsingImgBBMutation } from "../../../../Redux/Features/Apis/ProfilePicture/UploadProfilePicture";
 import "./SignUp.css";
 const RegisterForm = () => {
-  const { GoogleSignIn, EmailPassWordSignUp } = useAuthData();
+  const { GoogleSignIn, EmailPassWordSignUp, setUser } = useAuthData();
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
+  const [Base64photo, setBase64photo] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const [fileSize, setFileSize] = useState<number>(0);
+  const [ImgFile, setImgFile] = useState<string | null>(null);
+  const [ImgUrl, setImgUrl] = useState<string | null>(null);
+  const router = useRouter();
+
   // redux writing
   const Language =
     typeof window !== "undefined"
       ? localStorage.getItem("Language") ?? "BN"
       : "BN";
+
+  const [uploadProfilePictureMutation] = useUploadProfilePictureMutation();
+  const [UploadUsingImgBBMutation] = useUploadUsingImgBBMutation()
+  const convertToBase64 = (file: any) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        if (reader.result) {
+          resolve(reader.result.toString().split(",")[1]);
+        }
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleImageChange = async (e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFileName(file.name);
+      setFileSize(file.size);
+      setImgFile(file);
+      convertToBase64(file).then((base64) => {
+        console.log(base64);
+        setBase64photo(base64 as string)
+      });
+    }
+  };
 
   const {
     register,
@@ -26,53 +64,62 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     setbuttonLoading(true);
-    EmailPassWordSignUp(data?.email, data?.password)
-      .then(async (firebaseData) => {
-        console.log(firebaseData);
+    try {
+      const firebaseData = await EmailPassWordSignUp(data?.email, data?.password);
+      console.log(firebaseData);
 
-        // Firebase registration success, now send data to your backend
-        const userData = {
-          name: data.name,
-          email: data.email,
-          picture: "",
-        };
+      let uploadedImgUrl; // Use a local variable
 
-        try {
-          const response = await axios.post(
-            BaseApiUrl + "/add-user",
-            userData,
-            {
-              headers: { "Content-Type": "application/json" },
-            }
-          );
-
-          // Handle response from the backend if needed (e.g., saving additional data)
-          console.log(
-            "User registered successfully on backend:",
-            response.data
-          );
-          toast.success(
-            Language === "BN"
-              ? "নতুন ব্যবহারকারী যুক্ত হয়েছে"
-              : "New Users Added Successfully"
-          );
-        } catch (error) {
-          console.error("Error during backend registration:", error);
+      if (fileSize > 4.5 * 1024 * 1024) {
+        if (!ImgFile) {
+          throw new Error("No image file selected");
         }
+        const formData = new FormData();
+        formData.append("image", ImgFile);
+        const imgBBResponse = await axios.post(
+          `https://api.imgbb.com/1/upload?key=eada499cd6dc5e09c832c88531a41acb`,
+          formData
+        );
+        console.log(imgBBResponse.data);
+        const response = await UploadUsingImgBBMutation({ imgUrl: imgBBResponse.data.data.url, filename: fileName }).unwrap();
+        console.log("Upload successful:", response);
+        uploadedImgUrl = response.imageUrl; // Assign directly to local variable
+      } else {
+        const response = await uploadProfilePictureMutation({ file: Base64photo, fileName: fileName }).unwrap();
+        console.log("Upload successful:", response?.imageUrl);
+        uploadedImgUrl = response.imageUrl; // Assign directly to local variable
+      }
 
-        setbuttonLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setbuttonLoading(false);
-        toast.error(error.message.split("Firebase:")[1], {
-          id: "5",
-        });
-      });
-    console.log(data);
+      // Use the local variable for userData instead of the state value
+      const userData = {
+        name: data.name,
+        email: data.email,
+        picture: uploadedImgUrl,
+      };
+
+      const response = await axios.post(
+        BaseApiUrl + "/add-user",
+        userData,
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      console.log("User registered successfully on backend:", response.data.data);
+      setUser(response.data.data);
+      toast.success(Language === "BN" ? "নতুন ব্যবহারকারী যুক্ত হয়েছে" : "New User Added Successfully");
+
+      const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+      localStorage.removeItem('redirectUrl');
+      router.push(redirectUrl);
+    } catch (error: any) {
+      console.error("Error:", error);
+      toast.error(error?.message?.split("Firebase:")[1] || "An error occurred", { id: "5" });
+    } finally {
+      setbuttonLoading(false);
+    }
   };
+
   // DONE:GOOGLE LOGIN::>
   const handleGoogleLogin = () => {
     setGbuttonLoadin(true);
@@ -97,12 +144,17 @@ const RegisterForm = () => {
           toast.success(
             Language === "BN"
               ? "নতুন ব্যবহারকারী যুক্ত হয়েছে"
-              : "New Users Added Successfully"
+              : "New User Added Successfully"
           );
           console.log(
             "User registered successfully on backend:",
             response.data
           );
+          setUser(response.data.data);
+          // Redirect to the saved route or the home page
+          const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+          localStorage.removeItem('redirectUrl');
+          router.push(redirectUrl);
         } catch (error) {
           console.error("Error during backend registration:", error);
         }
@@ -193,9 +245,8 @@ const RegisterForm = () => {
               placeholder={
                 Language === "BN" ? "আপনার নাম লিখুন" : "Enter your name"
               }
-              className={`${
-                Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
-              } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
+              className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
+                } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
               required
             />
           </div>
@@ -216,9 +267,8 @@ const RegisterForm = () => {
                   ? "আপনার ইমেল লিখুন"
                   : "Enter your email address"
               }
-              className={`${
-                Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
-              } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
+              className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
+                } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
               required
             />
           </div>
@@ -240,15 +290,14 @@ const RegisterForm = () => {
                     ? "নতুন পাসওয়ার্ড লিখুন"
                     : "Enter new password"
                 }
-                className={`${
-                  Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
-                } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
+                className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
+                  } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
                 required
               />
               <button
                 onClick={() => setShowpass(!showPass)}
                 type="button"
-                className="absolute   px-4 py-4 rounded-lg lg:right-[10px] right-1 transform duration-300 top-0 bottom-0"
+                className="absolute   px-4 py-4 rounded-lg lg:right-[10px] right-1 transform duration-300 top-0 -bottom-1 flex items-center  justify-center"
               >
                 {showPass === false ? (
                   <FiEyeOff className="text-xl dark:text-dark-primary-color transform duration-300 font-bold" />
@@ -256,6 +305,60 @@ const RegisterForm = () => {
                   <FiEye className="text-xl dark:text-dark-primary-color transform duration-300 font-bold" />
                 )}
               </button>
+            </div>
+          </div>
+          <div className="form-control mt-3.5">
+            <label htmlFor="password" className="label ">
+              <span className="text-xl text-light-primary-color dark:text-dark-primary-color font-Righteous font-bold">
+                <span className="font-BanglaHeading">
+                  {Language === "BN" && "প্রোফাইল ছবি"}
+                </span>
+                {Language === "EN" && "Profile Picture"}
+              </span>
+            </label>
+            <div className="relative border-y-2 h-full mt-1 cursor-pointer">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
+                  } opacity-0 h-full input  w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-2`}
+                required
+              />
+              <h1 className="absolute top-0 left-5  bottom-0 flex items-center  justify-center">
+                {
+                  Base64photo === null ? (
+                    <span> <span className="font-BanglaHeading">
+                      {Language === "BN" && "একটি ছবি নির্বাচন করুন"}
+                    </span>
+                      {Language === "EN" && "select a  picture"}</span>
+                  ) : (
+                    <span> <span className="font-BanglaHeading">
+                      {Language === "BN" && "ছবি নির্বাচন করা হয়েছে"}
+                    </span>
+                      {Language === "EN" && "picture selected"}</span>
+                  )
+                }
+              </h1>
+              <button type="button" onClick={
+                () => {
+                  if (Base64photo !== null) {
+
+                    setBase64photo(null);
+                  }
+                }
+              } className="absolute top-0  right-5  bottom-0 flex items-center  justify-center">
+                {
+                  Base64photo === null && <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
+                      } opacity-0 h-full input  w-full absolute  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-2`}
+                    required
+                  />
+                }
+                <LuPlus className={`${Base64photo !== null && "rotate-45"} text-xl bg-dark-primary-color rounded-full w-6 h-6  dark:text-light-primary-color transform duration-300 font-bold `} /></button>
             </div>
           </div>
           <div className="form-control mt-6">

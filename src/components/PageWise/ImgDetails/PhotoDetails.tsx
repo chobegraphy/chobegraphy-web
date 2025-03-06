@@ -1,5 +1,5 @@
 import useAuthData from "@/ExportedFunctions/useAuthData";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { BiSolidCategoryAlt } from "react-icons/bi";
@@ -34,6 +34,7 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
   // auth data
   const { user } = useAuthData();
   const router = useRouter(); // Initialize router
+  const pathname = usePathname();
 
   // states
   const [copiedColor, setCopiedColor] = useState("");
@@ -166,6 +167,7 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
   const handleLike = async () => {
     if (!user) {
       router.push("/SignIn");
+      typeof window !== 'undefined' && localStorage.setItem('redirectUrl', pathname);
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
       return;
     }
@@ -189,6 +191,7 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
   const handleUnlike = async () => {
     if (!user) {
       router.push("/SignIn");
+      typeof window !== 'undefined' && localStorage.setItem('redirectUrl', pathname);
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
       return;
     }
@@ -236,11 +239,10 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
             )}
             {likeLoading === true && (
               <ImSpinner
-                className={`${
-                  LikedPictureData.includes(DetailsData?._id)
+                className={`${LikedPictureData.includes(DetailsData?._id)
                     ? "text-pink-600"
                     : "text-white"
-                } animate-spin `}
+                  } animate-spin `}
               />
             )}
             <PiShareNetworkBold onClick={handleShare} id="share" />

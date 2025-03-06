@@ -172,11 +172,10 @@ const ImgCard = ({ imgData, i }: any) => {
             )}
             {likeLoading === true && (
               <ImSpinner
-                className={`${
-                  LikedPictureData.includes(imgData?._id)
+                className={`${LikedPictureData.includes(imgData?._id)
                     ? "text-pink-600"
                     : "text-white"
-                } animate-spin `}
+                  } animate-spin `}
               />
             )}
             <p className="font-Space text-xs -ms-2">

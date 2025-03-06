@@ -1,5 +1,6 @@
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -11,6 +12,7 @@ const SignInForm = () => {
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
+  const router = useRouter();
   // redux writing
   const Language =
     typeof window !== "undefined"
@@ -33,7 +35,10 @@ const SignInForm = () => {
         toast.success(
           Language === "BN" ? "সাইন ইন সফল হয়েছে" : "Sign In Successfull"
         );
-
+        // Redirect to the saved route or the home page
+        const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+        localStorage.removeItem('redirectUrl');
+        router.push(redirectUrl);
         setbuttonLoading(false);
       })
       .catch((error) => {
@@ -54,6 +59,10 @@ const SignInForm = () => {
         toast.success(
           Language === "BN" ? "সাইন ইন সফল হয়েছে" : "Sign In Successfull"
         );
+        // Redirect to the saved route or the home page
+        const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+        localStorage.removeItem('redirectUrl');
+        router.push(redirectUrl);
       })
       .catch((error) => {
         console.log(error);
@@ -146,9 +155,8 @@ const SignInForm = () => {
                   ? "আপনার ইমেল লিখুন"
                   : "Enter your email address"
               }
-              className={`${
-                Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
-              } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
+              className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
+                } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
               required
             />
           </div>
@@ -170,9 +178,8 @@ const SignInForm = () => {
                     ? "আপনার পাসওয়ার্ড লিখুন"
                     : "Enter your password"
                 }
-                className={`${
-                  Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
-                } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
+                className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
+                  } input mt-1 w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-4`}
                 required
               />
               <button
