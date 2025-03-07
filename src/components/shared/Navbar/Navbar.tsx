@@ -258,7 +258,7 @@ const Navbar = () => {
         <IoMenuSharp className="text-4xl" />
       </div>
       <div
-        className={`${isOpen2 ? "h-screen w-screen opacity-100 " : "opacity-0"
+        className={`${isOpen2 ? "h-[100dvh] w-screen opacity-100 " : "opacity-0"
           } fixed z-50 overflow-hidden top-0 left-0 bg-black/90`}
       >
         <div
@@ -267,7 +267,7 @@ const Navbar = () => {
             } absolute transform duration-500 bg-dark-primary-color dark:bg-gradient-to-br from-black to-light-primary-color w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
         >
           <div className="w-full flex flex-col h-full ">
-            <div className="w-full h-[55px] mb-5  rounded justify-between flex items-center">
+            <div className="w-full h-[55px] mb-3.5  rounded justify-between flex items-center">
               {
                 user ? <div
                   onClick={() => {
@@ -306,7 +306,7 @@ const Navbar = () => {
                 </Link>
               }
 
-              <div className="flex justify-center items-center  h-full dark:bg-dark-primary-color   bg-black rounded-xl w-[55px]  relative "> <motion.div
+              <div className="flex justify-center items-center  h-full  rounded-full w-[55px]  relative "> <motion.div
                 key={theme}
                 initial={{ opacity: 0, scale: 0, rotate: 0 }}
                 animate={{ opacity: 1, scale: 1, rotate: 360 }}
@@ -314,9 +314,9 @@ const Navbar = () => {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
                 {theme === "dark" ? (
-                  <IoMdMoon className="pointer-events-none text-2xl dark:text-light-primary-color text-dark-primary-color" />
+                  <IoMdMoon className="pointer-events-none text-2xl text-light-primary-color dark:text-dark-primary-color" />
                 ) : (
-                  <MdLightMode className="pointer-events-none text-2xl dark:text-light-primary-color text-dark-primary-color" />
+                  <MdLightMode className="pointer-events-none text-2xl text-light-primary-color dark:text-dark-primary-color" />
                 )}
               </motion.div>
 
@@ -333,7 +333,7 @@ const Navbar = () => {
                   className="absolute opacity-0 top-0 bottom-0 left-0 right-0"
                 /></div>
             </div>
-
+            <div className="w-full h-[2px] bg-light-secondary-color mb-1"></div>
             <motion.div
               initial={{ opacity: 0, top: -50, rotate: 0 }}
               animate={{ opacity: 1, top: 0, rotate: 0 }}
@@ -351,7 +351,7 @@ const Navbar = () => {
                     className={` text-2xl  hover:text-3xl  my-1 px-0 `}
                     path={route.path}
                   >
-                    <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+                    <p className={`${Language === "BN" && "font-BanglaSubHeading font-bold"}`}>
                       {Language === "BN" ? route?.bnName : route?.enName}
                     </p>
                   </CustomButton>)
@@ -365,7 +365,7 @@ const Navbar = () => {
                     className={` text-2xl  hover:text-3xl  my-1 px-0 `}
                     path={route.path}
                   >
-                    <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+                    <p className={`${Language === "BN" && "font-BanglaSubHeading font-bold"}`}>
                       {Language === "BN" ? route?.bnName : route?.enName}
                     </p>
                   </CustomButton>)
