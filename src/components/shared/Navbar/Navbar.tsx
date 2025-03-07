@@ -1,13 +1,20 @@
 "use client";
 import CustomButton from "@/components/ui/CustomButton/CustomButton";
+import { NavRoutes, ProfileRoutes } from "@/ExportedFunctions/NavRoutes";
+import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { FaSignInAlt } from "react-icons/fa";
-import { FaLanguage, FaMagnifyingGlass } from "react-icons/fa6";
+import { FaUserCircle } from "react-icons/fa";
+import { FaLanguage } from "react-icons/fa6";
+import { IoIosArrowDown, IoMdMoon } from "react-icons/io";
 import { IoMenuSharp } from "react-icons/io5";
+import { MdLightMode } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+
+import toast from "react-hot-toast";
+import { useAuth } from "../../../../Provider/AuthProvider";
 import {
   setLanguage,
   SetLanguageBN,
@@ -22,12 +29,12 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const [languageOpen, setLanguageOpen] = useState(false);
-
+  const { user, logOut } = useAuth();
   // Location states
   const [country, setCountry] = useState(null);
   const [error, setError] = useState<string | null>(null);
   const { setTheme } = useTheme();
-
+  const [showProfileRoutes, setShowProfileRoutes] = useState(false);
   // Redux
   const Language = useSelector((state: any) => state.Language.value);
   const dispatch = useDispatch();
@@ -120,7 +127,18 @@ const Navbar = () => {
       setTheme(systemPreference);
     }
   }, [setTheme]);
+  const [theme, setTheme2] = useState(
+    typeof window !== "undefined" && localStorage.getItem("theme") === "dark"
+      ? "dark"
+      : "light"
+  );
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("theme", theme);
+      document.documentElement.classList.toggle("dark", theme === "dark");
+    }
+  }, [theme]);
   return (
     <div
       className={`flex  xl:backdrop-blur bg-dark-primary-color/80 dark:bg-black/80 z-50 bg-black-100 justify-between w-full items-center overflow-hidden sticky -top-0.5 mx-auto  sm:p-5 p-5 h-[65px] `}
@@ -145,45 +163,14 @@ const Navbar = () => {
         />
       </div>
       <div className="w-fit max-xl:hidden flex items-center h-full">
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/">
-          <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-            {Language === "BN" ? "হোম" : "Home"}
-          </p>
-        </CustomButton>
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/AllImg">
-          <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-            {Language === "BN" ? "গ্যালারি" : "Gallery"}
-          </p>
-        </CustomButton>
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/Team">
-          <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-            {Language === "BN" ? "টীম" : "Team"}
-          </p>
-        </CustomButton>
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/Event">
-          <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-            {Language === "BN" ? "ইভেন্ট" : "Event"}
-          </p>
-        </CustomButton>
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/Pages">
-          <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-            {Language === "BN" ? "পেইজ" : "Pages"}
-          </p>
-        </CustomButton>
-        {/* <CustomButton
-          className={"border-e-2 border-[#575757]"}
-          path="/PhotoGallery"
-        >
-          LibPatcher
-        </CustomButton> */}
-        {/* <CustomButton className={"border-e-2 border-[#575757]"} path="/Contact">
-          Contact
-        </CustomButton> */}
-        <CustomButton className={"border-e-2 border-[#575757]"} path="/About">
-          <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-            {Language === "BN" ? "আমাদের সম্পর্কে" : "About"}
-          </p>
-        </CustomButton>
+        {
+          NavRoutes.map((route, index) => <CustomButton key={index} className={"border-e-2 border-[#575757]"} path={route.path}>
+            <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+              {Language === "BN" ? route?.bnName : route?.enName}
+            </p>
+          </CustomButton>)
+        }
+
         <div className="flex items-center">
           <button
             onClick={() => {
@@ -217,7 +204,6 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        {/* <CustomButton path="/About">Support/Help</CustomButton> */}
         <div className="">
           <label className="switch">
             <span className="sun">
@@ -252,6 +238,12 @@ const Navbar = () => {
             {Language === "BN" ? "আপলোড" : "Upload"}
           </p>
         </Link>
+
+        {
+          user && <div>
+            <Image className="w-10 h-10 rounded-full hover:border-light-primary-color dark:hover:border-dark-primary-color/70 transform duration-200 border-2 border-light-secondary-color ms-5 " src={user?.picture} alt="" width={500} height={500} loading="lazy" />
+          </div>
+        }
       </div>
 
       {/* mobile Navebar */}
@@ -275,127 +267,114 @@ const Navbar = () => {
             } absolute transform duration-500 bg-dark-primary-color dark:bg-gradient-to-br from-black to-light-primary-color w-3/4 border-s-2 p-4 border-[#575757]  max-w-[320px] h-full`}
         >
           <div className="w-full flex flex-col h-full ">
-            <div className="w-full h-[60px] dark:bg-dark-primary-color flex mb-5 bg-black rounded">
-              <Link
-                href="/SignIn"
-                className="w-3/4 h-full flex items-center ps-3"
-              >
-                <div className="text-2xl flex items-center gap-x-2 dark:text-black text-white">
-                  <FaSignInAlt />
-                  <p
-                    className={`${Language === "BN" && "font-BanglaSubHeading"
-                      }`}
-                  >
-                    {Language === "BN" ? "সাইন ইন" : "Sign In"}
-                  </p>
-                </div>
-              </Link>
-              <div className="flex-grow mt-1.5 h-full ">
-                <FaMagnifyingGlass className="text-white dark:text-black text-lg text-center w-full" />
-                <label className="switch">
-                  <span className="sun">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                      <g className="fill-black dark:fill-white">
-                        <circle r="5" cy="12" cx="12"></circle>
-                        <path d="m21 13h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm-17 0h-1a1 1 0 0 1 0-2h1a1 1 0 0 1 0 2zm13.66-5.66a1 1 0 0 1 -.66-.29 1 1 0 0 1 0-1.41l.71-.71a1 1 0 1 1 1.41 1.41l-.71.71a1 1 0 0 1 -.75.29zm-12.02 12.02a1 1 0 0 1 -.71-.29 1 1 0 0 1 0-1.41l.71-.66a1 1 0 0 1 1.41 1.41l-.71.71a1 1 0 0 1 -.7.24zm6.36-14.36a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm0 17a1 1 0 0 1 -1-1v-1a1 1 0 0 1 2 0v1a1 1 0 0 1 -1 1zm-5.66-14.66a1 1 0 0 1 -.7-.29l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.29zm12.02 12.02a1 1 0 0 1 -.7-.29l-.66-.71a1 1 0 0 1 1.36-1.36l.71.71a1 1 0 0 1 0 1.41 1 1 0 0 1 -.71.24z"></path>
-                      </g>
-                    </svg>
-                  </span>
-                  <span className="moon">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 384 512"
+            <div className="w-full h-[55px] mb-5  rounded justify-between flex items-center">
+              {
+                user ? <div
+                  onClick={() => {
+                    setShowProfileRoutes(!showProfileRoutes);
+                  }}
+                  className="w-fit flex-nowrap text-nowrap px-5 h-full  items-center mt-5 rounded-xl   dark:bg-dark-primary-color flex mb-5 relative bg-black"
+                >
+                  <div className="text-3xl flex items-center justify-center gap-x-2   w-full dark:text-black text-white">
+                    <Image className="w-10 h-10 rounded-full  -ms-2 " src={user?.picture} alt="" width={500} height={500} loading="lazy" />
+                    <p
+                      className={`font text-lg`}
                     >
-                      <path d="m223.5 32c-123.5 0-223.5 100.3-223.5 224s100 224 223.5 224c60.6 0 115.5-24.2 155.8-63.4 5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6-96.9 0-175.5-78.8-175.5-176 0-65.8 36-123.1 89.3-153.3 6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path>
-                    </svg>
-                  </span>
-                  <input
-                    onChange={(e) =>
-                      setTheme(e.target.checked ? "dark" : "light")
-                    }
-                    type="checkbox"
-                    checked={
-                      localStorage.getItem("theme") === "dark" ? true : false
-                    }
-                    className="input"
-                  />
-                  <span className="slider"></span>
-                </label>
-              </div>
-            </div>
-            <CustomButton
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => setIsOpen2(false), 200);
-              }}
-              className={` text-2xl  hover:text-3xl my-1 px-0 `}
-              path="/"
-            >
-              <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "হোম" : "Home"}
-              </p>
-            </CustomButton>
-            <CustomButton
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => setIsOpen2(false), 200);
-              }}
-              className={" hover:text-3xl text-2xl mb-1 px-0 "}
-              path="/Gallery"
-            >
-              <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "গ্যালারি" : "Gallery"}
-              </p>
-            </CustomButton>
-            <CustomButton
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => setIsOpen2(false), 200);
-              }}
-              className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/Team"
-            >
-              <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "টীম" : "Team"}
-              </p>
-            </CustomButton>
-            <CustomButton
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => setIsOpen2(false), 200);
-              }}
-              className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/Event"
-            >
-              <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "ইভেন্ট" : "Event"}
-              </p>
-            </CustomButton>
-            <CustomButton
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => setIsOpen2(false), 200);
-              }}
-              className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/Pages"
-            >
-              <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "পেইজ" : "Pages"}
-              </p>
-            </CustomButton>
+                      {user?.name.slice(0, 10)}
 
-            <CustomButton
-              onClick={() => {
-                setIsOpen(false);
-                setTimeout(() => setIsOpen2(false), 200);
-              }}
-              className={" hover:text-3xl px-0 text-2xl mb-1 "}
-              path="/About"
-            >
-              <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "আমাদের সম্পর্কে" : "About"}
-              </p>
-            </CustomButton>
+                    </p>
+                    <IoIosArrowDown className={`${!showProfileRoutes ? "rotate-180" : "rotate-0"} text-[18px] transform duration-300 -me-1  right-2 bottom-0`} />
+                  </div>
+                </div> : <Link
+                  href="/SignIn"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setTimeout(() => setIsOpen2(false), 200);
+                  }}
+                  className="w-fit flex-nowrap text-nowrap px-5 h-full  items-center mt-5 rounded-xl   dark:bg-dark-primary-color flex mb-5 bg-black"
+                >
+                  <div className="text-3xl flex items-center justify-center gap-x-2   w-full dark:text-black text-white">
+                    <FaUserCircle className="-ms-2" />
+                    <p
+                      className={`${Language === "BN" && "font-BanglaSubHeading"
+                        } text-lg`}
+                    >
+                      {Language === "BN" ? "সাইন ইন" : "Sign In"}
+
+                    </p>
+                  </div>
+                </Link>
+              }
+
+              <div className="flex justify-center items-center  h-full dark:bg-dark-primary-color   bg-black rounded-xl w-[55px]  relative "> <motion.div
+                key={theme}
+                initial={{ opacity: 0, scale: 0, rotate: 0 }}
+                animate={{ opacity: 1, scale: 1, rotate: 360 }}
+                exit={{ opacity: 0, scale: 0, rotate: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                {theme === "dark" ? (
+                  <IoMdMoon className="pointer-events-none text-2xl dark:text-light-primary-color text-dark-primary-color" />
+                ) : (
+                  <MdLightMode className="pointer-events-none text-2xl dark:text-light-primary-color text-dark-primary-color" />
+                )}
+              </motion.div>
+
+                <input
+                  onChange={(e) => {
+                    setTheme2(e.target.checked ? "dark" : "light")
+                    setTheme(e.target.checked ? "dark" : "light")
+                  }
+                  }
+                  type="checkbox"
+                  checked={
+                    localStorage.getItem("theme") === "dark" ? true : false
+                  }
+                  className="absolute opacity-0 top-0 bottom-0 left-0 right-0"
+                /></div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, top: -50, rotate: 0 }}
+              animate={{ opacity: 1, top: 0, rotate: 0 }}
+              exit={{ opacity: 0, top: -50, rotate: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              key={showProfileRoutes ? 'profile' : 'nav'}>
+              {
+                showProfileRoutes ? <>{
+                  ProfileRoutes.map((route, index) => <CustomButton
+                    key={index}
+                    onClick={() => {
+                      setIsOpen(false);
+                      setTimeout(() => setIsOpen2(false), 200);
+                    }}
+                    className={` text-2xl  hover:text-3xl  my-1 px-0 `}
+                    path={route.path}
+                  >
+                    <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+                      {Language === "BN" ? route?.bnName : route?.enName}
+                    </p>
+                  </CustomButton>)
+                }</> : <>{
+                  NavRoutes.map((route, index) => <CustomButton
+                    key={index}
+                    onClick={() => {
+                      setIsOpen(false);
+                      setTimeout(() => setIsOpen2(false), 200);
+                    }}
+                    className={` text-2xl  hover:text-3xl  my-1 px-0 `}
+                    path={route.path}
+                  >
+                    <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+                      {Language === "BN" ? route?.bnName : route?.enName}
+                    </p>
+                  </CustomButton>)
+                }</>
+              }
+            </motion.div>
+
+
+
             <div className="flex items-center">
               <button
                 onClick={() => {
@@ -433,19 +412,31 @@ const Navbar = () => {
                   English
                 </button>
               </div>
+
             </div>
-            <Link onClick={() => {
-              setIsOpen(false);
-              setTimeout(() => setIsOpen2(false), 200);
-            }} href="/UploadPhoto"
-              className={
-                "border-2 mt-5 py-1 xl:py-1.5  px-6  xl:text-lg hover:bg-black dark:hover:bg-dark-primary-color dark:hover:text-black dark:border-dark-primary-color hover:text-white dark:text-dark-primary-color transform duration-300 rounded text-black border-[#000000] text-center"
+            <div className="fixed bottom-0 w-full px-4 bg-dark-primary-color dark:bg-gradient-to-br from-black to-light-primary-color right-0 left-0">
+              <button onClick={() => {
+                setIsOpen(false);
+                setTimeout(() => setIsOpen2(false), 200);
+              }} className={
+                "border-2 w-full mt-2 py-2 xl:py-1.5  mb-2  xl:text-lg hover:bg-black dark:hover:bg-dark-primary-color dark:hover:text-black dark:border-dark-primary-color hover:text-white dark:text-dark-primary-color transform duration-300 rounded-xl text-black border-[#000000] text-center"
+              }><p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+                  {Language === "BN" ? "ছবি আপলোড করুন" : "Upload Picture"}
+                </p></button>
+              {
+                user && <button onClick={() => {
+                  logOut().then(() => {
+                    toast.success(Language === "BN" ? "সাইন আউট সফল হয়েছে" : "SignOut Successful");
+                  })
+                  setIsOpen(false);
+                  setTimeout(() => setIsOpen2(false), 200);
+                }} className={
+                  "border-2 mb-2 w-full  py-2 xl:py-1.5    xl:text-lg bg-black dark:bg-dark-primary-color dark:text-black dark:border-dark-primary-color text-white  transform duration-300 rounded-xl  border-[#000000] text-center"
+                }><p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+                    {Language === "BN" ? "সাইন আউট" : "SignOut"}
+                  </p></button>
               }
-            >
-              <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-                {Language === "BN" ? "ছবি আপলোড করুন" : "Upload Picture"}
-              </p>
-            </Link>
+            </div>
           </div>
         </div>
       </div>

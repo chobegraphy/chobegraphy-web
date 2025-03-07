@@ -19,8 +19,8 @@ const HomeGallery = () => {
     refetch();
   }, [pathName]);
   return (
-    <div className="w-full dark:bg-light-primary-color bg-dark-primary-color xl:px-16 sm:px-10 px-5 pt-10 pb-20">
-      <h1
+    <section className="w-full  dark:bg-light-primary-color bg-dark-primary-color ">
+      <div className="max-w-7xl xl:px-16 sm:px-10 px-5 pt-10 pb-20 w-full mx-auto"><h1
         id="title"
         className="font-Righteous text-5xl max-xl:text-3xl text-center text-black dark:text-dark-primary-color"
       >
@@ -29,28 +29,27 @@ const HomeGallery = () => {
         </p>
         <p>{Language === "EN" && "Image Gallery"}</p>
       </h1>
-      <h1
-        id="title2"
-        className="font-Space mt-1 text-xl mx-auto max-lg:text-base w-2/3 text-center text-light-primary-color dark:text-dark-primary-color"
-      >
-        <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
-          {Language === "BN" &&
-            "ছবি সেটা নয় যা তুমি দেখো, ছবি সেটা যা তুমি অন্যদের দেখাও।"}
-        </p>
-        <p>
-          {Language === "EN" &&
-            "Picture is not what you see, but what you make others see"}
-        </p>
-      </h1>
+        <h1
+          id="title2"
+          className="font-Space mt-1 text-xl mx-auto max-lg:text-base w-2/3 text-center text-light-primary-color dark:text-dark-primary-color"
+        >
+          <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
+            {Language === "BN" &&
+              "ছবি সেটা নয় যা তুমি দেখো, ছবি সেটা যা তুমি অন্যদের দেখাও।"}
+          </p>
+          <p>
+            {Language === "EN" &&
+              "Picture is not what you see, but what you make others see"}
+          </p>
+        </h1>
 
-      <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-6 max-xl:columns-4 gap-2 justify-center w-full ">
-        {data?.slice(0, 19).map((imgInfo: any, index: any) => (
-          <div key={imgInfo?._id} className="relative ">
-            <ImgCard imgData={imgInfo} i={index} />
-          </div>
-        ))}
-      </div>
-      {data?.length >= 19 && (
+        <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-6 max-xl:columns-4 gap-2 justify-center w-full ">
+          {data?.slice(0, 19).map((imgInfo: any, index: any) => (
+            <div key={imgInfo?._id} className="relative ">
+              <ImgCard imgData={imgInfo} i={index} />
+            </div>
+          ))}
+        </div>
         <Link href={"/AllImg"}>
           <button
             className={
@@ -59,13 +58,12 @@ const HomeGallery = () => {
           >
             <span>
               <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-                {Language === "BN" ? "আরও দেখুন" : "View More"}
+                {Language === "BN" ? "সব দেখুন" : "View ALl"}
               </p>
             </span>
           </button>
-        </Link>
-      )}
-    </div>
+        </Link></div>
+    </section>
   );
 };
 

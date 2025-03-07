@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { ImSpinner } from "react-icons/im";
 import { LuPlus } from "react-icons/lu";
 import "./SignUp.css";
 const SignInForm = () => {
@@ -246,12 +247,9 @@ const SignInForm = () => {
                 {buttonLoading === true ? (
                   <div>
                     <button className="btn btn-primary dark:text-light-primary-color dark:bg-dark-primary-color border-none flex flex-row-reverse items-center gap-x-2  tracking-wider rounded-xl py-4 px-7">
-                      <div className="loader">
-                        <div className="circle"></div>
-                        <div className="circle"></div>
-                        <div className="circle"></div>
-                        <div className="circle"></div>
-                      </div>
+                      <ImSpinner
+                        className={`text-lg animate-spin `}
+                      />
                       <div className="mt-0.5">
                         <span className="font-BanglaHeading">
                           {Language === "BN" && "লোডিং"}
@@ -341,12 +339,9 @@ const SignInForm = () => {
                 {buttonLoading === true ? (
                   <div>
                     <button className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider rounded-xl flex items-center gap-x-3 py-4 px-7">
-                      <div className="loader ">
-                        <div className="circle"></div>
-                        <div className="circle"></div>
-                        <div className="circle"></div>
-                        <div className="circle"></div>
-                      </div>
+                      <ImSpinner
+                        className={`text-lg animate-spin `}
+                      />
                       <div className="mt-0.5">
                         <span className="font-BanglaHeading">
                           {Language === "BN" && "লোডিং"}

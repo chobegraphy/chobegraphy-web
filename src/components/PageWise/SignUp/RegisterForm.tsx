@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { ImSpinner } from "react-icons/im";
 import { LuPlus } from "react-icons/lu";
 import { useUploadProfilePictureMutation } from "../../../../Redux/Features/Apis/ProfilePicture/UploadProfilePicture";
 import "./SignUp.css";
@@ -342,12 +343,9 @@ const RegisterForm = () => {
             {buttonLoading === true ? (
               <div>
                 <button className="btn btn-primary dark:text-light-primary-color dark:bg-dark-primary-color border-none flex bg-light-primary-color text-dark-primary-color flex-row-reverse items-center gap-x-2  tracking-wider rounded-xl py-4 px-7">
-                  <div className="loader">
-                    <div className="circle"></div>
-                    <div className="circle"></div>
-                    <div className="circle"></div>
-                    <div className="circle"></div>
-                  </div>
+                  <ImSpinner
+                    className={`text-lg animate-spin `}
+                  />
                   <div className="mt-0.5">
                     <div className="mt-0.5">
                       <span className="font-BanglaHeading">
