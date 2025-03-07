@@ -17,7 +17,7 @@ const PrivateRoute = ({ children }: any) => {
             // Save the current route to redirect back to after login
 
             typeof window !== 'undefined' && localStorage.setItem('redirectUrl', pathname);
-            router.push('/signin');  // Redirect to sign in if no user
+            router.push('/SignIn');  // Redirect to sign in if no user
         }
     }, [user, router]);
 

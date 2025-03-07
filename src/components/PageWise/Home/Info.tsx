@@ -9,13 +9,13 @@ const Info = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   return (
-    <section className="mt-20 max-md:mt-10 ">
+    <section className="mt-20 max-md:mt-20 ">
       <h1
         id="title"
         className="font-Righteous text-5xl max-xl:text-3xl  text-center text-black dark:text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-          {Language === "BN" && "ছবিগ্রাফির সংখ্যা, আমাদের গল্প"}
+          {Language === "BN" && <span>ছবিগ্রাফির সংখ্যা, <br className="max-md:block hidden" /> আমাদের গল্প</span>}
         </p>
         <p>{Language === "EN" && "Numbers that Tell Our Story"}</p>
       </h1>
@@ -43,7 +43,7 @@ const Info = () => {
           <Lottie
             className="max-w-[200px]"
             animationData={imgAnimation}
-            //   loop={false}
+          //   loop={false}
           />
           <h1 className="text-2xl  font-Righteous text-light-primary-color dark:text-dark-primary-color">
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
@@ -63,7 +63,7 @@ const Info = () => {
           <Lottie
             className="max-w-[200px]"
             animationData={peopleAnimation}
-            //   loop={false}
+          //   loop={false}
           />
           <h1 className="text-2xl  font-Righteous text-light-primary-color dark:text-dark-primary-color">
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
@@ -85,7 +85,7 @@ const Info = () => {
               <Lottie
                 className="object-cover  rounded-b-3xl w-[200px]"
                 animationData={menLight}
-                //   loop={false}
+              //   loop={false}
               />
             </div>
           </div>

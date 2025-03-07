@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -47,20 +48,22 @@ interface AuthContextData {
   logOut: () => Promise<any>;
   signIn: boolean;
   setSignIn: (signIn: boolean) => void;
+  passwordReset: (email: string) => Promise<any>;
 }
 
 const defaultValue: AuthContextData = {
   open: false,
-  setOpen: () => {},
+  setOpen: () => { },
   EmailPassWordSignUp: () => Promise.resolve(),
   EmailPasswordLogin: () => Promise.resolve(),
   GoogleSignIn: () => Promise.resolve(),
   GitHubLogin: () => Promise.resolve(),
-  setUser: () => {},
+  setUser: () => { },
   logOut: () => Promise.resolve(),
   user: null,
   signIn: true,
-  setSignIn: () => {},
+  setSignIn: () => { },
+  passwordReset: () => Promise.resolve(),
 };
 
 export const AuthContext = createContext<AuthContextData>(defaultValue);
@@ -130,6 +133,11 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
     } catch (error) {
       console.error("Error logging out:", error);
     }
+  };
+
+  // password reset
+  const passwordReset = async (email: string) => {
+    return sendPasswordResetEmail(auth, email); (email);
   };
 
   // Fetch User Data from Backend
@@ -208,7 +216,7 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
         logOut,
         user,
         signIn,
-        setSignIn,
+        setSignIn, passwordReset,
       }}
     >
       {children}

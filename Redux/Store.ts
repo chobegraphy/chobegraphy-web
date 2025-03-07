@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./Features/ApiSlice/ApiSlice";
 import LanguageReducer from "./Features/Language/Language";
+import { RenderApiSlice } from "./Features/RenderApiSlice/ApiSlice";
 import StoreImgDetailsData from "./Features/StoreImgDetailsData/StoreImgDetailsData";
 import StoreImgDetailsId from "./Features/StoreImgDetailsId/StoreImgDetailsId";
 import StoreLikedPictureData from "./Features/StoreLikedPictureData/StoreLikedPictureData";
@@ -11,9 +12,13 @@ export const store = configureStore({
     StoreLikedPictureData: StoreLikedPictureData,
     StoreImgDetailsId: StoreImgDetailsId,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [RenderApiSlice.reducerPath]: RenderApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(
+      apiSlice.middleware,
+      RenderApiSlice.middleware
+    ),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

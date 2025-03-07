@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { LuPlus } from "react-icons/lu";
-import { useUploadProfilePictureMutation, useUploadUsingImgBBMutation } from "../../../../Redux/Features/Apis/ProfilePicture/UploadProfilePicture";
+import { useUploadProfilePictureMutation } from "../../../../Redux/Features/Apis/ProfilePicture/UploadProfilePicture";
 import "./SignUp.css";
 const RegisterForm = () => {
   const { GoogleSignIn, EmailPassWordSignUp, setUser } = useAuthData();
@@ -19,8 +19,6 @@ const RegisterForm = () => {
   const [Base64photo, setBase64photo] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [fileSize, setFileSize] = useState<number>(0);
-  const [ImgFile, setImgFile] = useState<string | null>(null);
-  const [ImgUrl, setImgUrl] = useState<string | null>(null);
   const router = useRouter();
 
   // redux writing
@@ -30,7 +28,7 @@ const RegisterForm = () => {
       : "BN";
 
   const [uploadProfilePictureMutation] = useUploadProfilePictureMutation();
-  const [UploadUsingImgBBMutation] = useUploadUsingImgBBMutation()
+
   const convertToBase64 = (file: any) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -49,7 +47,7 @@ const RegisterForm = () => {
     if (file) {
       setFileName(file.name);
       setFileSize(file.size);
-      setImgFile(file);
+
       convertToBase64(file).then((base64) => {
         console.log(base64);
         setBase64photo(base64 as string)
@@ -71,42 +69,24 @@ const RegisterForm = () => {
       console.log(firebaseData);
 
       let uploadedImgUrl; // Use a local variable
+      const response = await uploadProfilePictureMutation({ file: Base64photo, fileName: fileName }).unwrap();
+      console.log("Upload successful:", response?.imageUrl);
+      uploadedImgUrl = response.imageUrl;
 
-      if (fileSize > 4.5 * 1024 * 1024) {
-        if (!ImgFile) {
-          throw new Error("No image file selected");
-        }
-        const formData = new FormData();
-        formData.append("image", ImgFile);
-        const imgBBResponse = await axios.post(
-          `https://api.imgbb.com/1/upload?key=eada499cd6dc5e09c832c88531a41acb`,
-          formData
-        );
-        console.log(imgBBResponse.data);
-        const response = await UploadUsingImgBBMutation({ imgUrl: imgBBResponse.data.data.url, filename: fileName }).unwrap();
-        console.log("Upload successful:", response);
-        uploadedImgUrl = response.imageUrl; // Assign directly to local variable
-      } else {
-        const response = await uploadProfilePictureMutation({ file: Base64photo, fileName: fileName }).unwrap();
-        console.log("Upload successful:", response?.imageUrl);
-        uploadedImgUrl = response.imageUrl; // Assign directly to local variable
-      }
-
-      // Use the local variable for userData instead of the state value
       const userData = {
         name: data.name,
         email: data.email,
         picture: uploadedImgUrl,
       };
 
-      const response = await axios.post(
+      const response2 = await axios.post(
         BaseApiUrl + "/add-user",
         userData,
         { headers: { "Content-Type": "application/json" } }
       );
 
-      console.log("User registered successfully on backend:", response.data.data);
-      setUser(response.data.data);
+      console.log("User registered successfully on backend:", response2.data.data);
+      setUser(response2.data.data);
       toast.success(Language === "BN" ? "নতুন ব্যবহারকারী যুক্ত হয়েছে" : "New User Added Successfully");
 
       const redirectUrl = localStorage.getItem('redirectUrl') || '/';
@@ -316,27 +296,24 @@ const RegisterForm = () => {
                 {Language === "EN" && "Profile Picture"}
               </span>
             </label>
-            <div className="relative border-y-2 h-full mt-1 cursor-pointer">
+            <div className="relative border-y-2 h-full mt-1 bg-[#ffffff] dark:bg-[#121212] cursor-pointer flex items-center justify-center">
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
                 className={`${Language === "BN" ? "font-BanglaSubHeading" : "font-Space"
-                  } opacity-0 h-full input  w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  py-2`}
+                  } opacity-0 h-full input  w-full  border-x-0 px-5 border-y-2 outline-none text-light-primary-color dark:text-dark-primary-color  z-0   py-2`}
                 required
               />
-              <h1 className="absolute top-0 left-5  bottom-0 flex items-center  justify-center">
+              <h1 className="absolute top-0 left-5 text-[#8a91a0] bottom-0 flex pointer-events-none items-center z-0 justify-center">
                 {
                   Base64photo === null ? (
-                    <span> <span className="font-BanglaHeading">
+                    <span> <span className="font-BanglaSubHeading">
                       {Language === "BN" && "একটি ছবি নির্বাচন করুন"}
                     </span>
                       {Language === "EN" && "select a  picture"}</span>
                   ) : (
-                    <span> <span className="font-BanglaHeading">
-                      {Language === "BN" && "ছবি নির্বাচন করা হয়েছে"}
-                    </span>
-                      {Language === "EN" && "picture selected"}</span>
+                    <span>{fileName}</span>
                   )
                 }
               </h1>

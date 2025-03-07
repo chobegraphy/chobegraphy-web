@@ -1,13 +1,13 @@
-import { apiSlice } from "../../ApiSlice/ApiSlice";
+import { RenderApiSlice } from "../../RenderApiSlice/ApiSlice";
 
-export const UploadProfilePictureApiSlice = apiSlice.injectEndpoints({
+export const UploadProfilePictureApiSlice = RenderApiSlice.injectEndpoints({
     overrideExisting: true,
     endpoints: (builder) => ({
         UploadProfilePicture: builder.mutation({
-            query: ({ file, fileName, chunkIndex, totalChunks }) => ({
-                url: `http://localhost:5000/api/uploadUserPhoto`,
+            query: ({ file, fileName }) => ({
+                url: `/uploadUserPhoto`,
                 method: "POST",
-                body: { photo: file, filename: fileName, chunkIndex, totalChunks },
+                body: { photo: file, filename: fileName, },
                 fetchOptions: {
                     mode: "cors",
 
@@ -16,21 +16,7 @@ export const UploadProfilePictureApiSlice = apiSlice.injectEndpoints({
 
             invalidatesTags: ["UploadProfilePicture"],
         }),
-        UploadUsingImgBB: builder.mutation({
-            query: ({ imgUrl, filename }) => ({
-                url: `http://localhost:5000/api/uploadImgByImgBB`,
-                method: "POST",
-                body: { imgUrl, filename },
-                fetchOptions: {
-                    mode: "cors",
-
-                },
-            }),
-
-            invalidatesTags: ["UploadUsingImgBB"],
-        }),
-
     }),
 });
 
-export const { useUploadProfilePictureMutation, useUploadUsingImgBBMutation } = UploadProfilePictureApiSlice;
+export const { useUploadProfilePictureMutation, } = UploadProfilePictureApiSlice;
