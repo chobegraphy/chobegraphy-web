@@ -68,13 +68,17 @@ const Navbar = () => {
           }
         },
         (error) => {
-          setError(error.message);
+          // If geolocation is denied or fails, set the language to English
+          setError("Geolocation permission denied or failed.");
+          dispatch(setLanguage("EN")); // Set language to English if location is not allowed or an error occurs
         }
       );
     } else {
       setError("Geolocation is not supported by this browser.");
+      dispatch(setLanguage("EN")); // Set language to English if geolocation is not supported
     }
-  }, []);
+  }, [dispatch]);
+
 
   // Set language based on country when country updates
   useEffect(() => {

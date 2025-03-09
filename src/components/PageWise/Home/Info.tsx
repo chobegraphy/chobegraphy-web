@@ -1,23 +1,68 @@
 "use client";
 
+import { animate, motion, useInView, useMotionValue, useMotionValueEvent } from "framer-motion";
 import Lottie from "lottie-react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import imgAnimation from "../../../Assets/Animation/img.json";
 import peopleAnimation from "../../../Assets/Animation/people.json";
 import menLight from "../../../Assets/Animation/photographerLight.json";
+
 const Info = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
+  const ref = useRef(null);
+
+  // Track if element is in view
+  const isInView = useInView(ref, { once: true });
+
+  // Motion value for count
+  const countChobegraphy = useMotionValue(0);
+  const countPhotographer = useMotionValue(0);
+
+  // Local state to store the rounded value of counts
+  const [roundedChobegraphyCount, setRoundedChobegraphyCount] = useState(0);
+  const [roundedPhotographerCount, setRoundedPhotographerCount] = useState(0);
+
+  // Listen to count changes and update the rounded count states
+  useMotionValueEvent(countChobegraphy, "change", (latest: any) => {
+    setRoundedChobegraphyCount(Math.round(latest)); // Update the state to trigger a re-render
+  });
+
+  useMotionValueEvent(countPhotographer, "change", (latest: any) => {
+    setRoundedPhotographerCount(Math.round(latest)); // Update the state to trigger a re-render
+  });
+
+  // Trigger count animation when element is in view
+  useEffect(() => {
+    if (isInView) {
+      // Animate Chobegraphy count to 1000 at a faster speed
+      const controlsChobegraphy = animate(countChobegraphy, 1000, { duration: 4 });
+
+      // Animate Photographer count to 10 at a slower speed
+      const controlsPhotographer = animate(countPhotographer, 10, { duration: 6 });
+
+      return () => {
+        controlsChobegraphy.stop();
+        controlsPhotographer.stop();
+      };
+    }
+  }, [isInView, countChobegraphy, countPhotographer]);
+
   return (
-    <section className="mt-20 max-md:mt-20 ">
+    <section className="mt-20 max-md:mt-20">
       <h1
         id="title"
-        className="font-Righteous text-5xl max-xl:text-3xl  text-center text-black dark:text-dark-primary-color"
+        className="font-Righteous text-5xl max-xl:text-3xl text-center text-black dark:text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-          {Language === "BN" && <span>ছবিগ্রাফির সংখ্যা, <br className="max-md:block hidden" /> আমাদের গল্প</span>}
+          {Language === "BN" && (
+            <span>
+              আমাদের প্রভাব <br className="max-md:block hidden" />
+            </span>
+          )}
         </p>
-        <p>{Language === "EN" && "Numbers that Tell Our Story"}</p>
+        <p>{Language === "EN" && "Our Impact"}</p>
       </h1>
       <h1
         id="title2"
@@ -32,25 +77,24 @@ const Info = () => {
             "Every number tells a story—of moments, vision, and passion."}
         </p>
       </h1>
-      <div className="w-full mt-20  my-32 grid-cols-3 grid sm:px-10 relative max-md:grid-cols-1 px-5 gap-10 max-md:gap-5">
-        <div className="absolute  -right-10 top-10 items-center gap-x-3 max-lg:-right-24 max-lg:scale-90  rotate-45 flex">
-          <div className="bg-light-primary-color w-[100px] rounded-3xl h-[100px]  "></div>
+      <div className="w-full max-md:mt-5 mt-20 my-32 grid-cols-3  grid sm:px-10 relative max-md:grid-cols-1 px-5 gap-10 max-md:gap-5">
+        <div className="absolute -right-10 top-10 items-center gap-x-3 max-lg:-right-24 max-lg:scale-90 rotate-45 flex">
+          <div className="bg-light-primary-color w-[100px] rounded-3xl h-[100px]"></div>
         </div>
-        <div className="absolute  left-20  items-center gap-x-3 max-lg:-left-24 max-lg:scale-90  rotate-45 flex">
-          <div className="bg-light-primary-color w-[70px] rounded-3xl h-[70px]  "></div>
+        <div className="absolute left-20 items-center gap-x-3 max-lg:-left-24 max-lg:scale-90 rotate-45 flex">
+          <div className="bg-light-primary-color w-[70px] rounded-3xl h-[70px]"></div>
         </div>
         <div className="text-center flex flex-col items-center justify-center">
-          <Lottie
-            className="max-w-[200px]"
-            animationData={imgAnimation}
-          //   loop={false}
-          />
-          <h1 className="text-2xl  font-Righteous text-light-primary-color dark:text-dark-primary-color">
+          <Lottie className={`${Language === "BN" ? "max-w-[135px]" : "max-w-[120px]"}`} animationData={imgAnimation} />
+          <motion.pre
+            ref={ref}
+            className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color"
+          >
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">1000+</span>&nbsp;
-              {Language === "BN" ? "ইমেজ/ছবি" : " Chobegraphy"}
+              <span className="font-Bayon">{roundedChobegraphyCount}+</span>&nbsp;
+              {Language === "BN" ? "ইমেজ/ছবি" : " Images/Photos"}
             </p>
-          </h1>
+          </motion.pre>
           <p className="text-center text-light-primary-color dark:text-dark-primary-color text-sm mt-1 font-Space">
             <span className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
               {Language === "BN"
@@ -60,15 +104,11 @@ const Info = () => {
           </p>
         </div>
         <div className="text-center flex flex-col items-center justify-center">
-          <Lottie
-            className="max-w-[200px]"
-            animationData={peopleAnimation}
-          //   loop={false}
-          />
-          <h1 className="text-2xl  font-Righteous text-light-primary-color dark:text-dark-primary-color">
+          <Lottie className="max-w-[200px]" animationData={peopleAnimation} />
+          <h1 className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color">
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">1000+</span>&nbsp;
-              {Language === "BN" ? "সদস্য/অ্যাকাউন্ট" : " Chobegraphy"}
+              <span className="font-Bayon">{roundedChobegraphyCount}+</span>&nbsp;
+              {Language === "BN" ? "সদস্য/অ্যাকাউন্ট" : " Members/Accounts"}
             </p>
           </h1>
           <p className="text-center text-light-primary-color dark:text-dark-primary-color text-sm mt-1 font-Space ">
@@ -81,24 +121,18 @@ const Info = () => {
         </div>
         <div className="text-center flex flex-col items-center justify-center">
           <div className="max-w-[200px] overflow-hidden h-[135px] relative">
-            <div className="relative  w-full h-full -top-8 ">
-              <Lottie
-                className="object-cover  rounded-b-3xl w-[200px]"
-                animationData={menLight}
-              //   loop={false}
-              />
+            <div className="relative w-full h-full -top-8">
+              <Lottie className="object-cover rounded-b-3xl w-[200px]" animationData={menLight} />
             </div>
           </div>
-          <h1 className="text-2xl  font-Righteous text-light-primary-color dark:text-dark-primary-color">
+          <h1 className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color">
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">10+</span>&nbsp;
+              <span className="font-Bayon">{roundedPhotographerCount}+</span>&nbsp;
               {Language === "BN" ? "দক্ষ ফটোগ্রাফার" : "skilled Photographer"}
             </p>
           </h1>
           <p className="text-center text-light-primary-color dark:text-dark-primary-color text-sm mt-1 font-Space">
-            <span
-              className={`${Language === "BN" && "font-BanglaSubHeading "}`}
-            >
+            <span className={`${Language === "BN" && "font-BanglaSubHeading "}`}>
               {Language === "BN"
                 ? " অভিজ্ঞ ফটোগ্রাফার রয়েছেন, যারা ফটোগ্রাফি বিষয়ে দিচ্ছেন মূল্যবান পরামর্শ ও গাইডলাইন। 📸✨ আপনার দক্ষতা বাড়াতে ও সেরা মুহূর্ত ক্যামেরাবন্দি করতে আমাদের সঙ্গে থাকুন!"
                 : "Experienced photographers who provide valuable advice and guidelines on photography. 📸✨ Join us to improve your skills and capture the best moments!"}

@@ -1,15 +1,172 @@
 "use client";
+import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { FaSignInAlt } from "react-icons/fa";
-import { MdOutlineCamera, MdOutlineTipsAndUpdates } from "react-icons/md";
+import { MdOutlineTipsAndUpdates } from "react-icons/md";
 import { RiBox3Fill } from "react-icons/ri";
 import { TbBorderCornerSquare } from "react-icons/tb";
 import { useSelector } from "react-redux";
+
+import { useRef } from "react";
 import "./Home.css";
 const Hero = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
+  const ref = useRef(null)
 
+  const inView = useInView(ref);
+
+
+  const getRandomDuration = () => Math.random() * (1.5 - 0.7) + 0.7; // Random duration between 0.7s and 1.5s
+
+  const imgSection = <> <div className="w-full h-full  flex justify-center max-md:mt-5 max-md:mb-20 max-md:ms-0 ms-5 items-center relative">
+
+    <div className="w-[450px] h-[450px] grid-cols-3 max-md:w-[290px] max-md:h-[290px] rotate-45 scale-90 gap-3 grid grid-rows-3">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-100 rounded-3xl border-2 border-light-secondary-color rounded-br-none w-full h-full"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-200 w-full h-full rounded-3xl rounded-bl-none border-2 border-light-secondary-color"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-300 rounded-full w-full h-full border-2 border-light-secondary-color"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-400 rounded-3xl border-2 border-light-secondary-color rounded-tr-none w-full h-full"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-600 rounded-b-full rounded-tr-full w-full h-full border-2 border-light-secondary-color"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-700 rounded-t-full rounded-br-full w-full h-full border-2 border-light-secondary-color"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-800 rounded-full w-full h-full border-2 border-light-secondary-color"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-red-900 rounded-b-full rounded-tl-full w-full h-full border-2 border-light-secondary-color"
+      ></motion.div>
+
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, scale: 0, rotate: 0 }}
+        animate={{
+          opacity: inView ? 1 : 0,
+          scale: inView ? 1 : 0,
+          rotate: inView ? 0 : 0,
+        }}
+        exit={{ opacity: 0, scale: 0, rotate: 0 }}
+        transition={{
+          duration: getRandomDuration(),
+          ease: "easeInOut",
+        }}
+        className="bg-pink-800 w-full h-full rounded-b-full rounded-tr-full border-2 border-light-secondary-color"
+      ></motion.div>
+    </div>
+  </div></>
   return (
     <div className="">
       <div className="h-full   dark:border-light-secondary-color w-full my-5 relative mt-10  border-[#B8B8B8]">
@@ -27,7 +184,7 @@ const Hero = () => {
           <TbBorderCornerSquare className="text-light-primary-color dark:text-dark-primary-color" />
         </div>
 
-        <div className="grid max-xl:grid-cols-1 grid-cols-2 max-md:h-[1250px] w-full pb-7">
+        <div className="grid max-xl:grid-cols-1 grid-cols-2 max-md:h-full w-full pb-7">
           <div className="ms-10 max-xl:mx-5 z-20 mt-7">
             <div className=" max-sm:h-fit lg:h-[115px] max-sm:text-6xl text-8xl font-normal text-light-primary-color font-Bayon dark:text-dark-primary-color   leading-[120px]">
               <span className="">
@@ -73,6 +230,7 @@ const Hero = () => {
                 {Language === "BN" ? "গ্যালারি" : "Gallery"}
               </p>
             </button>
+
             <div className="w-full mt-12 min-h-[154px] border border-light-primary-color dark:border-dark-primary-color/30 relative p-4">
               <div className=" max-md:grid-cols-1 grid grid-cols-2 w-full h-full ">
                 <div className="max-md:border-b-2 max-md:mb-5 max-md:border-e-0 border-e-2 border-light-primary-color dark:border-dark-primary-color w-full h-full">
@@ -109,7 +267,7 @@ const Hero = () => {
                   </h1>
                   <p
                     className={`${Language === "BN" && "font-BanglaSubHeading"
-                      } text-light-secondary-color dark:text-dark-secondary-color`}
+                      } text-light-secondary-color font-Space dark:text-dark-secondary-color`}
                   >
                     {Language === "BN"
                       ? "ফটোগ্রাফির শিল্পের মাধ্যমে প্রতিটি মুহূর্তকে চিরতরে পুনরুজ্জীবিত করুন। অনন্তকাল।"
@@ -131,8 +289,8 @@ const Hero = () => {
               </div>
             </div>
           </div>
-          <div
-            className={`mt-10 relative flex justify-center ${window.screen.width === 360 && "left-2.5"
+          {/* <div
+            className={`mt-10 relative flex justify-center opacity-0 ${window.screen.width === 360 && "left-2.5"
               } `}
           >
             <div className="absolute w-[100px] rounded-3xl rotate-45 h-[100px] bg-green-700 max-md:hidden top-[5px] max-md:top-[770px] max-lg:top-[230px] max-lg:right-[210px] max-md:w-[70px] max-md:h-[70px] right-[323px] max-md:right-[270px] max-xl:top-[-505px] max-lg:hidden "></div>
@@ -166,7 +324,9 @@ const Hero = () => {
             <div className="absolute w-[90px] rounded-3xl rotate-45 h-[90px] max-xl:-top-[300px] bg-red-900 top-[205px] max-md:top-[-23px] max-lg:top-[230px] max-lg:right-[210px] right-[70px] max-lg:hidden max-md:block max-md:right-[74px]"></div>
             <div className="absolute w-[60px] rounded-xl rotate-45 h-[60px] max-xl:-top-[230px] max-lg:hidden max-md:block bg-red-200 top-[270px] max-md:top-[210px] max-lg:top-[230px] max-lg:right-[210px] right-[160px] max-md:right-[170px]"></div>
             <div className="absolute w-[60px] rounded-xl rotate-45 h-[60px] max-xl:right-[214px] max-lg:hidden max-md:block max-xl:-top-[180px] bg-red-200 top-[320px] max-md:top-[-255px] max-lg:top-[230px] max-lg:right-[210px] right-[210px] max-md:right-[133px]"></div>
-          </div>
+          </div> */}
+          {imgSection}
+
         </div>
       </div>
     </div>

@@ -1,9 +1,10 @@
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import clsx from "clsx"; // Utility for conditional class names
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
@@ -21,6 +22,9 @@ import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictu
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const ImgCard = ({ imgData, i }: any) => {
+  // framer motion
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
   const { user } = useAuthData();
   console.log(user?._id);
   const router = useRouter(); // Initialize router
@@ -116,7 +120,18 @@ const ImgCard = ({ imgData, i }: any) => {
   };
 
   return (
-    <div
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 100, rotate: 0 }}
+      animate={{
+        opacity: inView ? 1 : 0,
+        y: inView ? 0 : 100,
+      }}
+      transition={{
+        duration: 0.5,              // 0.5s animation duration
+        ease: "easeInOut",          // Smooth ease-in-out animation
+      }}
+      exit={{ opacity: 0, y: 100 }}
       className={clsx(
         i !== 0 && "my-2",
         "block relative overflow-hidden rounded-2xl"
@@ -173,8 +188,8 @@ const ImgCard = ({ imgData, i }: any) => {
             {likeLoading === true && (
               <ImSpinner
                 className={`${LikedPictureData.includes(imgData?._id)
-                    ? "text-pink-600"
-                    : "text-white"
+                  ? "text-pink-600"
+                  : "text-white"
                   } animate-spin `}
               />
             )}
@@ -188,7 +203,7 @@ const ImgCard = ({ imgData, i }: any) => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

@@ -25,9 +25,9 @@ const HomeGallery = () => {
         className="font-Righteous text-5xl max-xl:text-3xl text-center text-black dark:text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-          {Language === "BN" && "ছবির গ্যালারি"}
+          {Language === "BN" && "সাম্প্রতিক আপলোড"}
         </p>
-        <p>{Language === "EN" && "Image Gallery"}</p>
+        <p>{Language === "EN" && "Recent Uploads"}</p>
       </h1>
         <h1
           id="title2"
