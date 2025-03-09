@@ -1,9 +1,23 @@
-export async function GET() {
+export async function GET(req) {
   const GITHUB_USERNAME = "chobegraphy";
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const REPO_PREFIX = "ChobegraphyUser";
   let totalDataCount = 0;
+  // CORS Configuration: Allow both Live and Localhost
+  const allowedHosts = ["localhost:3000", "chobegraphy.vercel.app"];
+  const origin = req.headers.get("host") || "";
 
+  if (!allowedHosts.includes(origin)) {
+    return new Response(JSON.stringify({ message: "Forbidden" }), {
+      status: 403,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
+  }
   try {
     // Fetch all repositories for the user (including private repos)
     const repoResponse = await fetch(
@@ -52,11 +66,26 @@ export async function GET() {
       }
     }
 
-    return Response.json({ totalDataCount }, { status: 200 });
+    return Response.json(
+      { totalDataCount },
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": origin,
+        },
+      }
+    );
   } catch (error) {
     return Response.json(
       { message: "Server Error", error: error.message },
-      { status: 500 }
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": origin,
+        },
+      }
     );
   }
 }

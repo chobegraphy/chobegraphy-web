@@ -1,9 +1,25 @@
-export async function GET() {
+export async function GET(req) {
   const GITHUB_USERNAME = "chobegraphy";
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
   const REPO_PREFIX = "ChobegraphyPictureApi";
   let totalDataCount = 0;
 
+  // CORS Configuration: Allow both Live and Localhost
+  const allowedHosts = ["localhost:3000", "chobegraphy.vercel.app"];
+
+  const origin = req.headers.get("host") || "";
+  // console.log(allowedHosts.includes(origin));
+  if (!allowedHosts.includes(origin)) {
+    return new Response(JSON.stringify({ message: "Forbidden" }), {
+      status: 403,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      },
+    });
+  }
   try {
     // Fetch all repositories for the user (including private repos)
     const repoResponse = await fetch(
@@ -25,14 +41,14 @@ export async function GET() {
       );
     }
 
-    // Filter repositories that match ChobegraphyUser followed by numbers
+    // Filter repositories that match ChobegraphyPictureApi followed by numbers
     const filteredRepos = repos.filter(
       (repo) =>
         repo.name.startsWith(REPO_PREFIX) &&
         !isNaN(repo.name.replace(REPO_PREFIX, ""))
     );
 
-    // Fetch UserData.json from each repo
+    // Fetch PictureApi.json from each repo
     for (const repo of filteredRepos) {
       const fileResponse = await fetch(
         `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/contents/PictureApi.json`,
@@ -52,11 +68,22 @@ export async function GET() {
       }
     }
 
-    return Response.json({ totalDataCount }, { status: 200 });
+    return new Response(JSON.stringify({ totalDataCount }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": origin,
+      },
+    });
   } catch (error) {
-    return Response.json(
-      { message: "Server Error", error: error.message },
-      { status: 500 }
+    return new Response(
+      JSON.stringify({ message: "Server Error", error: error.message }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
   }
 }

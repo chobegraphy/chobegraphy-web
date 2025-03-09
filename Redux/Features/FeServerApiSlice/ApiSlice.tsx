@@ -7,8 +7,8 @@ export const FeServerApiSlice = createApi({
         "Get-Img-Count"
     ],
     baseQuery: fetchBaseQuery({
-        // baseUrl: "http://localhost:3000/api",
-        baseUrl: "https://chobegraphy.vercel.app/api",
+        baseUrl: "http://localhost:3000/api",
+        // baseUrl: "https://chobegraphy.vercel.app/api",
     }),
     endpoints: () => ({}),
 });
