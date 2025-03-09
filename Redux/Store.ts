@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./Features/ApiSlice/ApiSlice";
+import { FeServerApiSlice } from "./Features/FeServerApiSlice/ApiSlice";
 import LanguageReducer from "./Features/Language/Language";
 import { RenderApiSlice } from "./Features/RenderApiSlice/ApiSlice";
 import StoreImgDetailsData from "./Features/StoreImgDetailsData/StoreImgDetailsData";
@@ -13,11 +14,13 @@ export const store = configureStore({
     StoreImgDetailsId: StoreImgDetailsId,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [RenderApiSlice.reducerPath]: RenderApiSlice.reducer,
+    [FeServerApiSlice.reducerPath]: FeServerApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       apiSlice.middleware,
-      RenderApiSlice.middleware
+      RenderApiSlice.middleware,
+      FeServerApiSlice.middleware
     ),
 });
 

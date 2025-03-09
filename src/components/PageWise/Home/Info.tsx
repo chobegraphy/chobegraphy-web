@@ -4,6 +4,8 @@ import { animate, motion, useInView, useMotionValue, useMotionValueEvent } from 
 import Lottie from "lottie-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useGetImgCountQuery } from "../../../../Redux/Features/FeServerApiSlice/Apis/GetImgCount/ApiSlice";
+import { useGetUserCountQuery } from "../../../../Redux/Features/FeServerApiSlice/Apis/GetUserCount/ApiSlice";
 import imgAnimation from "../../../Assets/Animation/img.json";
 import peopleAnimation from "../../../Assets/Animation/people.json";
 import menLight from "../../../Assets/Animation/photographerLight.json";
@@ -11,43 +13,58 @@ import menLight from "../../../Assets/Animation/photographerLight.json";
 const Info = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
+  // user count rtk query
+  const { data: UserCountData } = useGetUserCountQuery(
+    {}
+  );
+  const { data: ImgCountData } = useGetImgCountQuery(
+    {}
+  );
+  console.log(UserCountData?.totalDataCount);
   const ref = useRef(null);
-
   // Track if element is in view
   const isInView = useInView(ref, { once: true });
 
   // Motion value for count
-  const countChobegraphy = useMotionValue(0);
+  const countImg = useMotionValue(0);
+  const countUser = useMotionValue(0);
   const countPhotographer = useMotionValue(0);
 
   // Local state to store the rounded value of counts
-  const [roundedChobegraphyCount, setRoundedChobegraphyCount] = useState(0);
+  const [roundedImgCount, setRoundedImgCount] = useState(0);
   const [roundedPhotographerCount, setRoundedPhotographerCount] = useState(0);
-
+  const [roundedUserCount, setRoundedUserCount] = useState(0);
   // Listen to count changes and update the rounded count states
-  useMotionValueEvent(countChobegraphy, "change", (latest: any) => {
-    setRoundedChobegraphyCount(Math.round(latest)); // Update the state to trigger a re-render
+  useMotionValueEvent(countImg, "change", (latest: any) => {
+    setRoundedImgCount(Math.round(latest)); // Update the state to trigger a re-render
   });
 
   useMotionValueEvent(countPhotographer, "change", (latest: any) => {
     setRoundedPhotographerCount(Math.round(latest)); // Update the state to trigger a re-render
   });
+  useMotionValueEvent(countUser, "change", (latest: any) => {
+    setRoundedUserCount(Math.round(latest)); // Update the state to trigger a re-render
+  });
+
+
 
   // Trigger count animation when element is in view
   useEffect(() => {
     if (isInView) {
-      // Animate Chobegraphy count to 1000 at a faster speed
-      const controlsChobegraphy = animate(countChobegraphy, 1000, { duration: 4 });
+      // Animate Img count to 1000 at a faster speed
+      const controlsImg = animate(countImg, ImgCountData?.totalDataCount || 0, { duration: 4 });
 
       // Animate Photographer count to 10 at a slower speed
       const controlsPhotographer = animate(countPhotographer, 10, { duration: 6 });
 
+      const controlsUser = animate(countUser, UserCountData?.totalDataCount || 0, { duration: 6 });
       return () => {
-        controlsChobegraphy.stop();
+        controlsImg.stop();
         controlsPhotographer.stop();
+        controlsUser.stop();
       };
     }
-  }, [isInView, countChobegraphy, countPhotographer]);
+  }, [isInView, countImg, countPhotographer]);
 
   return (
     <section className="mt-20 max-md:mt-20">
@@ -91,7 +108,7 @@ const Info = () => {
             className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color"
           >
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">{roundedChobegraphyCount}+</span>&nbsp;
+              <span className="font-Bayon">{roundedImgCount}+</span>&nbsp;
               {Language === "BN" ? "ইমেজ/ছবি" : " Images/Photos"}
             </p>
           </motion.pre>
@@ -107,7 +124,7 @@ const Info = () => {
           <Lottie className="max-w-[200px]" animationData={peopleAnimation} />
           <h1 className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color">
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">{roundedChobegraphyCount}+</span>&nbsp;
+              <span className="font-Bayon">{roundedUserCount}+</span>&nbsp;
               {Language === "BN" ? "সদস্য/অ্যাকাউন্ট" : " Members/Accounts"}
             </p>
           </h1>

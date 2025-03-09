@@ -14,7 +14,7 @@ const Hero = () => {
   const Language = useSelector((state: any) => state.Language.value);
   const ref = useRef(null)
 
-  const inView = useInView(ref);
+  const inView = useInView(ref, { once: true });
 
 
   const getRandomDuration = () => Math.random() * (1.5 - 0.7) + 0.7; // Random duration between 0.7s and 1.5s
