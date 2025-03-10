@@ -211,6 +211,23 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
     e.preventDefault();
   };
 
+  const resetForm = () => {
+    setSelectedImg(null);
+    setDimensions("");
+    setFileSize(0);
+    SetFileName('');
+    setColors([]);
+    setBase64photo(null);
+    setEncodedPhoto(null);
+    setThumbnail(null);
+    setUploadedTime('');
+    setDistrict({});
+    setMainImgFile(null);
+    setDescription('');
+    setExifData({});
+    setSelectedCategory([]);
+  };
+
 
   const onSubmit = async (data: any) => {
     if (Object.keys(district).length === 0) {
@@ -268,7 +285,10 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
         };
 
         const AddUploadedPictureDataResponse = await AddUploadedPictureData({ PictureData }).unwrap();
-        console.log(AddUploadedPictureDataResponse)
+        if (AddUploadedPictureDataResponse) {
+          resetForm();
+          toast.success(Language === "en" ? "Upload successful!" : "আপলোড সফল হয়েছে!");
+        }
       }
     } catch (error) {
       console.error("Upload failed:", error);
