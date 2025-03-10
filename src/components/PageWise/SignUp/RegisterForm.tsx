@@ -10,16 +10,16 @@ import { BsGoogle } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
 import { LuPlus } from "react-icons/lu";
-import { useUploadProfilePictureMutation } from "../../../../Redux/Features/Apis/ProfilePicture/UploadProfilePicture";
+
+import { useUploadProfilePictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadUserPhoto/ApiSlice";
 import "./SignUp.css";
 const RegisterForm = () => {
   const { GoogleSignIn, EmailPassWordSignUp, setUser } = useAuthData();
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
-  const [Base64photo, setBase64photo] = useState<string | null>(null);
-  const [fileName, setFileName] = useState<string | null>(null);
-  const [fileSize, setFileSize] = useState<number>(0);
+  const [fileName, setFileName] = useState<any>(null);
+  const [Imgfile, setImgFile] = useState<any>(null);
   const router = useRouter();
 
   // redux writing
@@ -30,37 +30,18 @@ const RegisterForm = () => {
 
   const [uploadProfilePictureMutation] = useUploadProfilePictureMutation();
 
-  const convertToBase64 = (file: any) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        if (reader.result) {
-          resolve(reader.result.toString().split(",")[1]);
-        }
-      };
-      reader.onerror = (error) => reject(error);
-    });
-  };
 
   const handleImageChange = async (e: any) => {
     const file = e.target.files[0];
     if (file) {
       setFileName(file.name);
-      setFileSize(file.size);
-
-      convertToBase64(file).then((base64) => {
-        console.log(base64);
-        setBase64photo(base64 as string)
-      });
+      setImgFile(file);
     }
   };
 
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
   } = useForm();
 
   const onSubmit = async (data: any) => {
@@ -68,9 +49,11 @@ const RegisterForm = () => {
     try {
       const firebaseData = await EmailPassWordSignUp(data?.email, data?.password);
       console.log(firebaseData);
-
+      const formData = new FormData();
+      formData.append('photo', Imgfile);
+      formData.append('filename', fileName);
       let uploadedImgUrl; // Use a local variable
-      const response = await uploadProfilePictureMutation({ file: Base64photo, fileName: fileName }).unwrap();
+      const response = await uploadProfilePictureMutation({ formData }).unwrap();
       console.log("Upload successful:", response?.imageUrl);
       uploadedImgUrl = response.imageUrl;
 
@@ -308,7 +291,7 @@ const RegisterForm = () => {
               />
               <h1 className="absolute top-0 left-5 text-[#8a91a0] bottom-0 flex pointer-events-none items-center z-0 justify-center">
                 {
-                  Base64photo === null ? (
+                  Imgfile === null ? (
                     <span> <span className="font-BanglaSubHeading">
                       {Language === "BN" && "একটি ছবি নির্বাচন করুন"}
                     </span>
@@ -320,14 +303,14 @@ const RegisterForm = () => {
               </h1>
               <button type="button" onClick={
                 () => {
-                  if (Base64photo !== null) {
+                  if (Imgfile !== null) {
 
-                    setBase64photo(null);
+                    Imgfile(null);
                   }
                 }
               } className="absolute top-0  right-5  bottom-0 flex items-center  justify-center">
                 {
-                  Base64photo === null && <input
+                  Imgfile === null && <input
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
@@ -336,7 +319,7 @@ const RegisterForm = () => {
                     required
                   />
                 }
-                <LuPlus className={`${Base64photo !== null && "rotate-45"} text-xl bg-dark-primary-color rounded-full w-6 h-6  dark:text-light-primary-color transform duration-300 font-bold `} /></button>
+                <LuPlus className={`${Imgfile !== null && "rotate-45"} text-xl bg-dark-primary-color rounded-full w-6 h-6  dark:text-light-primary-color transform duration-300 font-bold `} /></button>
             </div>
           </div>
           <div className="form-control mt-6">

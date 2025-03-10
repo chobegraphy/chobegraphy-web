@@ -1,7 +1,7 @@
-import { FeServerApiSlice } from "../../ApiSlice";
+import { FeVercelServerApiSlice } from "../../ApiSlice";
 
 
-export const GetUserCountApiSlice = FeServerApiSlice.injectEndpoints({
+export const GetUserCountApiSlice = FeVercelServerApiSlice.injectEndpoints({
     overrideExisting: true,
     endpoints: (builder) => ({
         GetUserCount: builder.query({

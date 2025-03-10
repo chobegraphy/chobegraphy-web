@@ -4,8 +4,8 @@ import { animate, motion, useInView, useMotionValue, useMotionValueEvent } from 
 import Lottie from "lottie-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { useGetImgCountQuery } from "../../../../Redux/Features/FeServerApiSlice/Apis/GetImgCount/ApiSlice";
-import { useGetUserCountQuery } from "../../../../Redux/Features/FeServerApiSlice/Apis/GetUserCount/ApiSlice";
+import { useGetImgCountQuery } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/GetImgCount/ApiSlice";
+import { useGetUserCountQuery } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/GetUserCount/ApiSlice";
 import imgAnimation from "../../../Assets/Animation/img.json";
 import peopleAnimation from "../../../Assets/Animation/people.json";
 import menLight from "../../../Assets/Animation/photographerLight.json";

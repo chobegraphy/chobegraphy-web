@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "./Features/ApiSlice/ApiSlice";
-import { FeServerApiSlice } from "./Features/FeServerApiSlice/ApiSlice";
+import { FeRenderServerApiSlice } from "./Features/FeRenderServerApiSlice/ApiSlice";
+import { FeVercelServerApiSlice } from "./Features/FeVercelServerApiSlice/ApiSlice";
 import LanguageReducer from "./Features/Language/Language";
 import { RenderApiSlice } from "./Features/RenderApiSlice/ApiSlice";
 import StoreImgDetailsData from "./Features/StoreImgDetailsData/StoreImgDetailsData";
 import StoreImgDetailsId from "./Features/StoreImgDetailsId/StoreImgDetailsId";
 import StoreLikedPictureData from "./Features/StoreLikedPictureData/StoreLikedPictureData";
+
 export const store = configureStore({
   reducer: {
     Language: LanguageReducer,
@@ -14,13 +16,15 @@ export const store = configureStore({
     StoreImgDetailsId: StoreImgDetailsId,
     [apiSlice.reducerPath]: apiSlice.reducer,
     [RenderApiSlice.reducerPath]: RenderApiSlice.reducer,
-    [FeServerApiSlice.reducerPath]: FeServerApiSlice.reducer,
+    [FeVercelServerApiSlice.reducerPath]: FeVercelServerApiSlice.reducer,
+    [FeRenderServerApiSlice.reducerPath]: FeRenderServerApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       apiSlice.middleware,
       RenderApiSlice.middleware,
-      FeServerApiSlice.middleware
+      FeVercelServerApiSlice.middleware,
+      FeRenderServerApiSlice.middleware
     ),
 });
 

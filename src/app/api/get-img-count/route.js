@@ -5,7 +5,11 @@ export async function GET(req) {
   let totalDataCount = 0;
 
   // CORS Configuration: Allow both Live and Localhost
-  const allowedHosts = ["localhost:3000", "chobegraphy.vercel.app"];
+  const allowedHosts = [
+    "localhost:3000",
+    "chobegraphy.vercel.app",
+    "chobegraphy-web.onrender.com",
+  ];
 
   const origin = req.headers.get("host") || "";
   // console.log(allowedHosts.includes(origin));

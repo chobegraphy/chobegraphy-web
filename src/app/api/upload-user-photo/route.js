@@ -1,9 +1,16 @@
 import axios from "axios";
-import { NextResponse } from "next/server";
 
+// GitHub settings
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const OWNER = "chobegraphy";
 const BASE_REPO_NAME = "UserImgStorage";
+
+// Allowed hosts (origins)
+const allowedHosts = [
+  "localhost:3000", // Local development
+  "chobegraphy.vercel.app", // Production
+  "chobegraphy-web.onrender.com", // Render
+];
 
 // Function to get repository size
 const getRepoSize = async (repoName) => {
@@ -50,9 +57,40 @@ const createNewRepo = async () => {
   return newRepoName;
 };
 
-// **POST** request handler for Next.js API route
+// Function to check if the origin is allowed
+const isOriginAllowed = (origin) => allowedHosts.includes(origin);
+
+// POST request handler for Next.js API route
 export async function POST(req) {
   try {
+    // Get the origin from the headers (for CORS check)
+    const origin = req.headers.get("host");
+
+    // Check if origin is allowed
+    if (!isOriginAllowed(origin)) {
+      return new Response(JSON.stringify({ message: "Forbidden" }), {
+        status: 403,
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": origin, // Allow specific origin
+          "Access-Control-Allow-Methods": "POST", // Allow POST method
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      });
+    }
+
+    // Handle preflight request (OPTIONS)
+    if (req.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204, // No content
+        headers: {
+          "Access-Control-Allow-Origin": origin,
+          "Access-Control-Allow-Methods": "POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        },
+      });
+    }
+
     let photo, filename;
 
     // Check if the request is JSON or form-data
@@ -70,17 +108,16 @@ export async function POST(req) {
       filename = formData.get("filename") || "uploaded-image.jpg";
 
       if (!file) {
-        return NextResponse.json(
-          { error: "No file uploaded" },
-          { status: 400 }
-        );
+        return new Response(JSON.stringify({ error: "No file uploaded" }), {
+          status: 400,
+        });
       }
 
       const bytes = await file.arrayBuffer();
       photo = Buffer.from(bytes).toString("base64");
     } else {
-      return NextResponse.json(
-        { error: "Unsupported content type" },
+      return new Response(
+        JSON.stringify({ error: "Unsupported content type" }),
         { status: 400 }
       );
     }
@@ -88,12 +125,13 @@ export async function POST(req) {
     // File size check
     const fileSizeInMB = Buffer.byteLength(photo, "base64") / (1024 * 1024);
     if (fileSizeInMB > 30) {
-      return NextResponse.json(
-        { error: "File size exceeds 30MB limit" },
+      return new Response(
+        JSON.stringify({ error: "File size exceeds 30MB limit" }),
         { status: 400 }
       );
     }
 
+    // Select the repository
     let currentRepo = BASE_REPO_NAME;
     let repoSize = await getRepoSize(currentRepo);
 
@@ -102,7 +140,7 @@ export async function POST(req) {
       currentRepo = await createNewRepo();
     }
 
-    // Check if file already exists
+    // Check if file already exists in the repository
     const url = `https://api.github.com/repos/${OWNER}/${currentRepo}/contents/${filename}`;
     const fileExists = await axios
       .get(url, { headers: { Authorization: `token ${GITHUB_TOKEN}` } })
@@ -118,7 +156,7 @@ export async function POST(req) {
       finalFilename = `${baseName}-${Date.now()}.${fileExtension}`;
     }
 
-    // Upload the file
+    // Upload the file to GitHub
     const uploadUrl = `https://api.github.com/repos/${OWNER}/${currentRepo}/contents/${finalFilename}`;
     await axios.put(
       uploadUrl,
@@ -131,15 +169,23 @@ export async function POST(req) {
       }
     );
 
+    // Image URL from GitHub
     const imageUrl = `https://raw.githubusercontent.com/${OWNER}/${currentRepo}/main/${finalFilename}`;
-    return NextResponse.json({ imageUrl });
+
+    // Respond with the image URL
+    return new Response(JSON.stringify({ imageUrl }), {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": origin, // Allow origin
+      },
+    });
   } catch (error) {
-    console.error(
-      "Error uploading file:",
-      error.response?.data || error.message
-    );
-    return NextResponse.json(
-      { message: "Internal server error", error: error.message },
+    console.error("Error uploading file:", error);
+    return new Response(
+      JSON.stringify({
+        message: "Internal server error",
+        error: error.message,
+      }),
       { status: 500 }
     );
   }
