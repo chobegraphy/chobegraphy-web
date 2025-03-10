@@ -53,10 +53,40 @@ const createNewRepo = async () => {
 // **POST** request handler for Next.js API route
 export async function POST(req) {
   try {
-    const { photo, filename } = await req.json();
-    const fileSizeInBytes = Buffer.byteLength(photo, "base64");
-    const fileSizeInMB = fileSizeInBytes / (1024 * 1024);
+    let photo, filename;
 
+    // Check if the request is JSON or form-data
+    const contentType = req.headers.get("content-type") || "";
+
+    if (contentType.includes("application/json")) {
+      // JSON request (Base64 string)
+      const body = await req.json();
+      photo = body.photo;
+      filename = body.filename || "uploaded-image.jpg";
+    } else if (contentType.includes("multipart/form-data")) {
+      // Form-data request (File upload)
+      const formData = await req.formData();
+      const file = formData.get("photo");
+      filename = formData.get("filename") || "uploaded-image.jpg";
+
+      if (!file) {
+        return NextResponse.json(
+          { error: "No file uploaded" },
+          { status: 400 }
+        );
+      }
+
+      const bytes = await file.arrayBuffer();
+      photo = Buffer.from(bytes).toString("base64");
+    } else {
+      return NextResponse.json(
+        { error: "Unsupported content type" },
+        { status: 400 }
+      );
+    }
+
+    // File size check
+    const fileSizeInMB = Buffer.byteLength(photo, "base64") / (1024 * 1024);
     if (fileSizeInMB > 30) {
       return NextResponse.json(
         { error: "File size exceeds 30MB limit" },
@@ -72,11 +102,8 @@ export async function POST(req) {
       currentRepo = await createNewRepo();
     }
 
-    const content = Buffer.from(photo, "base64").toString("base64");
+    // Check if file already exists
     const url = `https://api.github.com/repos/${OWNER}/${currentRepo}/contents/${filename}`;
-
-    // Check if the file already exists
-    let finalFilename = filename;
     const fileExists = await axios
       .get(url, { headers: { Authorization: `token ${GITHUB_TOKEN}` } })
       .then(() => true)
@@ -84,6 +111,7 @@ export async function POST(req) {
         err.response?.status === 404 ? false : Promise.reject(err)
       );
 
+    let finalFilename = filename;
     if (fileExists) {
       const fileExtension = filename.split(".").pop();
       const baseName = filename.replace(`.${fileExtension}`, "");
@@ -94,7 +122,7 @@ export async function POST(req) {
     const uploadUrl = `https://api.github.com/repos/${OWNER}/${currentRepo}/contents/${finalFilename}`;
     await axios.put(
       uploadUrl,
-      { message: `Add ${finalFilename}`, content },
+      { message: `Add ${finalFilename}`, content: photo },
       {
         headers: {
           Authorization: `token ${GITHUB_TOKEN}`,
