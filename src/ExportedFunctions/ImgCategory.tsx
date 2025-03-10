@@ -1,5 +1,6 @@
 export const ImgCategory = [
     { English: "Abstract", Bengali: "অ্যাবস্ট্রাক্ট" },
+    { English: "Mango", Bengali: "আম" },
     { English: "Aerial", Bengali: "এয়ারিয়াল" },
     { English: "Animals", Bengali: "প্রাণী" },
     { English: "Architecture", Bengali: "স্থাপত্য" },
