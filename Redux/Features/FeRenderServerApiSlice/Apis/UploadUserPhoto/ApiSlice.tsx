@@ -8,12 +8,8 @@ export const UploadProfilePictureApiSlice = FeRenderServerApiSlice.injectEndpoin
                 url: `/upload-user-photo`,
                 method: "POST",
                 body: formData,
-                fetchOptions: {
-                    mode: "no-cors",
-                },
             }),
-
-            invalidatesTags: ["Upload-User-Image"],
+            invalidatesTags: ["Upload-User-Photo"],
         }),
     }),
 });

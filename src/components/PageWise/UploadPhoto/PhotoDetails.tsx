@@ -6,7 +6,6 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaMountainSun } from "react-icons/fa6";
 import { FiEye } from "react-icons/fi";
-import { IoPersonCircle } from "react-icons/io5";
 import { MdPublishedWithChanges } from "react-icons/md";
 import {
   RiColorFilterFill,
@@ -16,7 +15,7 @@ import {
 import { SlCloudUpload } from "react-icons/sl";
 import { TbCopy } from "react-icons/tb";
 import { useSelector } from "react-redux";
-const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsData, uploadedTime, setDetailsData, colors, dimensions, fileSize }: any) => {
+const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsData, uploadedTime, setDetailsData, colors, dimensions, fileSize, onSubmit, setDescription }: any) => {
   // auth data
   const { user } = useAuthData();
   const router = useRouter(); // Initialize router
@@ -73,16 +72,11 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
   return (
     <div>
       <section className="lg:px-3  py-2 text-light-primary-color dark:text-dark-primary-color">
-        <div className="flex max-md:mt-2 mt-5 w-full items-center ">
-          <h1 className="font-Righteous max-md:text-2xl text-xl w-full  ">
 
-            <input {...register("name", { required: true })} placeholder={Language === "BN" ? "ছবির নাম" : "Image name"} className="px-5 rounded-2xl outline-none py-2 border-2 border-light-secondary-color w-full" type="text" />
-
-          </h1>
-
-        </div>
         <div className="font-Space mt-2 max-md:text-base text-xl">
-          <textarea {...register("description", { required: true })} placeholder={Language === "EN" ? "Description" : "বর্ণনা"} className="p-5 w-full outline-none rounded-3xl border-2 border-light-secondary-color"></textarea>
+          <textarea onChange={(e) => {
+            setDescription(e.target.value)
+          }} onPaste={(e) => setDescription(e.clipboardData.getData("text"))} placeholder={Language === "EN" ? "Description" : "বর্ণনা"} className="p-5 w-full outline-none rounded-3xl border-2 border-light-secondary-color"></textarea>
         </div>
       </section>
       <section className="lg:px-3  relative text-light-primary-color dark:text-dark-primary-color mt-2">
@@ -118,17 +112,7 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
               {Language === "EN" && "Picture Size"} : {fileSize} mb
             </p>
           </h1>
-          {/* picture author */}
-          <h1 className="flex flex-col items-start gap-x-1 font-Space">
-            <p className="flex mt-1 mb-1 gap-x-0.5 items-center">
-              <IoPersonCircle className="text-xl" />
-              {" "}
-              <span className="font-BanglaSubHeading">
-                {Language === "BN" && "ছবি প্রণেতা"}
-              </span>{" "}
-              {Language === "EN" && "Author"} :
-            </p> <input type="text" className="border-2 border-light-secondary-color rounded-xl outline-none w-full border-dashed px-3 py-2" />
-          </h1>
+
           <h1
             onBlur={() => {
 
@@ -239,7 +223,7 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
           </div>
         </div>
         {/* download button */}
-        <button className="flex items-center lg:absolute lg:right-20 right-3 max-lg:scale-90  cursor-pointer max-lg:fixed  max-lg:bg-light-primary-color
+        <button onClick={() => onSubmit()} className="flex items-center lg:absolute lg:right-20 right-3 max-lg:scale-90  cursor-pointer max-lg:fixed  max-lg:bg-light-primary-color
         max-lg:text-dark-primary-color max-lg:dark:bg-dark-primary-color max-lg:dark:text-light-primary-color max-md:h-fit max-lg:w-full justify-center max-lg:right-0  max-lg:rounded-xl lg:top-0 gap-x-2 max-lg:bottom-2 max-lg:py-4 z-30"
         ><SlCloudUpload className="text-8xl max-lg:text-4xl" />
           <span className="max-lg:block hidden">

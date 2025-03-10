@@ -1,0 +1,6 @@
+.dropdown-container {
+  @apply outline-none bg-transparent border-none focus:outline-none focus-within:shadow-none focus-within:border-none text-black !important;
+}
+.dropdown-heading {
+  @apply rounded-xl border-light-secondary-color border-2 dark:border-none dark:text-white dark:bg-light-secondary-color  outline-none !important;
+}

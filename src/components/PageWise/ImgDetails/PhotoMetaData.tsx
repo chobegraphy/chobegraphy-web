@@ -34,7 +34,7 @@ const PhotoMetaData = ({ MetaData }: any) => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   return (
-    <div>
+    <div className="w-full col-span-4">
       <section>
         <h1 className=" rounded-md  text-light-primary-color font-Righteous dark:text-dark-primary-color w-fit mt-3">
           <span className="font-BanglaHeading">

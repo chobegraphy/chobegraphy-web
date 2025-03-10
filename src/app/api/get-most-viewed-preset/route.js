@@ -1,29 +1,12 @@
 export async function GET(req) {
   const GITHUB_USERNAME = "chobegraphy";
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-  const REPO_PREFIX = "ChobegraphyUser";
-  let totalDataCount = 0;
-  // CORS Configuration: Allow both Live and Localhost
-  const allowedHosts = [
-    "localhost:3000",
-    "chobegraphy.vercel.app",
-    "chobegraphy-web.onrender.com",
-  ];
-  const origin = req.headers.get("host");
+  const REPO_PREFIX = "ChobegraphyPresetApi";
 
-  if (!allowedHosts.includes(origin)) {
-    return new Response(JSON.stringify({ message: "Forbidden" }), {
-      status: 403,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      },
-    });
-  }
+  let allImages = [];
+
   try {
-    // Fetch all repositories for the user (including private repos)
+    // Fetch all repositories
     const repoResponse = await fetch(
       `https://api.github.com/user/repos?per_page=100&type=all`,
       {
@@ -43,17 +26,17 @@ export async function GET(req) {
       );
     }
 
-    // Filter repositories that match ChobegraphyUser followed by numbers
+    // Filter repositories that match "ChobegraphyPictureApi-*" pattern
     const filteredRepos = repos.filter(
       (repo) =>
         repo.name.startsWith(REPO_PREFIX) &&
         !isNaN(repo.name.replace(REPO_PREFIX, ""))
     );
 
-    // Fetch UserData.json from each repo
+    // Fetch PresetApi.json from each repo and combine data
     for (const repo of filteredRepos) {
       const fileResponse = await fetch(
-        `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/contents/UserData.json`,
+        `https://api.github.com/repos/${GITHUB_USERNAME}/${repo.name}/contents/PresetApi.json`,
         {
           headers: {
             Authorization: `token ${GITHUB_TOKEN}`,
@@ -65,29 +48,42 @@ export async function GET(req) {
       if (fileResponse.ok) {
         const fileData = await fileResponse.json();
         if (Array.isArray(fileData)) {
-          totalDataCount += fileData.length;
+          allImages = [...allImages, ...fileData];
         }
       }
     }
 
-    return Response.json(
-      { totalDataCount },
+    // Sorting functions
+    const sortByView = [...allImages].sort(
+      (a, b) => (b.view || 0) - (a.view || 0)
+    );
+    const sortByDownload = [...allImages].sort(
+      (a, b) => (b.download || 0) - (a.download || 0)
+    );
+    const sortByReact = [...allImages].sort(
+      (a, b) => (b.react || 0) - (a.react || 0)
+    );
+
+    return new Response(
+      JSON.stringify({
+        mostViewed: sortByView.slice(0, 10), // Top 10 most viewed images
+        mostDownloaded: sortByDownload.slice(0, 10), // Top 10 most downloaded images
+        mostReacted: sortByReact.slice(0, 10), // Top 10 most reacted images
+      }),
       {
         status: 200,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": origin,
         },
       }
     );
   } catch (error) {
-    return Response.json(
-      { message: "Server Error", error: error.message },
+    return new Response(
+      JSON.stringify({ message: "Server Error", error: error.message }),
       {
         status: 500,
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": origin,
         },
       }
     );

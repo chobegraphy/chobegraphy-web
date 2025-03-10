@@ -218,7 +218,7 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
       <section className="lg:px-3  py-2 text-light-primary-color dark:text-dark-primary-color">
         <div className="flex max-md:mt-2 mt-5 justify-between items-center ">
           <h1 className="font-Righteous max-md:text-2xl text-4xl ">
-            {DetailsData?.name}
+            {/* {DetailsData?.name} */}
             {/* <span className="font-BanglaHeading">
                   {Language === "BN" && "ছবির নাম"}
                 </span>
@@ -240,8 +240,8 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
             {likeLoading === true && (
               <ImSpinner
                 className={`${LikedPictureData.includes(DetailsData?._id)
-                    ? "text-pink-600"
-                    : "text-white"
+                  ? "text-pink-600"
+                  : "text-white"
                   } animate-spin `}
               />
             )}
@@ -324,7 +324,9 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
                 {Language === "BN" && "ক্যাটাগরি "}
               </span>{" "}
               {Language === "EN" && "Categories"} :{" "}
-              {DetailsData?.collections?.map((item: any) => item)}
+              {DetailsData?.collections?.map((item: any) => <span key={item?.value}>{Language === "EN" && item?.label + ", "}<span className="font-BanglaSubHeading">
+                {Language === "BN" && <>{item?.value} ,</>}
+              </span></span>)}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
