@@ -9,7 +9,7 @@ export const UploadProfilePictureApiSlice = FeRenderServerApiSlice.injectEndpoin
                 method: "POST",
                 body: formData,
                 fetchOptions: {
-                    mode: "cors",
+                    mode: "no-cors",
                 },
             }),
 
