@@ -5,13 +5,6 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const OWNER = "chobegraphy";
 const BASE_REPO_NAME = "UserImgStorage";
 
-// Allowed hosts (origins)
-const allowedHosts = [
-  "localhost:3000", // Local development
-  "chobegraphy.vercel.app", // Production
-  "chobegraphy-web.onrender.com", // Render
-];
-
 // Function to get repository size
 const getRepoSize = async (repoName) => {
   try {
@@ -57,34 +50,15 @@ const createNewRepo = async () => {
   return newRepoName;
 };
 
-// Function to check if the origin is allowed
-const isOriginAllowed = (origin) => allowedHosts.includes(origin);
-
 // POST request handler for Next.js API route
 export async function POST(req) {
   try {
-    // Get the origin from the headers (for CORS check)
-    const origin = req.headers.get("host");
-
-    // Check if origin is allowed
-    if (!isOriginAllowed(origin)) {
-      return new Response(JSON.stringify({ message: "Forbidden" }), {
-        status: 403,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": origin, // Allow specific origin
-          "Access-Control-Allow-Methods": "POST", // Allow POST method
-          "Access-Control-Allow-Headers": "Content-Type, Authorization",
-        },
-      });
-    }
-
     // Handle preflight request (OPTIONS)
     if (req.method === "OPTIONS") {
       return new Response(null, {
-        status: 204, // No content
+        status: 204,
         headers: {
-          "Access-Control-Allow-Origin": origin,
+          "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "POST, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type, Authorization",
         },
@@ -176,7 +150,9 @@ export async function POST(req) {
     return new Response(JSON.stringify({ imageUrl }), {
       status: 200,
       headers: {
-        "Access-Control-Allow-Origin": origin, // Allow origin
+        "Access-Control-Allow-Origin": "*", // Allow all origins
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     });
   } catch (error) {
