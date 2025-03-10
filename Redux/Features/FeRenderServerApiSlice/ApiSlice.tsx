@@ -10,8 +10,8 @@ export const FeRenderServerApiSlice = createApi({
         , "Add-Upload-Picture-Data"
     ],
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:3000/api",
-        // baseUrl: "https://chobegraphy-web.onrender.com/api",
+        // baseUrl: "http://localhost:3000/api",
+        baseUrl: "https://chobegraphy-web.onrender.com/api",
     }),
     endpoints: () => ({}),
 });
