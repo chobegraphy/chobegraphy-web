@@ -1,6 +1,5 @@
 export const ImgCategory = [
     { English: "Abstract", Bengali: "অ্যাবস্ট্রাক্ট" },
-    { English: "Mango", Bengali: "আম" },
     { English: "Aerial", Bengali: "এয়ারিয়াল" },
     { English: "Animals", Bengali: "প্রাণী" },
     { English: "Architecture", Bengali: "স্থাপত্য" },
@@ -10,9 +9,10 @@ export const ImgCategory = [
     { English: "Black and White", Bengali: "সাদা-কালো" },
     { English: "Boudoir", Bengali: "বউডোয়ার" },
     { English: "Business", Bengali: "ব্যবসা" },
-    { English: "Cat", Bengali: "বিড়াল" },
+
     { English: "Beach", Bengali: "সৈকত" },
-    { English: "River", Bengali: "নদী" },
+
+    { English: "Cat", Bengali: "বিড়াল" },
     { English: "Candid", Bengali: "ক্যান্ডিড" },
     { English: "Cityscape", Bengali: "শহরের দৃশ্য" },
     { English: "Commercial", Bengali: "বাণিজ্যিক" },
@@ -29,6 +29,7 @@ export const ImgCategory = [
     { English: "Festival", Bengali: "উৎসব" },
     { English: "Film Photography", Bengali: "ফিল্ম ফটোগ্রাফি" },
     { English: "Floral", Bengali: "ফুল" },
+    { English: "Flower", Bengali: "ফুল" },
     { English: "Fine Art", Bengali: "ফাইন আর্ট" },
     { English: "Fireworks", Bengali: "আতশবাজি" },
     { English: "Fitness", Bengali: "ফিটনেস" },
@@ -56,7 +57,8 @@ export const ImgCategory = [
     { English: "Mirror Photography", Bengali: "আয়না ফটোগ্রাফি" },
     { English: "Misty", Bengali: "কুয়াশাচ্ছন্ন" },
     { English: "Mountains", Bengali: "পর্বত" },
-    { English: "Music", Bengali: "সঙ্গীত" },
+    { English: "Music", Bengali: "সঙ্গীত" }, { English: "Mango", Bengali: "আম" },
+
     { English: "Nature", Bengali: "প্রকৃতি" },
     { English: "Neon Lights", Bengali: "নিয়ন লাইট" },
     { English: "Newborn", Bengali: "নবজাতক" },
@@ -73,6 +75,7 @@ export const ImgCategory = [
     { English: "Religious", Bengali: "ধর্মীয়" },
     { English: "Romantic", Bengali: "রোমান্টিক" },
     { English: "Rural", Bengali: "গ্রামীণ" },
+    { English: "River", Bengali: "নদী" },
     { English: "Science", Bengali: "বিজ্ঞান" },
     { English: "Seasons", Bengali: "ঋতু" },
     { English: "Self-Portrait", Bengali: "সেলফ-পোর্ট্রেট" },
@@ -95,6 +98,7 @@ export const ImgCategory = [
     { English: "Traditional", Bengali: "ঐতিহ্যবাহী" },
     { English: "Transportation", Bengali: "পরিবহন" },
     { English: "Travel", Bengali: "ভ্রমণ" },
+
     { English: "Underwater", Bengali: "জলের নিচে" },
     { English: "Urban", Bengali: "নগর" },
     { English: "Vintage", Bengali: "ভিনটেজ" },

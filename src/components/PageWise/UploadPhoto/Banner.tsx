@@ -305,7 +305,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
         onDragOver={handleDragOver}
       >
         <input
-          {...register("image", { required: true })}
+
           className="opacity-0 h-full w-full absolute cursor-pointer"
           type="file"
           accept="image/*"

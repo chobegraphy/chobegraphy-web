@@ -32,8 +32,46 @@ const CategorySelector = ({ setSelectedCategory, selectedCategory }: any) => {
                 onChange={setSelectedCategory}
                 isMulti
                 placeholder="Select categories..."
-                className="mt-2"
+                className="mt-2 font-Space font-semibold"
+                styles={{
+                    control: (base) => ({
+                        ...base,
+                        backgroundColor: "white", // Ensures a fixed light background
+                        color: "black",
+                        border: "none", // Removes the default border
+                        boxShadow: "none", // Disables focus outline
+                    }),
+                    menu: (base) => ({
+                        ...base,
+                        backgroundColor: "white",
+                        color: "black",
+                    }),
+                    option: (base, { isFocused }) => ({
+                        ...base,
+                        backgroundColor: isFocused ? "#f0f0f0" : "white",
+                        color: "black",
+                    }),
+                    multiValue: (base) => ({
+                        ...base,
+                        backgroundColor: "#e0e0e0",
+                        color: "black",
+                    }),
+                    multiValueLabel: (base) => ({
+                        ...base,
+                        color: "black",
+                    }),
+                    multiValueRemove: (base) => ({
+                        ...base,
+                        color: "black",
+                        ":hover": {
+                            backgroundColor: "red",
+                            color: "white",
+                        },
+                    }),
+                }}
             />
+
+
         </div>
     );
 };
