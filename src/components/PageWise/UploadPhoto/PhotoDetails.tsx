@@ -74,7 +74,7 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
       <section className="lg:px-3  py-2 text-light-primary-color dark:text-dark-primary-color">
 
         <div className="font-Space mt-2 max-md:text-base text-xl">
-          <textarea {...register("description")} placeholder={Language === "EN" ? "Description" : "বর্ণনা"} className="p-5 w-full outline-none rounded-3xl border-2 border-light-secondary-color"></textarea>
+          <textarea {...register("description")} placeholder={Language === "EN" ? "Description" : "বর্ণনা"} className="p-5 border-dashed w-full outline-none rounded-3xl border-2 border-light-secondary-color"></textarea>
         </div>
       </section>
       <section className="lg:px-3  relative text-light-primary-color dark:text-dark-primary-color mt-2">
