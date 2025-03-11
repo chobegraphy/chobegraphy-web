@@ -5,7 +5,7 @@ export const UploadProfilePictureApiSlice = FeRenderServerApiSlice.injectEndpoin
     endpoints: (builder) => ({
         UploadProfilePicture: builder.mutation({
             query: ({ formData }) => ({
-                url: `/upload-user-photo`,
+                url: `/upload-user-picture`,
                 method: "POST",
                 body: formData,
             }),

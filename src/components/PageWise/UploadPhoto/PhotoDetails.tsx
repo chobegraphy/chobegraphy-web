@@ -15,7 +15,7 @@ import {
 import { SlCloudUpload } from "react-icons/sl";
 import { TbCopy } from "react-icons/tb";
 import { useSelector } from "react-redux";
-const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsData, uploadedTime, setDetailsData, colors, dimensions, fileSize, onSubmit, setDescription }: any) => {
+const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsData, uploadedTime, colors, dimensions, fileSize, onSubmit, }: any) => {
   // auth data
   const { user } = useAuthData();
   const router = useRouter(); // Initialize router
@@ -74,9 +74,7 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
       <section className="lg:px-3  py-2 text-light-primary-color dark:text-dark-primary-color">
 
         <div className="font-Space mt-2 max-md:text-base text-xl">
-          <textarea onChange={(e) => {
-            setDescription(e.target.value)
-          }} onPaste={(e) => setDescription(e.clipboardData.getData("text"))} placeholder={Language === "EN" ? "Description" : "বর্ণনা"} className="p-5 w-full outline-none rounded-3xl border-2 border-light-secondary-color"></textarea>
+          <textarea {...register("description")} placeholder={Language === "EN" ? "Description" : "বর্ণনা"} className="p-5 w-full outline-none rounded-3xl border-2 border-light-secondary-color"></textarea>
         </div>
       </section>
       <section className="lg:px-3  relative text-light-primary-color dark:text-dark-primary-color mt-2">
@@ -127,7 +125,6 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
               </span>{" "}
               {Language === "EN" && "District"} :{" "}
             </p> <input value={district}
-
               onChange={handleDistrictChange}
               onFocus={() => {
                 if (!zillaDatas.some(z => z.name.toLowerCase() === district.toLowerCase())) {

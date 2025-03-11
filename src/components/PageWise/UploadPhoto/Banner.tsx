@@ -7,14 +7,19 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../../../Provider/AuthProvider";
+
+
+
+import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/AddUploadPictureData/ApiSlice";
+
 import { useUploadEncodedPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadEncodedPhoto/ApiSlice";
 import { useUploadMainPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadMainPhoto/ApiSlice";
 import { useUploadThumbnailPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadThumbnailPhoto/ApiSlice";
-import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/AddUploadPictureData/ApiSlice";
 import "./Banner.css";
 import CategorySelector from "./CategorySelector";
 import PhotoDetails from "./PhotoDetails";
 import PhotoMetaData from "./PhotoMetaData";
+
 const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }: any) => {
   // user data 
   const { user } = useAuth();
@@ -158,6 +163,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -224,12 +230,25 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
     setDistrict({});
     setMainImgFile(null);
     setDescription('');
-    setExifData({});
+    setExifData({
+      aperture: "",
+      exposureTime: "",
+      flash: "",
+      iso: "",
+      model: "",
+      software: "",
+      datetimeOriginal: "",
+      focalLength: "",
+      creatorTool: "",
+      subjectDistance: "",
+
+    });
     setSelectedCategory([]);
   };
 
 
   const onSubmit = async (data: any) => {
+
     if (Object.keys(district).length === 0) {
       toast.error(Language === "en" ? "Select a district" : " একটি জেলা নির্বাচন করুন")
       return;
@@ -261,7 +280,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
           // Image Details
           name: fileName,
           url: mainImgUrl,
-          description,
+          description: data?.description,
           thumbnail: thumbnailUrl,
           encodedUrl: encodedImgUrl,
           dimensions,
@@ -287,9 +306,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
         const AddUploadedPictureDataResponse = await AddUploadedPictureData({ PictureData }).unwrap();
         if (AddUploadedPictureDataResponse) {
           resetForm();
+          reset({ "description": "" })
           toast.success(Language === "en" ? "Upload successful!" : "আপলোড সফল হয়েছে!");
         }
       }
+
+
     } catch (error) {
       console.error("Upload failed:", error);
       // setUploadStatus("An error occurred while uploading.");
