@@ -1,22 +1,18 @@
 "use client";
 import Banner from "@/components/PageWise/ImgDetails/Banner";
 import RelatedImages from "@/components/PageWise/ImgDetails/RelatedImages";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { ImSpinner } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
-import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
-import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
-import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
+import { useIncreaseViewCountMutation } from "../../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
+import { useGetSingleImgDetailsQuery } from "../../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
+import { SetImgDetailsData } from "../../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
+
 
 const ImdDetailsPage = () => {
-  const pictureId = useSelector((state: any) => state.StoreImgDetailsId.value);
-  useEffect(() => {
-    const pictureId =
-      typeof window !== "undefined" && localStorage.getItem("ImgDetailsId");
-    dispatch(SetImgDetailsId(pictureId));
-  }, []);
+  const id = useParams()?.id
+
   const dispatch = useDispatch();
   const pathName = usePathname();
   // imgDetailsData
@@ -34,8 +30,8 @@ const ImdDetailsPage = () => {
     },
   ] = useIncreaseViewCountMutation();
   // Fetch image details if ImgDetailsData is empty
-  const { data, error, isLoading } = useGetSingleImgDetailsQuery(pictureId, {
-    skip: !pictureId, // Skip the API call if pictureId or ImgDetailsData is not available
+  const { data, error, isLoading } = useGetSingleImgDetailsQuery(id, {
+    skip: !id, // Skip the API call if pictureId or ImgDetailsData is not available
   });
   useEffect(() => {
     if (data) {
@@ -50,9 +46,9 @@ const ImdDetailsPage = () => {
   }, [pathName, dispatch]);
 
   const updateViewCount = async () => {
-    if (pictureId) {
+    if (id) {
       const UpdateViewCountResponse = await increaseViewCount({
-        id: pictureId,
+        id: id,
       }).unwrap();
       console.log(UpdateViewCountResponse);
       dispatch(SetImgDetailsData(UpdateViewCountResponse?.updatedData));
@@ -61,11 +57,11 @@ const ImdDetailsPage = () => {
   useEffect(() => {
     const hasViewed =
       typeof window !== "undefined" && localStorage.getItem(`viewed`);
-    if (!hasViewed && typeof window !== "undefined" && pictureId) {
+    if (!hasViewed && typeof window !== "undefined" && id) {
       updateViewCount();
-      localStorage.setItem(`viewed`, pictureId.toString());
+      localStorage.setItem(`viewed`, id.toString());
     }
-  }, [pictureId]);
+  }, [id]);
 
   return (
     <div>

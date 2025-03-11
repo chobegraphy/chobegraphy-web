@@ -12,6 +12,7 @@ import { useAuth } from "../../../../Provider/AuthProvider";
 
 import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/AddUploadPictureData/ApiSlice";
 
+import Link from "next/link";
 import { LuFileImage } from "react-icons/lu";
 import { PiShareNetworkBold } from "react-icons/pi";
 import { SiSparkpost } from "react-icons/si";
@@ -24,6 +25,7 @@ import PhotoDetails from "./PhotoDetails";
 import PhotoMetaData from "./PhotoMetaData";
 
 const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }: any) => {
+
   // user data 
   const { user } = useAuth();
   const Language = useSelector((state: any) => state.Language.value);
@@ -48,6 +50,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
   const [mainImgFile, setMainImgFile] = useState<any>(null);
   const [description, setDescription] = useState<string>('');
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [uploadedPictureId, setUploadedPictureId] = useState('');
   // upload loading states
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -329,6 +332,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
         const AddUploadedPictureDataResponse = await AddUploadedPictureData({ PictureData }).unwrap();
         if (AddUploadedPictureDataResponse) {
           resetForm();
+          setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
           reset({ "description": "" })
           toast.success(Language === "en" ? "Upload successful!" : "আপলোড সফল হয়েছে!");
           setUploadProgress(100);
@@ -344,8 +348,24 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
       // setLoading(false);
     }
   };
-  console.log(district)
-
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          text:
+            Language === "EN"
+              ? "Check out this amazing image!"
+              : "এই চমৎকার ছবিটি দেখুন!",
+          url: `https://chobegraphy.vercel.app/ImgDetails/${uploadedPictureId}`,
+        });
+        console.log("Share was successful.");
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      toast.error("Your browser doesn't support sharing.");
+    }
+  };
 
   return (
     <div className="col-span-6">
@@ -417,6 +437,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
                   setIsOpen(false);
                   setTimeout(() => setIsOpen2(false), 200);
                   setUploadProgress(0)
+                  handleShare()
                 }
                 } className="w-full h-full flex flex-col cursor-pointer  justify-center items-center rounded-xl bg-gradient-to-br dark:from-light-primary-color/10 from-dark-primary-color/10 via-black dark:to-dark-primary-color/20 to-light-primary-color/20  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-5">
                   <PiShareNetworkBold className="text-4xl" />
@@ -427,7 +448,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
                     {Language === "EN" && <span className="font-Space font-bold text-[10px]">Share Link</span>}
                   </span>
                 </div>
-                <div onClick={() => {
+                <Link href={`/ImgDetails/${uploadedPictureId}`} onClick={() => {
                   setIsOpen(false);
                   setTimeout(() => setIsOpen2(false), 200);
                   setUploadProgress(0)
@@ -440,11 +461,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
                     </p>
                     {Language === "EN" && <span className="font-Space  font-bold text-[10px]">View As Post</span>}
                   </span>
-                </div>
+                </Link>
                 <div onClick={() => {
                   setIsOpen(false);
                   setTimeout(() => setIsOpen2(false), 200);
                   setUploadProgress(0)
+
                 }
                 } className="w-full h-full flex flex-col cursor-pointer  justify-center items-center rounded-xl bg-gradient-to-br dark:from-light-primary-color/10 from-dark-primary-color/10 via-black dark:to-dark-primary-color/20 to-light-primary-color/20  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-5"><svg className="w-10 h-10" viewBox="0 0 73 60" xmlns="http://www.w3.org/2000/svg">
                     <path d="M36.1366 14.7458L36.2288 14.7733L36.2328 14.7688C36.6705 14.8481 37.1047 14.586 37.2332 14.1519C38.4049 10.2152 42.096 7.46504 46.2084 7.46504C46.6953 7.46504 47.0901 7.07016 47.0901 6.5833C47.0901 6.09643 46.6952 5.70156 46.2084 5.70156C41.1542 5.70156 36.9071 9.06665 35.5433 13.6493C35.4042 14.1162 35.6701 14.6067 36.1366 14.7458Z" className="dark:fill-light-primary-color fill-dark-primary-color dark:stroke-light-primary-color stroke-dark-primary-color" strokeWidth="2" />
@@ -464,7 +486,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
             </div>
           }
           {
-            uploadProgress < 100 && <div><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3`}>
+            uploadProgress < 100 && <div className="text-center"><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3`}>
               {Language === "BN" && "আপলোড করা হচ্ছে"}
             </p>
               {Language === "EN" && <span className="font-Righteous text-xl">Uploading Picture</span>}

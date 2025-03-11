@@ -13,6 +13,7 @@ import { IoMenuSharp } from "react-icons/io5";
 import { MdLightMode } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../../Provider/AuthProvider";
 import {
@@ -25,6 +26,8 @@ import logo from "../../../Assets/logo/logo.png";
 import "./Nav.css";
 
 const Navbar = () => {
+  const router = useRouter();
+
   const [isOpen2, setIsOpen2] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
@@ -422,6 +425,15 @@ const Navbar = () => {
               <button onClick={() => {
                 setIsOpen(false);
                 setTimeout(() => setIsOpen2(false), 200);
+                if (!user) {
+                  // Save the current route to redirect back to after login
+
+                  typeof window !== 'undefined' && localStorage.setItem('redirectUrl', "/UploadPhoto");
+                  router.push('/SignIn');  // Redirect to sign in if no user
+                }
+                if (user) {
+                  router.push('/UploadPhoto');
+                }
               }} className={
                 "border-2 w-full mt-2 py-2 xl:py-1.5  mb-2  xl:text-lg hover:bg-black dark:hover:bg-dark-primary-color dark:hover:text-black dark:border-dark-primary-color hover:text-white dark:text-dark-primary-color transform duration-300 rounded-xl text-black border-[#000000] text-center"
               }><p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>

@@ -139,7 +139,7 @@ const ImgCard = ({ imgData, i }: any) => {
     >
       {/* Blurred Low-Quality Background */}
       <Link
-        href={`/ImgDetails`}
+        href={`/ImgDetails/${imgData?._id}`}
         onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
         style={{
           backgroundImage: `url(${imgData?.encodedUrl})`,

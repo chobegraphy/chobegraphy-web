@@ -2,7 +2,6 @@
 import PhotoMetaData from "@/components/PageWise/ImgDetails/PhotoMetaData";
 import Banner from "@/components/PageWise/UploadPhoto/Banner";
 import CategorySelector from "@/components/PageWise/UploadPhoto/CategorySelector";
-import PrivateRoute from "@/ExportedFunctions/PrivateRoute";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -23,7 +22,7 @@ const UploadPhotoPage = () => {
     });
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
     return (
-        <PrivateRoute>        <div className="grid grid-cols-10 max-lg:grid-cols-1 sm:px-10 px-5 py-5  dark:bg-gradient-to-br from-black to-light-primary-color gap-5 h-full">
+        <div className="grid grid-cols-10 max-lg:grid-cols-1 sm:px-10 px-5 py-5  dark:bg-gradient-to-br from-black to-light-primary-color gap-5 h-full">
             <Banner selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} exifData={exifData} setExifData={setExifData} />
             <div className="max-lg:hidden col-span-4">
                 {
@@ -49,7 +48,7 @@ const UploadPhotoPage = () => {
 
                 </button>
             </div>
-        </div></PrivateRoute>
+        </div>
     );
 };
 
