@@ -9,9 +9,7 @@ export const ImgCategory = [
     { English: "Black and White", Bengali: "সাদা-কালো" },
     { English: "Boudoir", Bengali: "বউডোয়ার" },
     { English: "Business", Bengali: "ব্যবসা" },
-
     { English: "Beach", Bengali: "সৈকত" },
-
     { English: "Cat", Bengali: "বিড়াল" },
     { English: "Candid", Bengali: "ক্যান্ডিড" },
     { English: "Cityscape", Bengali: "শহরের দৃশ্য" },
