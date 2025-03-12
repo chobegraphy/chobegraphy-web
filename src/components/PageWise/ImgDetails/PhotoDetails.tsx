@@ -1,53 +1,27 @@
-import useAuthData from "@/ExportedFunctions/useAuthData";
-import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import { FaMountainSun } from "react-icons/fa6";
 import { FiEye } from "react-icons/fi";
-import { ImSpinner } from "react-icons/im";
 import { IoPersonCircle } from "react-icons/io5";
 import { MdPublishedWithChanges } from "react-icons/md";
-import { PiShareNetworkBold } from "react-icons/pi";
 import {
   RiColorFilterFill,
   RiCustomSize,
   RiDownloadCloud2Fill,
 } from "react-icons/ri";
 import { TbCopy } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  usePictureLikeMutation,
-  usePictureUnLikeMutation,
-} from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
-import {
-  usePictureLikeCountDecreaseMutation,
-  usePictureLikeCountIncreaseMutation,
-} from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
-import { useLazyGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
+import { useSelector } from "react-redux";
 import { useIncreaseDownloadCountMutation } from "../../../../Redux/Features/Apis/UpdateDownloadCount/ApiSlice";
-import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
-import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 
 const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
-  // auth data
-  const { user } = useAuthData();
-  const router = useRouter(); // Initialize router
-  const pathname = usePathname();
 
   // states
   const [copiedColor, setCopiedColor] = useState("");
-  const [likeLoading, setLikeLoading] = useState(false);
 
   // redux writing
-  const dispatch = useDispatch();
   const Language = useSelector((state: any) => state.Language.value);
-  const LikedPictureData = useSelector(
-    (state: any) => state.StoreLikedPictureData.value
-  );
-  const [fetchImageDetails, { data, error, isLoading }] =
-    useLazyGetSingleImgDetailsQuery();
   //  redux writing download
   const [
     increaseDownloadCount,
@@ -59,48 +33,6 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
     },
   ] = useIncreaseDownloadCountMutation();
 
-  // redux writing for like
-  const [
-    LikedData,
-    {
-      data: likedData,
-      isLoading: likedLoading,
-      isError: likedError,
-      error: likedInitial,
-    },
-  ] = usePictureLikeMutation();
-  const [
-    UnLikedData,
-    {
-      data: UnlikedData,
-      isLoading: UnlikedLoading,
-      isError: UnlikedError,
-      error: UnlikedInitial,
-    },
-  ] = usePictureUnLikeMutation();
-  const [LikedCountData] = usePictureLikeCountIncreaseMutation();
-  const [UnLikedCountData] = usePictureLikeCountDecreaseMutation();
-
-  // Share function
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: DetailsData?.name || "Image",
-          text:
-            Language === "EN"
-              ? "Check out this amazing image!"
-              : "এই চমৎকার ছবিটি দেখুন!",
-          url: window.location.href,
-        });
-        console.log("Share was successful.");
-      } catch (error) {
-        console.error("Error sharing:", error);
-      }
-    } else {
-      toast.error("Your browser doesn't support sharing.");
-    }
-  };
 
   // convert time format
   const formatDateTime = (dateString: any) => {
@@ -164,98 +96,12 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
     }
   };
 
-  const handleLike = async () => {
-    if (!user) {
-      router.push("/SignIn");
-      typeof window !== 'undefined' && localStorage.setItem('redirectUrl', pathname);
-      toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
-      return;
-    }
-    if (DetailsData?._id) {
-      setLikeLoading(true);
-      const LikedResponse = await LikedData({
-        UserId: user?._id,
-        PictureId: DetailsData._id,
-      }).unwrap();
-      const liked = await LikedCountData({
-        PictureId: DetailsData._id,
-      }).unwrap();
-      const fetchData = await fetchImageDetails(DetailsData._id).unwrap();
-      console.log(liked);
-      dispatch(SetImgDetailsData(fetchData));
-      dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
-      setLikeLoading(false);
-    }
-  };
 
-  const handleUnlike = async () => {
-    if (!user) {
-      router.push("/SignIn");
-      typeof window !== 'undefined' && localStorage.setItem('redirectUrl', pathname);
-      toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
-      return;
-    }
-    if (DetailsData?._id) {
-      setLikeLoading(true);
-      const UnLikedResponse = await UnLikedData({
-        UserId: user?._id,
-        PictureId: DetailsData._id,
-      }).unwrap();
-      const unliked = await UnLikedCountData({
-        PictureId: DetailsData._id,
-      }).unwrap();
-      const fetchData = await fetchImageDetails(DetailsData._id).unwrap();
-      // dispatch(SetImgDetailsData(fetchData));
-      console.log(fetchData);
-      dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
-      setLikeLoading(false);
-    }
-  };
-
-  console.log(DetailsData);
   return (
     <div>
       <section className="lg:px-3  py-2 text-light-primary-color dark:text-dark-primary-color">
-        <div className="flex max-md:mt-2 mt-5 justify-between items-center ">
-          <h1 className="font-Righteous max-md:text-2xl text-4xl ">
-            {/* {DetailsData?.name} */}
-            {/* <span className="font-BanglaHeading">
-                  {Language === "BN" && "ছবির নাম"}
-                </span>
-                {Language === "EN" && "Image name"} */}
-          </h1>
-          <div className="text-3xl flex gap-x-5 cursor-pointer ">
-            {likeLoading !== true && (
-              <span>
-                {LikedPictureData.includes(DetailsData?._id) ? (
-                  <FaHeart
-                    onClick={handleUnlike}
-                    className="text-pink-600 cursor-pointer"
-                  />
-                ) : (
-                  <FaRegHeart onClick={handleLike} className="cursor-pointer" />
-                )}
-              </span>
-            )}
-            {likeLoading === true && (
-              <ImSpinner
-                className={`${LikedPictureData.includes(DetailsData?._id)
-                  ? "text-pink-600"
-                  : "text-white"
-                  } animate-spin `}
-              />
-            )}
-            <PiShareNetworkBold onClick={handleShare} id="share" />
-          </div>
-        </div>
-        <h2 className="font-Space mt-2 max-md:text-base text-xl">
-          {/* <span className="font-BanglaSubHeading">
-                    {Language === "BN" &&
-                      "প্রকৃতিতে থাকা, এমনকি প্রকৃতির দৃশ্য দেখা, রাগ, ভয় এবং চাপ কমায় এবং আনন্দদায়ক অনুভূতি বৃদ্ধি করে।"}
-                  </span>
-                  {Language === "EN" &&
-                    "Image nameBeing in nature, or even viewing scenes of nature, reduces anger, fear, and stress and increases pleasant feelings"} */}
 
+        <h2 className="font-Space mt-2 max-md:text-base text-xl">
           {DetailsData?.description}
         </h2>
       </section>

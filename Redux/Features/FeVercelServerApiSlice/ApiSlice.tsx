@@ -6,7 +6,8 @@ export const FeVercelServerApiSlice = createApi({
         "Get-User-Count",
         "Get-Img-Count",
         "Get-Most-Viewed-Downloaded-Reacted-Img",
-        "Add-Upload-Picture-Data"
+        "Add-Upload-Picture-Data",
+        "Get-Suggestion-Data"
 
     ],
     baseQuery: fetchBaseQuery({

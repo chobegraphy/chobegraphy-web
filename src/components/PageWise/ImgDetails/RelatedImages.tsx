@@ -1,6 +1,8 @@
 "use client";
 import { useSelector } from "react-redux";
 import { useGetSuggestionsDataQuery } from "../../../../Redux/Features/Apis/Suggestions/ApiSlice";
+import { useGetSuggestionDataQuery } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/GetSuggestionData/ApiSlice";
+import SuggestionImgCard from "./SuggestionImgCard";
 
 const RelatedImages = () => {
   // redux writing
@@ -16,21 +18,22 @@ const RelatedImages = () => {
     categories: ImgDetailsData?.collections,
     excludedId: ImgDetailsData?._id,
   });
-  console.log("🚀 ~ RelatedImages ~ data:", data);
+  const { data: SuggestionData } = useGetSuggestionDataQuery({ collections: ImgDetailsData?.collections })
+  console.log("🚀 ~ RelatedImages ~ data:", SuggestionData);
   return (
-    <div className="xl:px-3">
+    <div className={`${SuggestionData !== undefined && SuggestionData.length === 0 && "hidden"} xl:px-3`}>
       <h1 className="text-2xl font-Righteous">
-        {/* <span className="font-BanglaHeading">
+        <span className="font-BanglaHeading">
           {Language === "BN" && "কিছু সাজেসটেড ছবি"}
         </span>
-        {Language === "EN" && "Suggested Pictures"} : */}
+        {Language === "EN" && "Suggested Pictures"} :
       </h1>
       <div className="my-3 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-3 max-xl:columns-3 gap-2 justify-center w-full ">
-        {/* {images.slice(0, 10).map((image, index) => (
-          <div key={index} className="relative ">
-            <ImgCard img={image} i={index} />
+        {SuggestionData !== undefined && SuggestionData.filter((image: any) => image?._id !== ImgDetailsData?._id)?.map((image: any, index: any) => (
+          <div key={image?._id} className="relative ">
+            <SuggestionImgCard i={index} imgData={image} />
           </div>
-        ))} */}
+        ))}
       </div>
     </div>
   );
