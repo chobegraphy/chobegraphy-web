@@ -13,7 +13,7 @@ import {
 } from "react-icons/ri";
 import { TbCopy } from "react-icons/tb";
 import { useSelector } from "react-redux";
-const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsData, uploadedTime, colors, dimensions, fileSize, onSubmit, }: any) => {
+const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, react, register, DetailsData, uploadedTime, colors, dimensions, fileSize, onSubmit, }: any) => {
   // auth data
   const { user } = useAuthData();
   const router = useRouter(); // Initialize router
@@ -21,7 +21,7 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
 
   const zillaDatas = (ZillaData);
   const [filteredZilla, setFilteredZilla] = useState(zillaDatas);
-  const [district, setDistrict] = useState("");
+
   const [showDropdown, setShowDropdown] = useState(false);
 
 
@@ -123,7 +123,7 @@ const PhotoDetails = ({ setDistrict1, download, view, react, register, DetailsDa
                 {Language === "BN" && "জেলা"}
               </span>{" "}
               {Language === "EN" && "District"} :{" "}
-            </p> <input value={district}
+            </p> <input id="district" value={district !== "" ? district : ""}
               onChange={handleDistrictChange}
               onFocus={() => {
                 if (!zillaDatas.some(z => z.name.toLowerCase() === district.toLowerCase())) {

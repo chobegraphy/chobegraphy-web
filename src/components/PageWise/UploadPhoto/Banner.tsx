@@ -47,6 +47,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
   const [download] = useState(0);
   const [uploadedTime, setUploadedTime] = useState<string>('');
   const [district, setDistrict] = useState<object>({});
+  const [district1, setDistrict1] = useState("");
   const [mainImgFile, setMainImgFile] = useState<any>(null);
   const [description, setDescription] = useState<string>('');
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -248,6 +249,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
     setThumbnail(null);
     setUploadedTime('');
     setDistrict({});
+    setDistrict1('');
     setMainImgFile(null);
     setDescription('');
     setExifData({
@@ -263,7 +265,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
       subjectDistance: "",
 
     });
+    setDistrict({});
     setSelectedCategory([]);
+    const districtElement = document.getElementById("district") as HTMLInputElement;
+    if (districtElement) {
+      districtElement.value = "";
+    }
   };
 
 
@@ -334,8 +341,9 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
           resetForm();
           setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
           reset({ "description": "" })
-          toast.success(Language === "en" ? "Upload successful!" : "আপলোড সফল হয়েছে!");
+
           setUploadProgress(100);
+
 
 
         }
@@ -402,7 +410,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
         {errors.image && <p className="text-red-500">Image is required</p>}
 
         {/* Picture information */}
-        <PhotoDetails setDescription={setDescription} onSubmit={onSubmit} district={district} setDistrict1={setDistrict} view={view} download={download} react={react} register={register} uploadedTime={uploadedTime} colors={colors} fileSize={fileSize} dimensions={dimensions} />
+        <PhotoDetails setDistrict={setDistrict1} district={district1} setDescription={setDescription} onSubmit={onSubmit} setDistrict1={setDistrict} view={view} download={download} react={react} register={register} uploadedTime={uploadedTime} colors={colors} fileSize={fileSize} dimensions={dimensions} />
         <div className="mt-3 h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
 
         {/* Picture meta data */}
@@ -496,7 +504,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
                 className="h-full bg-white dark:bg-light-primary-color  rounded-xl z-10 duration-300 transform relative ease-in-out"
                 style={{ width: `${uploadProgress}%` }}
               ><span className="absolute top-0 bottom-0 right-1 flex items-center justify-center font-bold text-black dark:text-dark-primary-color">
-                  {uploadProgress}%
+                  {uploadProgress > 10 && uploadProgress}%
                 </span></div>
 
                 <div className="bg-black dark:bg-light-primary-color/5 rounded-xl absolute top-0 left-0 right-0 bottom-0 h-full"></div>

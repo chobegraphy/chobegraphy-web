@@ -142,12 +142,12 @@ const Banner = () => {
             </span>
           )}
           {likeLoading === true && (
-            <ImSpinner
+            <span className="dark:bg-light-primary-color bg-dark-primary-color lg:p-2.5 p-2 rounded-full"> <ImSpinner
               className={`${LikedPictureData.includes(DetailsData?._id)
                 ? "text-pink-600"
                 : "text-white"
                 } animate-spin `}
-            />
+            /></span>
           )}
           <span className="dark:bg-light-primary-color bg-dark-primary-color lg:p-2.5 p-2 rounded-full">
             <PiShareNetworkBold onClick={handleShare} id="share" />
