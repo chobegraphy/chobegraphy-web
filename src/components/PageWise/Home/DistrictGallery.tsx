@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import "swiper/css";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 
+import { convertToBanglaNum } from "@/ExportedFunctions/ConvertToBanglaNum";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
@@ -361,14 +362,7 @@ const DistrictGallery = () => {
       photoCount: 10,
     },
   ];
-  const convertToBangla = (num: any) => {
-    const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-    return num
-      .toString()
-      .split("")
-      .map((digit: any) => banglaDigits[parseInt(digit)])
-      .join("");
-  };
+
 
   const [showAllDistrict, setShowAllDistrict] = useState(false);
 
@@ -444,7 +438,7 @@ const DistrictGallery = () => {
                         {" "}
                         -{" "}
                         <span className="font-BanglaHeading">
-                          {Language === "BN" && convertToBangla(x?.photoCount)}
+                          {Language === "BN" && convertToBanglaNum(x?.photoCount)}
                         </span>{" "}
                         <span className="font-Righteous">
                           {Language === "EN" && x?.photoCount}
@@ -493,7 +487,7 @@ const DistrictGallery = () => {
                         {" "}
                         -{" "}
                         <span className="font-BanglaHeading">
-                          {Language === "BN" && convertToBangla(x?.photoCount)}
+                          {Language === "BN" && convertToBanglaNum(x?.photoCount)}
                         </span>{" "}
                         <span className="font-Righteous">
                           {Language === "EN" && x?.photoCount}
@@ -581,7 +575,7 @@ const DistrictGallery = () => {
                     {" "}
                     -{" "}
                     <span className="font-BanglaHeading">
-                      {Language === "BN" && convertToBangla(x?.photoCount)}
+                      {Language === "BN" && convertToBanglaNum(x?.photoCount)}
                     </span>{" "}
                     <span className="font-Righteous">
                       {Language === "EN" && x?.photoCount}

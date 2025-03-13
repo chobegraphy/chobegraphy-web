@@ -8,8 +8,8 @@ export const FeVercelServerApiSlice = createApi({
         "Get-Most-Viewed-Downloaded-Reacted-Img",
         "Add-Upload-Picture-Data",
         "Get-Suggestion-Data",
-        "Get-Collection-Data"
-
+        "Get-Collection-Data",
+        "Add-Collection-Data", "PictureLike"
     ],
     baseQuery: fetchBaseQuery({
         // baseUrl: "http://localhost:3000/api",

@@ -33,9 +33,7 @@ const Navbar = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const [languageOpen, setLanguageOpen] = useState(false);
   const { user, logOut } = useAuth();
-  // Location states
-  const [country, setCountry] = useState(null);
-  const [error, setError] = useState<string | null>(null);
+
   const { setTheme } = useTheme();
   const [showProfileRoutes, setShowProfileRoutes] = useState(false);
   // Redux
@@ -55,48 +53,21 @@ const Navbar = () => {
   }, [dispatch]);
 
   // Fetch location and set country
-  useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          try {
-            const response = await fetch(
-              `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
-            );
-            const data = await response.json();
-            setCountry(data.address?.country || "Country not found");
-          } catch (err) {
-            setError("Failed to fetch location details.");
-          }
-        },
-        (error) => {
-          // If geolocation is denied or fails, set the language to English
-          setError("Geolocation permission denied or failed.");
-          dispatch(setLanguage("EN")); // Set language to English if location is not allowed or an error occurs
-        }
-      );
-    } else {
-      setError("Geolocation is not supported by this browser.");
-      dispatch(setLanguage("EN")); // Set language to English if geolocation is not supported
-    }
-  }, [dispatch]);
+
 
 
   // Set language based on country when country updates
   useEffect(() => {
-    if (country) {
-      const storedLanguage = localStorage.getItem("Language");
+    const storedLanguage = typeof window !== "undefined" && localStorage.getItem("Language");
+    if (!storedLanguage) {
 
-      if (!storedLanguage) {
-        if (country === "Bangladesh") {
-          dispatch(setLanguage("BN"));
-        } else {
-          dispatch(setLanguage("EN"));
-        }
-      }
+      dispatch(setLanguage("BN"));
+
+
+
     }
-  }, [country, dispatch]);
+
+  }, []);
 
   // Handle click outside to close menu
   useEffect(() => {

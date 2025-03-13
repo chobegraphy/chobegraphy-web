@@ -1,9 +1,10 @@
+import { convertToBanglaNum } from "@/ExportedFunctions/ConvertToBanglaNum";
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import { ZillaData } from "@/ExportedFunctions/ZillaData";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
-import { FaMountainSun } from "react-icons/fa6";
 import { FiEye } from "react-icons/fi";
 import { MdPublishedWithChanges } from "react-icons/md";
 import {
@@ -17,7 +18,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
   // auth data
   const { user } = useAuthData();
   const router = useRouter(); // Initialize router
-
+  const { theme } = useTheme()
 
   const zillaDatas = (ZillaData);
   const [filteredZilla, setFilteredZilla] = useState(zillaDatas);
@@ -71,9 +72,14 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
     <div>
       <section className="  py-2 text-light-primary-color dark:text-dark-primary-color">
 
-        <div className="font-Space mt-2 max-md:text-base text-xl">
-
-          <textarea {...register("description")} placeholder={Language === "EN" ? "Caption" : "ক্যাপশন"} className="p-5  w-full outline-none rounded-2xl border border-opacity-30 dark:border-opacity-30  border-light-primary-color dark:border-dark-primary-color  bg-gradient-to-br from-light-primary-color/0 dark:from-dark-primary-color/0 dark:via-black to-dark-primary-color/20 dark:to-light-primary-color/20  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-5"></textarea>
+        <div className="font-Space relative mt-2 max-md:text-base ">
+          <p style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">
+            <span className="font-BanglaSubHeading">
+              {Language === "BN" && "ক্যাপশন"}
+            </span>{" "}
+            {Language === "EN" && "Caption"} :{" "}
+          </p>
+          <textarea style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000" }} {...register("description")} className={`p-5 rounded-xl  w-full outline-none bg-transparent border  border-light-secondary-color `}></textarea>
         </div>
       </section>
       <section className="  relative text-light-primary-color dark:text-dark-primary-color mt-2">
@@ -84,7 +90,8 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               {Language === "BN" && "প্রকাশিত সময় :"}
             </span>
             {Language === "EN" && "Publishing on :"}{" "}
-            {formatDateTime(uploadedTime)}
+
+            <span className="font-BanglaSubHeading text-lg">{Language === "BN" && convertToBanglaNum(formatDateTime(uploadedTime))}</span>{Language === "EN" && formatDateTime(uploadedTime)}
           </p>
         </h1>
         <div className="flex flex-col gap-y-1">
@@ -96,7 +103,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "রেজোলিউশন"}
               </span>{" "}
-              {Language === "EN" && "Resolution"} : {dimensions}
+              {Language === "EN" && "Resolution"} : <span className="font-BanglaSubHeading text-lg">{Language === "BN" && convertToBanglaNum(dimensions)}</span>{Language === "EN" && dimensions}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -106,7 +113,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "ছবির সাইজ"}
               </span>{" "}
-              {Language === "EN" && "Picture Size"} : {fileSize} mb
+              {Language === "EN" && "Picture Size"} : <span className="font-BanglaSubHeading text-lg">{Language === "BN" && convertToBanglaNum(fileSize)}</span>{Language === "EN" && fileSize} mb
             </p>
           </h1>
 
@@ -115,15 +122,13 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
 
               setShowDropdown(false);
             }}
-            className="flex flex-col items-start gap-x-1 transform  duration-300 font-Space">
-            <p className="flex mt-2 mb-1 gap-x-0.5 items-center">
-              <FaMountainSun className="text-xl" />
-              {" "}
+            className="flex mt-3 relative flex-col items-start gap-x-1 transform  duration-300 font-Space">
+            <p style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">
               <span className="font-BanglaSubHeading">
-                {Language === "BN" && "জেলা"}
+                {Language === "BN" && "জেলা সিলেক্ট করুন"}
               </span>{" "}
-              {Language === "EN" && "District"} :{" "}
-            </p> <input id="district" value={district !== "" ? district : ""}
+              {Language === "EN" && "Select District"} :{" "}
+            </p> <input style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000" }} id="district" value={district !== "" ? district : ""}
               onChange={handleDistrictChange}
               onFocus={() => {
                 if (!zillaDatas.some(z => z.name.toLowerCase() === district.toLowerCase())) {
@@ -131,8 +136,8 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
                 }
               }}
 
-              className={`${showDropdown && filteredZilla.length > 0 ? "border  rounded-xl  rounded-b-none" : "border rounded-xl"} border border-light-secondary-color  outline-none w-full px-3 py-2`} />
-            <ul className={`${showDropdown && filteredZilla.length > 0 ? "border  rounded-xl  rounded-t-none border-t-0 h-full opacity-100 z-10" : " rounded-xl h-0 opacity-0 -z-20"}  border   rounded-xl transform duration-300 max-h-52 w-full border-light-secondary-color  overflow-y-scroll example`}>
+              className={`${showDropdown && filteredZilla.length > 0 ? "border rounded-xl   rounded-b-none" : "border rounded-xl "} border dark:border-light-secondary-color border-light-secondary-color  outline-none  bg-transparent w-full px-3 py-3 pt-4`} />
+            <ul style={{ borderTop: "none", border: `2px solid ${showDropdown && filteredZilla.length > 0 ? colors[2]?.hex : colors[2]?.hex}` }} className={`${showDropdown && filteredZilla.length > 0 ? "border  rounded-xl  rounded-t-none border-t-0 h-full opacity-100 z-10" : " rounded-xl h-0 opacity-0 -z-20"}  border   rounded-xl transform duration-300 max-h-52 w-full border-light-secondary-color  overflow-y-scroll example`}>
               {filteredZilla.map((zilla: any) => (
                 <li
                   key={zilla.id}
@@ -143,7 +148,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
                   className="px-3 py-2 cursor-pointer hover:bg-light-primary-color dark:hover:bg-dark-primary-color
                     hover:text-dark-primary-color dark:hover:text-light-primary-color"
                 >
-                  {zilla.name} ({zilla.bn_name})
+                  {zilla.name} / <span className="font-BanglaSubHeading">{zilla.bn_name}</span>
                 </li>
               ))}
             </ul>
@@ -162,7 +167,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট ডাউনলোড"}
               </span>{" "}
-              {Language === "EN" && "Total downloads"} : {download}
+              {Language === "EN" && "Total downloads"} : <span className="font-BanglaSubHeading text-lg">{Language === "BN" && convertToBanglaNum(download)}</span>{Language === "EN" && download}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -172,7 +177,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট ভিউ"}
               </span>{" "}
-              {Language === "EN" && "Total View"} : {view}
+              {Language === "EN" && "Total View"} : <span className="font-BanglaSubHeading text-lg">{Language === "BN" && convertToBanglaNum(view)}</span>{Language === "EN" && view}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -182,7 +187,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট রিয়েক্ট"}
               </span>{" "}
-              {Language === "EN" && "Total React"} : {react}
+              {Language === "EN" && "Total React"} : <span className="font-BanglaSubHeading text-lg">{Language === "BN" && convertToBanglaNum(react)}</span>{Language === "EN" && react}
             </p>
           </h1>
           <div className="">
