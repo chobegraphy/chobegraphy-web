@@ -56,7 +56,7 @@ const AllImgPage = () => {
       <FilterSearch />
       {/* ImgMappingComponent with ref */}
       <div ref={imgMappingRef}>
-        <ImgMappingComponent ImgData={ImgData?.pictures} />
+        <ImgMappingComponent ImgData={ImgData?.data} />
         {
           ImgData?.pictures.length >= 19 && isFetching === true && <div className="flex items-center justify-center"><ImSpinner
             className={`dark:text-white text-light-primary-color animate-spin `}

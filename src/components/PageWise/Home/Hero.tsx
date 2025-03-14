@@ -8,7 +8,9 @@ import { TbBorderCornerSquare } from "react-icons/tb";
 import { useSelector } from "react-redux";
 
 import { useRef } from "react";
+import { useGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
 import "./Home.css";
+import ImgCardHero from "./ImgCardHero";
 const Hero = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
@@ -16,7 +18,11 @@ const Hero = () => {
 
   const inView = useInView(ref, { once: true });
 
-
+  const { data, error, isLoading } = useGetPictureDataQuery({
+    filter: "popular",
+    page: 1,
+    limit: 9,
+  });
   const getRandomDuration = () => Math.random() * (1.5 - 0.7) + 0.7; // Random duration between 0.7s and 1.5s
 
   const imgSection = <> <div className="w-full h-full  flex justify-center max-md:mt-5 max-md:mb-20 max-md:ms-0 ms-5 items-center relative">
@@ -35,8 +41,10 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-100 rounded-3xl border-2 border-light-secondary-color rounded-br-none w-full h-full"
-      ></motion.div>
+        className="bg-red-100 rounded-3xl overflow-hidden border-2 border-light-secondary-color rounded-br-none w-full h-full"
+      >
+        <div className="object-cover object-center w-full h-full scale-150 -rotate-45"><ImgCardHero imgData={data?.data[0]} i={0} /></div>
+      </motion.div>
 
       <motion.div
         ref={ref}
@@ -51,8 +59,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-200 w-full h-full rounded-3xl rounded-bl-none border-2 border-light-secondary-color"
-      ></motion.div>
+        className="bg-red-200 w-full h-full rounded-3xl rounded-bl-none border-2 border-light-secondary-color overflow-hidden"
+      ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[1]} i={0} /></div></motion.div>
 
       <motion.div
         ref={ref}
@@ -67,8 +75,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-300 rounded-full w-full h-full border-2 border-light-secondary-color"
-      ></motion.div>
+        className="bg-red-300 rounded-full w-full h-full border-2 border-light-secondary-color overflow-hidden"
+      ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[2]} i={0} /></div></motion.div>
 
       <motion.div
         ref={ref}
@@ -83,8 +91,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-400 rounded-3xl border-2 border-light-secondary-color rounded-tr-none w-full h-full"
-      ></motion.div>
+        className="bg-red-400 rounded-3xl border-2 border-light-secondary-color rounded-tr-none w-full overflow-hidden h-full"
+      ><div className="object-cover object-center relative top-5 w-[160%] h-[160%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[3]} i={0} /></div></motion.div>
 
       <motion.div
         ref={ref}
@@ -99,8 +107,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-600 rounded-b-full rounded-tr-full w-full h-full border-2 border-light-secondary-color"
-      ></motion.div>
+        className="bg-red-600 rounded-b-full overflow-hidden rounded-tr-full w-full h-full border-2 border-light-secondary-color"
+      ><div className="object-cover object-center relative  w-[160%] h-[160%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[4]} i={0} /></div></motion.div>
 
       <motion.div
         ref={ref}
@@ -115,8 +123,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-700 rounded-t-full rounded-br-full w-full h-full border-2 border-light-secondary-color"
-      ></motion.div>
+        className="bg-red-700 rounded-t-full overflow-hidden rounded-br-full w-full h-full border-2 border-light-secondary-color"
+      ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[5]} i={0} /></div></motion.div>
 
       <motion.div
         ref={ref}
@@ -131,8 +139,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-800 rounded-full w-full h-full border-2 border-light-secondary-color"
-      ></motion.div>
+        className="bg-red-800 rounded-full overflow-hidden w-full h-full border-2 border-light-secondary-color"
+      ><div className="object-cover object-center relative w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[6]} i={0} /></div></motion.div>
 
       <motion.div
         ref={ref}
@@ -147,8 +155,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-red-900 rounded-b-full rounded-tl-full w-full h-full border-2 border-light-secondary-color"
-      ></motion.div>
+        className="bg-red-900 rounded-b-full rounded-tl-full w-full h-full border-2 border-light-secondary-color overflow-hidden"
+      ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[7]} i={0} /></div></motion.div>
 
       <motion.div
         ref={ref}
@@ -163,8 +171,8 @@ const Hero = () => {
           duration: getRandomDuration(),
           ease: "easeInOut",
         }}
-        className="bg-pink-800 w-full h-full rounded-b-full rounded-tr-full border-2 border-light-secondary-color"
-      ></motion.div>
+        className="bg-pink-800 w-full h-full rounded-b-full rounded-tr-full border-2 border-light-secondary-color overflow-hidden"
+      ><div className="object-cover object-center relative   w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[8]} i={0} /></div></motion.div>
     </div>
   </div></>
   return (
@@ -204,7 +212,7 @@ const Hero = () => {
               >
                 {Language === "BN"
                   ? "ফটোগ্রাফি কেবল ছবি নয় - এটি অনুভূতি, গল্প এবং আবেগ সম্পর্কে। একটি ফ্রেম হাজার হাজার স্মৃতি ধরে রাখতে পারে। মুহূর্তগুলি ম্লান হয়ে যায়, কিন্তু ছবিগুলি সেগুলিকে বাঁচিয়ে রাখে। লেন্সের মাধ্যমে, সময় চিরকাল স্থির থাকে।"
-                  : "Photography isn’t just about pictures— It’s about feelings, stories,            and emotions. A single frame can hold a thousand memories. Moments            fade, but images keep them alive. Through the lens, time stands            still forever."}
+                  : "Photography isn’t just about data— It’s about feelings, stories,            and emotions. A single frame can hold a thousand memories. Moments            fade, but images keep them alive. Through the lens, time stands            still forever."}
               </p>
             </div>
             <Link
@@ -319,7 +327,7 @@ const Hero = () => {
           max-lg:scale-75
           max-lg:right-[90px] max-md:scale-95 right-[190px] max-md:h-[150px] overflow-hidden max-md:w-[150px] max-md:right-[170px]"
             >
-              <img className=" object-cover object-center w-full h-full" src="https://i.ibb.co.com/hRy5NsQb/retouch-2024110413453895-3.jpg" alt="s" width={500} height={500} loading="lazy" />
+              <img className=" object-cover object-center object-center w-full h-full" src="https://i.ibb.co.com/hRy5NsQb/retouch-2024110413453895-3.jpg" alt="s" width={500} height={500} loading="lazy" />
             </div>
             <div className="absolute w-[90px] rounded-3xl rotate-45 h-[90px] max-xl:-top-[300px] bg-red-900 top-[205px] max-md:top-[-23px] max-lg:top-[230px] max-lg:right-[210px] right-[70px] max-lg:hidden max-md:block max-md:right-[74px]"></div>
             <div className="absolute w-[60px] rounded-xl rotate-45 h-[60px] max-xl:-top-[230px] max-lg:hidden max-md:block bg-red-200 top-[270px] max-md:top-[210px] max-lg:top-[230px] max-lg:right-[210px] right-[160px] max-md:right-[170px]"></div>

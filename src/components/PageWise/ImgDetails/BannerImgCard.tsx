@@ -1,5 +1,4 @@
 import clsx from "clsx"; // Utility for conditional class names
-import Image from "next/image";
 import { useState } from "react";
 
 const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
@@ -43,7 +42,7 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
         className="relative w-full rounded-2xl overflow-hidden"
       >
         {/* High-Quality Image */}
-        <Image
+        <img
           width={width}
           height={height}
           onLoad={() => setLoadedImg(true)}

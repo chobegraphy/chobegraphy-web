@@ -560,7 +560,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
             onChange={handleImageChange}
           />
           {selectedImg ? (
-            <img src={selectedImg} alt="Selected" className="w-full rounded-2xl h-full max-h-[400px] object-cover" />
+            <img src={selectedImg} alt="Selected" className="w-auto rounded-2xl h-auto max-h-[400px] " />
           ) : (
             <div className="flex flex-col justify-center items-center">
               <svg className="w-20  h-20 max-md:w-18 max-md:h-18" viewBox="0 0 73 60" xmlns="http://www.w3.org/2000/svg">

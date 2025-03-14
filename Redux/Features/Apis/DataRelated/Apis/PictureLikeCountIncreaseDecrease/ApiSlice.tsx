@@ -1,11 +1,11 @@
-import { apiSlice } from "../../ApiSlice/ApiSlice";
+import { DataRelatedApiSlice } from "../../ApiSlice";
 
-export const PictureLikeApiSlice = apiSlice.injectEndpoints({
+export const PictureLikeApiSlice = DataRelatedApiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
     PictureLikeCountIncrease: builder.mutation({
       query: ({ PictureId }) => ({
-        url: `/IncreaseLike/${PictureId}`,
+        url: `IncreaseLike/${PictureId}`,
         method: "POST",
         fetchOptions: {
           mode: "cors",
@@ -15,7 +15,7 @@ export const PictureLikeApiSlice = apiSlice.injectEndpoints({
     }),
     PictureLikeCountDecrease: builder.mutation({
       query: ({ PictureId }) => ({
-        url: `/DecreaseLike/${PictureId}`,
+        url: `DecreaseLike/${PictureId}`,
         method: "DELETE",
         fetchOptions: {
           mode: "cors",

@@ -9,11 +9,11 @@ export const DataRelatedApiSlice = createApi({
         "Add-Upload-Picture-Data",
         "Get-Suggestion-Data",
         "Get-Collection-Data",
-        "Add-Collection-Data", "PictureLike", "Get-Img-Data"
+        "Add-Collection-Data", "PictureLike", "Get-Img-Data", "PictureIncreaseLikeCount", "PictureDecreaseLikeCount"
     ],
     baseQuery: fetchBaseQuery({
         // baseUrl: "http://localhost:3000/api",
-        baseUrl: "https://chobegraphy.vercel.app/api",
+        baseUrl: "https://chobegraphyserver.onrender.com/api",
     }),
     endpoints: () => ({}),
 });

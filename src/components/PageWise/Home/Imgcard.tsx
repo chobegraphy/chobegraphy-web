@@ -12,17 +12,15 @@ import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRela
 import {
   usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
-import {
-  usePictureLikeCountDecreaseMutation,
-  usePictureLikeCountIncreaseMutation,
-} from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
+
+import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
-const ImgCard = ({ imgData, i, triggerFetch }: any) => {
+const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
   // framer motion
 
   const { user } = useAuthData();
-  console.log(user?._id);
+
   const router = useRouter(); // Initialize router
 
   // Redux dispatch function
@@ -34,7 +32,7 @@ const ImgCard = ({ imgData, i, triggerFetch }: any) => {
   );
   const Language = useSelector((state: any) => state.Language.value);
 
-  console.log(LikedPictureData);
+
 
   const [
     LikedData,
@@ -54,12 +52,12 @@ const ImgCard = ({ imgData, i, triggerFetch }: any) => {
       error: UnlikedInitial,
     },
   ] = usePictureUnLikeMutation();
-  const [LikedCountData] = usePictureLikeCountIncreaseMutation();
-  const [UnLikedCountData] = usePictureLikeCountDecreaseMutation();
+  const [LikedCountData, { isLoading: LikedCountLoading }] = usePictureLikeCountIncreaseMutation();
+  const [UnLikedCountData, { isLoading: UnlikedCountLoading }] = usePictureLikeCountDecreaseMutation();
   // use effect for like unlike loading
   useEffect(() => {
-    setLikeLoading(likedLoading || UnlikedLoading);
-  }, [likedLoading, UnlikedLoading]);
+    setLikeLoading(likedLoading || UnlikedLoading || LikedCountLoading || UnlikedCountLoading);
+  }, [likedLoading, UnlikedLoading, LikedCountLoading, UnlikedCountLoading]);
 
   // Ensure imgData exists before using it
   if (!imgData) return null;
@@ -79,26 +77,42 @@ const ImgCard = ({ imgData, i, triggerFetch }: any) => {
 
 
   const handleLike = async () => {
+    console.log("👍 handleLike function called!");
+
     if (!user) {
+      console.log("⚠️ User not logged in. Redirecting to SignIn...");
       router.push("/SignIn");
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
       return;
     }
+
     if (imgData?._id) {
-      const LikedResponse = await LikedData({
-        UserId: user?._id,
-        PictureId: imgData._id,
-      }).unwrap();
+      try {
+        const LikedResponse = await LikedData({
+          UserId: user?._id,
+          PictureId: imgData._id,
+        }).unwrap();
 
-      LikedCountData({
-        PictureId: imgData._id,
-      }).unwrap();
+        const LikedCountDataResponse = await LikedCountData({
+          PictureId: imgData._id,
+        }).unwrap();
 
-      document.getElementById("refetch")?.click()  // Trigger refetch after like
+        // ✅ Update the like count at its original position
+        setRecentImgData((prevData: any) =>
+          prevData.map((item: any) =>
+            item._id === imgData._id ? LikedCountDataResponse?.updatedData : item
+          )
+        );
 
-      dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
+        document.getElementById("refetch")?.click();
+        dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
+      } catch (error) {
+        console.error("❌ Error in handleLike:", error);
+        toast.error("Failed to like the picture.");
+      }
     }
   };
+
 
   const handleUnlike = async () => {
     if (!user) {
@@ -106,21 +120,34 @@ const ImgCard = ({ imgData, i, triggerFetch }: any) => {
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
       return;
     }
+
     if (imgData?._id) {
-      const UnLikedResponse = await UnLikedData({
-        UserId: user?._id,
-        PictureId: imgData._id,
-      }).unwrap();
+      try {
+        const UnLikedResponse = await UnLikedData({
+          UserId: user?._id,
+          PictureId: imgData._id,
+        }).unwrap();
 
-      UnLikedCountData({
-        PictureId: imgData._id,
-      }).unwrap();
+        const UnLikedCountDataResponse = await UnLikedCountData({
+          PictureId: imgData._id,
+        }).unwrap();
 
-      document.getElementById("refetch")?.click()  // Trigger refetch after unlike
+        // ✅ Update the like count at its original position
+        setRecentImgData((prevData: any) =>
+          prevData.map((item: any) =>
+            item._id === imgData._id ? UnLikedCountDataResponse?.updatedData : item
+          )
+        );
 
-      dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
+        document.getElementById("refetch")?.click(); // Trigger refetch after unlike
+        dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
+      } catch (error) {
+        console.error("❌ Error in handleUnlike:", error);
+        toast.error("Failed to unlike the picture.");
+      }
     }
   };
+
   return (
     <div
 

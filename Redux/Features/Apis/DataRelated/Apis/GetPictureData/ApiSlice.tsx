@@ -6,9 +6,7 @@ export const GetPictureDataApiSlice = DataRelatedApiSlice.injectEndpoints({
         // Standard query hook
         GetPictureData: builder.query({
             query: ({ filter, page, limit }) => ({
-                url: `get-picture-data?filter=${encodeURIComponent(
-                    JSON.stringify(filter)
-                )}&page=${page}&limit=${limit}`,
+                url: `get-picture-data?filter=${filter}&page=${page}&limit=${limit}`,
                 method: "GET",
                 fetchOptions: {
                     mode: "cors",
@@ -17,23 +15,10 @@ export const GetPictureDataApiSlice = DataRelatedApiSlice.injectEndpoints({
             providesTags: ["Get-Img-Data"],
         }),
 
-        // Lazy fetch query hook
-        GetPictureDataLazy: builder.query({
-            query: ({ filter, page, limit }) => ({
-                url: `get-picture-data?filter=${encodeURIComponent(
-                    JSON.stringify(filter)
-                )}&page=${page}&limit=${limit}`,
-                method: "GET",
-                fetchOptions: {
-                    mode: "cors",
-                },
-            }),
-            providesTags: ["Get-Img-Data"],
-        }),
+
     }),
 });
 
 export const {
     useGetPictureDataQuery,
-    useLazyGetPictureDataQuery
 } = GetPictureDataApiSlice;

@@ -15,10 +15,8 @@ import {
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 
 import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLike/ApiSlice";
-import {
-    usePictureLikeCountDecreaseMutation,
-    usePictureLikeCountIncreaseMutation,
-} from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
+
+import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
 import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";

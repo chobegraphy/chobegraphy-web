@@ -1,11 +1,7 @@
 "use client";
-import DistrictGallery from "@/components/PageWise/Home/DistrictGallery";
 import Hero from "@/components/PageWise/Home/Hero";
-import HomeGallery from "@/components/PageWise/Home/HomeGallery";
 import Info from "@/components/PageWise/Home/Info";
-import LightroomPresets from "@/components/PageWise/Home/LightroomPresets";
-import Popular from "@/components/PageWise/Home/Popular";
-import Team from "@/components/PageWise/Home/Team";
+import RecentImg from "@/components/PageWise/Home/RecentImg";
 
 export default function Home() {
   return (
@@ -16,19 +12,19 @@ export default function Home() {
       </div>
       <div className="max-w-7xl w-full mx-auto ">
         <Info />
-        <Popular />
+        {/* <Popular /> */}
       </div>
 
       <div className=" w-full mx-auto ">
-        <HomeGallery />
+        <RecentImg />
         <div className=" w-full max-w-7xl mx-auto ">
-          <DistrictGallery />
+          {/* <DistrictGallery /> */}
 
         </div>
-        <LightroomPresets />
+        {/* <LightroomPresets /> */}
       </div>
       <div className=" w-full max-w-7xl mx-auto ">
-        <Team />
+        {/* <Team /> */}
 
       </div>
     </main>

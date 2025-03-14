@@ -5,35 +5,34 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { useLazyGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
+import { useGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
 import ImgCard from "./Imgcard";
-const HomeGallery = () => {
+const RecentImg = () => {
   const pathName = usePathname();
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   // Fetch data using the RTK Query hook
-  const [triggerFetch, { data, error, isLoading }] = useLazyGetPictureDataQuery();
-
-
+  const { data, error, isLoading, refetch } = useGetPictureDataQuery({
+    filter: "recent",
+    page: 1,
+    limit: 19,
+  });
+  console.log(data);
+  const [RecentImgData, setRecentImgData] = useState([]);
   const [hovered, SetHovered] = useState(false);
   const [hovered2, SetHovered2] = useState(false);
   useEffect(() => {
-    triggerFetch({
-      filter: "Recent",
-      page: 1,
-      limit: 19,
-    });
-  }, [pathName]);
+    if (data) {
+      setRecentImgData(data.data);
+    }
+  }, [data, pathName]);
+  useEffect(() => {
+    refetch()
+  }, [pathName])
+
   return (
     <section className="w-full  dark:bg-light-primary-color bg-dark-primary-color ">
-      <button id="refetch" className="hidden" onClick={() => {
-        console.log("fetch")
-        triggerFetch({
-          filter: "Recent",
-          page: 1,
-          limit: 19,
-        });
-      }}></button>
+
       <div className="max-w-7xl xl:px-16 sm:px-10 px-5 pt-10 pb-20 w-full mx-auto"><h1
         id="title"
         className="font-Righteous text-5xl max-xl:text-3xl text-center text-black dark:text-dark-primary-color"
@@ -58,9 +57,9 @@ const HomeGallery = () => {
         </h1>
 
         <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-6 max-xl:columns-4 gap-2 justify-center w-full ">
-          {data?.pictures.map((imgInfo: any, index: any) => (
+          {RecentImgData?.map((imgInfo: any, index: any) => (
             <div key={imgInfo?._id} className="relative ">
-              <ImgCard triggerFetch={triggerFetch} imgData={imgInfo} i={index} />
+              <ImgCard setRecentImgData={setRecentImgData} RecentImgData={RecentImgData} imgData={imgInfo} i={index} />
             </div>
           ))}
         </div>
@@ -81,4 +80,4 @@ const HomeGallery = () => {
   );
 };
 
-export default HomeGallery;
+export default RecentImg;
