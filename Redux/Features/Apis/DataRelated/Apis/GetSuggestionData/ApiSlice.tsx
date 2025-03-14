@@ -1,6 +1,6 @@
-import { FeVercelServerApiSlice } from "../../ApiSlice";
+import { DataRelatedApiSlice } from "../../ApiSlice";
 
-export const GetSuggestionDataApiSlice = FeVercelServerApiSlice.injectEndpoints({
+export const GetSuggestionDataApiSlice = DataRelatedApiSlice.injectEndpoints({
     overrideExisting: true,
     endpoints: (builder) => ({
         GetSuggestionData: builder.query({

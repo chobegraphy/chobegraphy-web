@@ -1,7 +1,7 @@
-import { FeVercelServerApiSlice } from "../../ApiSlice";
+import { DataRelatedApiSlice } from "../../ApiSlice";
 
 
-export const PictureLikeApiSlice = FeVercelServerApiSlice.injectEndpoints({
+export const PictureLikeApiSlice = DataRelatedApiSlice.injectEndpoints({
     overrideExisting: true,
     endpoints: (builder) => ({
 

@@ -1,7 +1,8 @@
 "use client";
 import { useSelector } from "react-redux";
 import { useGetSuggestionsDataQuery } from "../../../../Redux/Features/Apis/Suggestions/ApiSlice";
-import { useGetSuggestionDataQuery } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/GetSuggestionData/ApiSlice";
+
+import { useGetSuggestionDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetSuggestionData/ApiSlice";
 import SuggestionImgCard from "./SuggestionImgCard";
 
 const RelatedImages = () => {

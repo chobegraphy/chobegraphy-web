@@ -1,6 +1,6 @@
-import { FeVercelServerApiSlice } from "../../ApiSlice";
+import { DataRelatedApiSlice } from "../../ApiSlice";
 
-export const AddNewCollectionDataApiSlice = FeVercelServerApiSlice.injectEndpoints({
+export const AddNewCollectionDataApiSlice = DataRelatedApiSlice.injectEndpoints({
     overrideExisting: true,
     endpoints: (builder) => ({
         AddNewCollectionData: builder.mutation({

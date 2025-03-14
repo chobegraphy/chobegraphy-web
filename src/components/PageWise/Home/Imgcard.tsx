@@ -1,6 +1,5 @@
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import clsx from "clsx"; // Utility for conditional class names
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,18 +8,17 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
+import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLike/ApiSlice";
 import {
-  usePictureLikeMutation,
   usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 import {
   usePictureLikeCountDecreaseMutation,
   usePictureLikeCountIncreaseMutation,
 } from "../../../../Redux/Features/Apis/PictureLikeCount/ApiSlice";
-import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
-const ImgCard = ({ imgData, i }: any) => {
+const ImgCard = ({ imgData, i, triggerFetch }: any) => {
   // framer motion
 
   const { user } = useAuthData();
@@ -35,7 +33,6 @@ const ImgCard = ({ imgData, i }: any) => {
     (state: any) => state.StoreLikedPictureData.value
   );
   const Language = useSelector((state: any) => state.Language.value);
-  const { data, error, isLoading, refetch } = useGetTopPicturesQuery([]);
 
   console.log(LikedPictureData);
 
@@ -79,6 +76,8 @@ const ImgCard = ({ imgData, i }: any) => {
     return num.toString();
   };
 
+
+
   const handleLike = async () => {
     if (!user) {
       router.push("/SignIn");
@@ -90,10 +89,13 @@ const ImgCard = ({ imgData, i }: any) => {
         UserId: user?._id,
         PictureId: imgData._id,
       }).unwrap();
+
       LikedCountData({
         PictureId: imgData._id,
       }).unwrap();
-      refetch();
+
+      document.getElementById("refetch")?.click()  // Trigger refetch after like
+
       dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
     }
   };
@@ -109,14 +111,16 @@ const ImgCard = ({ imgData, i }: any) => {
         UserId: user?._id,
         PictureId: imgData._id,
       }).unwrap();
+
       UnLikedCountData({
         PictureId: imgData._id,
       }).unwrap();
-      refetch();
+
+      document.getElementById("refetch")?.click()  // Trigger refetch after unlike
+
       dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
     }
   };
-
   return (
     <div
 
@@ -140,7 +144,7 @@ const ImgCard = ({ imgData, i }: any) => {
         className="relative w-full rounded-2xl overflow-hidden"
       >
         {/* High-Quality Image */}
-        <Image
+        <img
           width={width}
           height={height}
           onLoad={() => setLoadedImg(true)}

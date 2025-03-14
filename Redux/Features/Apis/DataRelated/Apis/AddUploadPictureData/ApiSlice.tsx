@@ -1,6 +1,6 @@
-import { FeVercelServerApiSlice } from "../../ApiSlice";
+import { DataRelatedApiSlice } from "../../ApiSlice";
 
-export const AddUploadedPictureDataApiSlice = FeVercelServerApiSlice.injectEndpoints({
+export const AddUploadedPictureDataApiSlice = DataRelatedApiSlice.injectEndpoints({
     overrideExisting: true,
     endpoints: (builder) => ({
         AddUploadedPictureData: builder.mutation({

@@ -4,8 +4,10 @@ import toast from "react-hot-toast";
 import { FiPlus } from "react-icons/fi";
 import { IoIosArrowDown } from "react-icons/io";
 import { useSelector } from "react-redux";
-import { useAddNewCollectionDataMutation } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/AddCollectionData/ApiSlice";
-import { useGetCollectionsDataQuery } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/GetCollectionsData/ApiSlice";
+import { useAddNewCollectionDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/AddCollectionData/ApiSlice";
+import { useGetCollectionsDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetCollectionsData/ApiSlice";
+
+
 
 interface Category {
     label: string;

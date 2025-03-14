@@ -10,8 +10,8 @@ import { useAuth } from "../../../../Provider/AuthProvider";
 
 
 
-import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/AddUploadPictureData/ApiSlice";
 
+import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/AddUploadPictureData/ApiSlice";
 import { useUploadEncodedPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadEncodedPhoto/ApiSlice";
 import { useUploadMainPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadMainPhoto/ApiSlice";
 import { useUploadThumbnailPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadThumbnailPhoto/ApiSlice";

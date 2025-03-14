@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const FeVercelServerApiSlice = createApi({
-    reducerPath: "FeVercelServerApi",
+export const DataRelatedApiSlice = createApi({
+    reducerPath: "DataRelatedApi",
     tagTypes: [
         "Get-User-Count",
         "Get-Img-Count",
@@ -9,7 +9,7 @@ export const FeVercelServerApiSlice = createApi({
         "Add-Upload-Picture-Data",
         "Get-Suggestion-Data",
         "Get-Collection-Data",
-        "Add-Collection-Data", "PictureLike"
+        "Add-Collection-Data", "PictureLike", "Get-Img-Data"
     ],
     baseQuery: fetchBaseQuery({
         // baseUrl: "http://localhost:3000/api",

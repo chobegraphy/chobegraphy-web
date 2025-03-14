@@ -1,11 +1,15 @@
 "use client";
 
-import { animate, motion, useInView, useMotionValue, useMotionValueEvent } from "framer-motion";
+import { animate, motion, useMotionValue, useMotionValueEvent } from "framer-motion";
 import Lottie from "lottie-react";
-import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useGetImgCountQuery } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/GetImgCount/ApiSlice";
-import { useGetUserCountQuery } from "../../../../Redux/Features/FeVercelServerApiSlice/Apis/GetUserCount/ApiSlice";
+
+
+
+import { useGetImgCountQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetImgCount/ApiSlice";
+import { useGetUserCountQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetUserCount/ApiSlice";
 import imgAnimation from "../../../Assets/Animation/img.json";
 import peopleAnimation from "../../../Assets/Animation/people.json";
 import menLight from "../../../Assets/Animation/photographerLight.json";
@@ -14,16 +18,9 @@ const Info = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   // user count rtk query
-  const { data: UserCountData } = useGetUserCountQuery(
-    {}
-  );
-  const { data: ImgCountData } = useGetImgCountQuery(
-    {}
-  );
+  const { data: UserCountData } = useGetUserCountQuery({});
+  const { data: ImgCountData } = useGetImgCountQuery({});
   console.log(UserCountData?.totalDataCount);
-  const ref = useRef(null);
-  // Track if element is in view
-  const isInView = useInView(ref, { once: true });
 
   // Motion value for count
   const countImg = useMotionValue(0);
@@ -34,6 +31,7 @@ const Info = () => {
   const [roundedImgCount, setRoundedImgCount] = useState(0);
   const [roundedPhotographerCount, setRoundedPhotographerCount] = useState(0);
   const [roundedUserCount, setRoundedUserCount] = useState(0);
+
   // Listen to count changes and update the rounded count states
   useMotionValueEvent(countImg, "change", (latest: any) => {
     setRoundedImgCount(Math.round(latest)); // Update the state to trigger a re-render
@@ -42,29 +40,27 @@ const Info = () => {
   useMotionValueEvent(countPhotographer, "change", (latest: any) => {
     setRoundedPhotographerCount(Math.round(latest)); // Update the state to trigger a re-render
   });
+
   useMotionValueEvent(countUser, "change", (latest: any) => {
     setRoundedUserCount(Math.round(latest)); // Update the state to trigger a re-render
   });
 
-
-
-  // Trigger count animation when element is in view
+  // Trigger count animation immediately (without the "on view" check)
   useEffect(() => {
-    if (isInView) {
-      // Animate Img count to 1000 at a faster speed
-      const controlsImg = animate(countImg, ImgCountData?.totalDataCount || 0, { duration: 4 });
+    // Animate Img count to 1000 at a faster speed
+    const controlsImg = animate(countImg, ImgCountData?.totalDataCount || 0, { duration: 4 });
 
-      // Animate Photographer count to 10 at a slower speed
-      const controlsPhotographer = animate(countPhotographer, 10, { duration: 6 });
+    // Animate Photographer count to 10 at a slower speed
+    const controlsPhotographer = animate(countPhotographer, 10, { duration: 6 });
 
-      const controlsUser = animate(countUser, UserCountData?.totalDataCount || 0, { duration: 6 });
-      return () => {
-        controlsImg.stop();
-        controlsPhotographer.stop();
-        controlsUser.stop();
-      };
-    }
-  }, [isInView, countImg, countPhotographer]);
+    const controlsUser = animate(countUser, UserCountData?.totalDataCount || 0, { duration: 6 });
+
+    return () => {
+      controlsImg.stop();
+      controlsPhotographer.stop();
+      controlsUser.stop();
+    };
+  }, [ImgCountData?.totalDataCount, UserCountData?.totalDataCount]);
 
   return (
     <section className="mt-20 max-md:mt-20">
@@ -103,15 +99,14 @@ const Info = () => {
         </div>
         <div className="text-center flex flex-col items-center justify-center">
           <Lottie className={`${Language === "BN" ? "max-w-[135px]" : "max-w-[120px]"}`} animationData={imgAnimation} />
-          <motion.pre
-            ref={ref}
+          <Link href={"/AllImg"} className="focus:underline"><motion.pre
             className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color"
           >
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
               <span className="font-Bayon">{roundedImgCount}+</span>&nbsp;
               {Language === "BN" ? "ইমেজ/ছবি" : " Images/Photos"}
             </p>
-          </motion.pre>
+          </motion.pre></Link>
           <p className="text-center text-light-primary-color dark:text-dark-primary-color text-sm mt-1 font-Space">
             <span className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
               {Language === "BN"

@@ -4,22 +4,36 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
+
+import { useLazyGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
 import ImgCard from "./Imgcard";
 const HomeGallery = () => {
   const pathName = usePathname();
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
   // Fetch data using the RTK Query hook
-  const { data, error, isLoading, refetch } = useGetTopPicturesQuery([]);
+  const [triggerFetch, { data, error, isLoading }] = useLazyGetPictureDataQuery();
+
 
   const [hovered, SetHovered] = useState(false);
   const [hovered2, SetHovered2] = useState(false);
   useEffect(() => {
-    refetch();
+    triggerFetch({
+      filter: "Recent",
+      page: 1,
+      limit: 19,
+    });
   }, [pathName]);
   return (
     <section className="w-full  dark:bg-light-primary-color bg-dark-primary-color ">
+      <button id="refetch" className="hidden" onClick={() => {
+        console.log("fetch")
+        triggerFetch({
+          filter: "Recent",
+          page: 1,
+          limit: 19,
+        });
+      }}></button>
       <div className="max-w-7xl xl:px-16 sm:px-10 px-5 pt-10 pb-20 w-full mx-auto"><h1
         id="title"
         className="font-Righteous text-5xl max-xl:text-3xl text-center text-black dark:text-dark-primary-color"
@@ -44,9 +58,9 @@ const HomeGallery = () => {
         </h1>
 
         <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-6 max-xl:columns-4 gap-2 justify-center w-full ">
-          {data?.slice(0, 19).map((imgInfo: any, index: any) => (
+          {data?.pictures.map((imgInfo: any, index: any) => (
             <div key={imgInfo?._id} className="relative ">
-              <ImgCard imgData={imgInfo} i={index} />
+              <ImgCard triggerFetch={triggerFetch} imgData={imgInfo} i={index} />
             </div>
           ))}
         </div>

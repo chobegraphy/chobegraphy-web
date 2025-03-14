@@ -9,8 +9,8 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
+import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLike/ApiSlice";
 import {
-    usePictureLikeMutation,
     usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 import {

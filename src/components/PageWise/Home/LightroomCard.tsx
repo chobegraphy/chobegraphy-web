@@ -11,9 +11,10 @@ import { ImSpinner } from "react-icons/im";
 import { SiAdobelightroom } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    usePictureLikeMutation,
     usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
+
+import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLike/ApiSlice";
 import {
     usePictureLikeCountDecreaseMutation,
     usePictureLikeCountIncreaseMutation,
