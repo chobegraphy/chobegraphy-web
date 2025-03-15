@@ -163,7 +163,7 @@ const RegisterForm = () => {
             <div className="form-control flex justify-center mt-0">
               {gbuttonLoading === true ? (
                 <div>
-                  <button className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider flex items-center rounded-xl py-4 px-7">
+                  <button type="button" className="btn btn-primary bg-light-primary-color text-dark-primary-color dark:text-light-primary-color dark:bg-dark-primary-color border-none dark:hover:text-white font-VarelaRound dark:hover:bg-light-secondary-color tracking-wider flex items-center rounded-xl py-4 px-7">
                     <div className="mt-0.5">
                       <span className="font-BanglaHeading">
                         {Language === "BN" && "লোডিং"}
@@ -325,7 +325,7 @@ const RegisterForm = () => {
           <div className="form-control mt-6">
             {buttonLoading === true ? (
               <div>
-                <button className="btn btn-primary dark:text-light-primary-color dark:bg-dark-primary-color border-none flex bg-light-primary-color text-dark-primary-color flex-row-reverse items-center gap-x-2  tracking-wider rounded-xl py-4 px-7">
+                <button type="button" className="btn btn-primary dark:text-light-primary-color dark:bg-dark-primary-color border-none flex bg-light-primary-color text-dark-primary-color flex-row-reverse items-center gap-x-2  tracking-wider rounded-xl py-4 px-7">
                   <ImSpinner
                     className={`text-lg animate-spin `}
                   />
