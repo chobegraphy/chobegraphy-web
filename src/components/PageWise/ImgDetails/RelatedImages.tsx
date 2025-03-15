@@ -22,7 +22,7 @@ const RelatedImages = () => {
   const { data: SuggestionData } = useGetSuggestionDataQuery({ collections: ImgDetailsData?.collections })
   console.log("🚀 ~ RelatedImages ~ data:", SuggestionData);
   return (
-    <div className={`${SuggestionData !== undefined && SuggestionData.length === 0 && "hidden"} xl:px-3`}>
+    <div className={`${SuggestionData !== undefined && SuggestionData.length === 1 && "hidden"} xl:px-3`}>
       <h1 className="text-2xl font-Righteous">
         <span className="font-BanglaHeading">
           {Language === "BN" && "কিছু সাজেসটেড ছবি"}

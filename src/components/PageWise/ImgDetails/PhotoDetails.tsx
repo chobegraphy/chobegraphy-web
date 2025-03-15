@@ -1,10 +1,10 @@
+import { convertToBanglaNum } from "@/ExportedFunctions/ConvertToBanglaNum";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaMountainSun } from "react-icons/fa6";
 import { FiEye } from "react-icons/fi";
-import { IoPersonCircle } from "react-icons/io5";
 import { MdPublishedWithChanges } from "react-icons/md";
 import {
   RiColorFilterFill,
@@ -114,7 +114,11 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
                 {Language === "BN" && "প্রকাশিত হয়েছে :"}
               </span>
               {Language === "EN" && "Published on :"}{" "}
-              {formatDateTime(DetailsData?.uploadedTime)}
+              <span className="font-BanglaSubHeading">
+                {Language === "BN" && convertToBanglaNum(formatDateTime(DetailsData?.uploadedTime))}
+              </span>
+              {Language === "EN" && formatDateTime(DetailsData?.uploadedTime)}
+
             </p>
           </h1>
 
@@ -125,7 +129,10 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "রেজোলিউশন"}
               </span>{" "}
-              {Language === "EN" && "Resolution"} : {DetailsData?.dimensions}
+              {Language === "EN" && "Resolution"} : <span className="font-BanglaSubHeading">
+                {Language === "BN" && convertToBanglaNum(DetailsData?.dimensions)}
+              </span>
+              {Language === "EN" && DetailsData?.dimensions}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -135,19 +142,13 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "ছবির সাইজ"}
               </span>{" "}
-              {Language === "EN" && "Picture Size"} : {DetailsData?.fileSize} mb
+              {Language === "EN" && "Picture Size"} : <span className="font-BanglaSubHeading">
+                {Language === "BN" && convertToBanglaNum((DetailsData?.fileSize))}
+              </span>
+              {Language === "EN" && (DetailsData?.uploadedTime)} mb
             </p>
           </h1>
-          <h1 className="flex items-center gap-x-1 font-Space">
-            <IoPersonCircle className="text-xl" />
-            <p className="">
-              {" "}
-              <span className="font-BanglaSubHeading">
-                {Language === "BN" && "ছবি প্রণেতা"}
-              </span>{" "}
-              {Language === "EN" && "Author"} : {DetailsData?.author}
-            </p>
-          </h1>
+
           <h1 className="flex items-center gap-x-1 font-Space">
             <FaMountainSun className="text-xl" />
             <p className="">
@@ -157,9 +158,9 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
               </span>{" "}
               {Language === "EN" && "District"} :{" "}
               <span className="font-BanglaSubHeading">
-                {Language === "BN" && DetailsData?.district?.Bengali}
+                {Language === "BN" && DetailsData?.district?.bn_name}
               </span>
-              {Language === "EN" && DetailsData?.district?.English}
+              {Language === "EN" && DetailsData?.district?.name}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -182,7 +183,10 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট ডাউনলোড"}
               </span>{" "}
-              {Language === "EN" && "Total downloads"} : {DetailsData?.download}
+              {Language === "EN" && "Total downloads"} :  <span className="font-BanglaSubHeading">
+                {Language === "BN" && convertToBanglaNum((DetailsData?.download))}
+              </span>
+              {Language === "EN" && (DetailsData?.download)}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -192,7 +196,10 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট ভিউ"}
               </span>{" "}
-              {Language === "EN" && "Total View"} : {DetailsData?.view}
+              {Language === "EN" && "Total View"} :  <span className="font-BanglaSubHeading">
+                {Language === "BN" && convertToBanglaNum((DetailsData?.view))}
+              </span>
+              {Language === "EN" && (DetailsData?.view)}
             </p>
           </h1>
           <h1 className="flex items-center gap-x-1 font-Space">
@@ -202,7 +209,10 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "মোট রিয়েক্ট"}
               </span>{" "}
-              {Language === "EN" && "Total React"} : {DetailsData?.react}
+              {Language === "EN" && "Total React"} :  <span className="font-BanglaSubHeading">
+                {Language === "BN" && convertToBanglaNum((DetailsData?.react))}
+              </span>
+              {Language === "EN" && (DetailsData?.react)}
             </p>
           </h1>
           <div className="">
@@ -239,8 +249,10 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
                 ></button>
               ))}
             </div>
+
           </div>
         </div>
+
         {/* download button */}
         <button
           id="downloadButton"
@@ -264,6 +276,11 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
           {/* <span className="font-Righteous text-xl">Download</span> */}
         </button>
       </section>
+      <div className="flex  items-center ms-1.5 lg:ms-3 w-fit  gap-x-1 font-Righteous mt-3 ">
+
+        <img className="w-10 border-2 border-light-secondary-color h-10 rounded-2xl  -ms-2 " src={DetailsData?.author?.picture} alt="" width={500} height={500} loading="lazy" />
+        {DetailsData?.author?.name}
+      </div>
     </div>
   );
 };

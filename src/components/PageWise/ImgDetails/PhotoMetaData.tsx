@@ -1,3 +1,4 @@
+import { convertToBanglaNum } from "@/ExportedFunctions/ConvertToBanglaNum";
 import { CgEditExposure } from "react-icons/cg";
 import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 import { LuAperture } from "react-icons/lu";
@@ -96,7 +97,10 @@ const PhotoMetaData = ({ MetaData }: any) => {
                 <span className="font-BanglaSubHeading">
                   {Language === "BN" && "অ্যাপারচার :"}
                 </span>
-                {Language === "EN" && "Aperture :"} {MetaData?.aperture}
+                <span className="font-BanglaSubHeading">{" "}
+                  {Language === "BN" && convertToBanglaNum(MetaData?.aperture)}
+                </span>
+                {Language === "EN" && "Aperture :"} {Language === "EN" && MetaData?.aperture}
               </p>
             </h1>
           </div>
@@ -110,7 +114,10 @@ const PhotoMetaData = ({ MetaData }: any) => {
                 <span className="font-BanglaSubHeading">
                   {Language === "BN" && "এক্সপোযার :"}
                 </span>
-                {Language === "EN" && "Exposure :"} {MetaData?.exposureTime}
+                <span className="font-BanglaSubHeading">{" "}
+                  {Language === "BN" && convertToBanglaNum(MetaData?.exposureTime)}
+                </span>
+                {Language === "EN" && "Aperture :"} {Language === "EN" && MetaData?.exposureTime}
               </p>
             </h1>
           </div>
@@ -124,7 +131,12 @@ const PhotoMetaData = ({ MetaData }: any) => {
                 <span className="font-BanglaSubHeading">
                   {Language === "BN" && "ফোকাস :"}
                 </span>
-                {Language === "EN" && "Focus :"} {MetaData?.focalLength}
+                {Language === "EN" && "Focus :"}
+                <span className="font-BanglaSubHeading">{" "}
+                  {Language === "BN" && convertToBanglaNum(MetaData?.focalLength)}
+                </span>
+                {Language === "EN" && "Aperture :"} {Language === "EN" && MetaData?.focalLength}
+
               </p>
             </h1>
           </div>
@@ -138,7 +150,12 @@ const PhotoMetaData = ({ MetaData }: any) => {
                 <span className="font-BanglaSubHeading">
                   {Language === "BN" && "আইএসও :"}
                 </span>
-                {Language === "EN" && "ISO :"} {MetaData?.iso}
+                {Language === "EN" && "ISO :"}
+                <span className="font-BanglaSubHeading">{" "}
+                  {Language === "BN" && convertToBanglaNum(MetaData?.iso)}
+                </span>
+                {Language === "EN" && "Aperture :"} {Language === "EN" && MetaData?.iso}
+
               </p>
             </h1>
           </div>
@@ -153,7 +170,11 @@ const PhotoMetaData = ({ MetaData }: any) => {
                   {Language === "BN" && "সাবজেক্ট দূরত্ব :"}
                 </span>
                 {Language === "EN" && "Subject Distance :"}{" "}
-                {MetaData?.subjectDistance}
+
+                <span className="font-BanglaSubHeading">{" "}
+                  {Language === "BN" && convertToBanglaNum(MetaData?.subjectDistance)}
+                </span>
+                {Language === "EN" && "Aperture :"} {Language === "EN" && MetaData?.subjectDistance}
               </p>
             </h1>
           </div>
@@ -182,7 +203,11 @@ const PhotoMetaData = ({ MetaData }: any) => {
                   {Language === "BN" && "ক্যাপচারের তারিখ :"}
                 </span>
                 {Language === "EN" && "Capture Date :"}{" "}
-                {formatDateTime(MetaData?.datetimeOriginal)}
+                <span className="font-BanglaSubHeading">{" "}
+                  {Language === "BN" && convertToBanglaNum(formatDateTime(MetaData?.datetimeOriginal))}
+                </span>
+                {Language === "EN" && "Aperture :"} {Language === "EN" && formatDateTime(MetaData?.datetimeOriginal)}
+
               </p>
             </h1>
           </div>

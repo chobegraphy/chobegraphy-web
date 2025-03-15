@@ -2,6 +2,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FiPlus } from "react-icons/fi";
+import { ImSpinner } from "react-icons/im";
 import { IoIosArrowDown } from "react-icons/io";
 import { useSelector } from "react-redux";
 import { useAddNewCollectionDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/AddCollectionData/ApiSlice";
@@ -20,7 +21,7 @@ export default function CategorySelector({
     console.log(colors)
     const { theme } = useTheme()
     const { data: initialCategories, refetch } = useGetCollectionsDataQuery({})
-    const [AddCollectionData] = useAddNewCollectionDataMutation()
+    const [AddCollectionData, { isLoading }] = useAddNewCollectionDataMutation()
     console.log(initialCategories)
     const Language = useSelector((state: any) => state.Language.value);
 
@@ -103,14 +104,7 @@ export default function CategorySelector({
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [showDropdown]);
 
-    // Prevent background scrolling when dropdown is open
-    useEffect(() => {
-        if (showDropdown) {
-            if (window.screen.width < 768) document.body.style.overflow = "hidden";
-        } else {
-            if (window.screen.width < 768) document.body.style.overflow = "";
-        }
-    }, [showDropdown]);
+
 
     const handleAddCollection = async () => {
         try {
@@ -155,10 +149,10 @@ export default function CategorySelector({
                 {
                     selectedCategory.length > 0 && <div className="flex flex-wrap gap-2 mb-3">
                         {selectedCategory.map((category: any) => (
-                            <button
+                            <button type="button"
                                 key={category.label}
                                 onClick={() => handleSelect(category)}
-                                className="bg-black flex items-center justify-center  text-sm text-dark-primary-color dark:bg-dark-primary-color dark:text-light-primary-color border-light-secondary-color overflow-hidden border rounded-lg"
+                                className="bg-black flex items-center justify-center  text-sm text-dark-primary-color dark:bg-dark-primary-color dark:text-light-primary-color cursor-pointer border-light-secondary-color overflow-hidden border rounded-lg"
                             >
 
                                 <div className="p-2 font-Space">{category.label} / <span className="font-BanglaSubHeading">{category.value}</span></div> <div className=" bg-dark-primary-color dark:bg-light-primary-color px-1 flex items-center justify-center 
@@ -210,7 +204,7 @@ export default function CategorySelector({
                 {!showNewCollection && showDropdown && (
                     <div style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000" }} className={`${showDropdown ? "border  rounded-xl  rounded-t-none" : "border rounded-xl "} font-Space border-light-secondary-color example overflow-y-auto h-full max-h-[200px]`}>
                         {filteredCategories?.map((category, index) => (
-                            <button
+                            <button type="button"
                                 key={category.label}
                                 onClick={() => handleSelect(category)}
                                 className={`block w-full text-left p-2 ${selectedCategory.includes(category) && "hidden"}  ${selectedCategory.some((item: any) => item.label === category.label)
@@ -218,7 +212,7 @@ export default function CategorySelector({
                                     : highlightedIndex === index
                                         ? "dark:bg-dark-primary-color dark:text-light-primary-color bg-light-primary-color text-dark-primary-color"
                                         : " dark:bg-black hover:dark:bg-dark-primary-color hover:dark:text-light-primary-color hover:bg-light-primary-color hover:text-dark-primary-color dark:text-dark-primary-color bg-dark-primary-color text-light-primary-color"
-                                    }`}
+                                    } cursor-pointer`}
                             >
                                 {category.label} / <span className="font-BanglaSubHeading">{category.value}</span>
                             </button>
@@ -234,7 +228,7 @@ export default function CategorySelector({
                         <h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">English :</h1> <input
                             onChange={(e) => setNewCollectionEnglishName(e.target.value)}
                             onPaste={(e) => setNewCollectionEnglishName(e.clipboardData.getData('text'))}
-
+                            style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }}
                             className={`rounded-xl font-Space border-2 border-light-secondary-color bg-transparent outline-none flex-grow px-3 py-3`}
                         />
 
@@ -242,14 +236,22 @@ export default function CategorySelector({
                         className="flex mt-4 w-full gap-x-2 items-center justify-center relative"
                     ><h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">বাংলা :</h1>
                             <input onChange={(e) => setNewCollectionBanglaName(e.target.value)}
+                                style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }}
                                 onPaste={(e) => setNewCollectionBanglaName(e.clipboardData.getData('text'))}
                                 className={`rounded-xl font-BanglaSubHeading border-2 border-light-secondary-color  outline-none bg-transparent flex-grow px-3 py-3`}
                             />
 
-                        </div></div><button onClick={() => handleAddCollection()} className="w-[40%]  h-full dark:bg-dark-primary-color max-md:py-[10px] bg-light-primary-color dark:text-light-primary-color text-dark-primary-color max-md:mt-2 font-Bold  py-[45px] rounded-xl ms-1 ">                        <span className="font-BanglaSubHeading">
-                            {Language === "BN" && "যোগ করুন"}
-                        </span>{" "}
-                        <h1 className="font-Bayon uppercase font-bold">{Language === "EN" && "Add"}</h1></button>
+                        </div></div>
+                    <button type="button" onClick={() => {
+                        if (!isLoading) {
+                            handleAddCollection()
+                        }
+                    }} className="w-[40%] cursor-pointer h-full dark:bg-dark-primary-color max-md:py-[10px] bg-light-primary-color dark:text-light-primary-color text-dark-primary-color flex items-center justify-center max-md:mt-2 font-Bold  py-[45px] rounded-xl ms-1 "> {isLoading === true ? <ImSpinner
+                        className={`text-white text-center text-xl dark:text-light-primary-color animate-spin `}
+                    /> : <span><span className="font-BanglaSubHeading">
+                        {Language === "BN" && "যোগ করুন"}
+                    </span>{" "}
+                        <h1 className="font-Bayon uppercase font-bold">{Language === "EN" && "Add"}</h1></span>}                   </button>
                 </div>
             )}
         </div>

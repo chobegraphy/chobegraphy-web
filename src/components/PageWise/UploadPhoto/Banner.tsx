@@ -17,11 +17,12 @@ import { useUploadMainPictureMutation } from "../../../../Redux/Features/FeRende
 import { useUploadThumbnailPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadThumbnailPhoto/ApiSlice";
 import "./Banner.css";
 import CategorySelector from "./CategorySelector";
+import CopyRightType from "./CopyRightType";
 import PhotoDetails from "./PhotoDetails";
 import PhotoMetaData from "./PhotoMetaData";
 import UploadProgress from "./UploadProgress";
 
-const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }: any) => {
+const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, colors, setColors, SelectedCopyrightType, setSelectedCopyrightType }: any) => {
 
   // user data 
   const { user } = useAuth();
@@ -35,7 +36,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
   const [dimensions, setDimensions] = useState("");
   const [fileSize, setFileSize] = useState<string | number>(0);
   const [fileName, SetFileName] = useState<string>('');
-  const [colors, setColors] = useState<Array<{ r: number; g: number; b: number; hex: string; area: number }>>([]);
+
   const [Base64photo, setBase64photo] = useState<string | null>(null);
   const [encodedPhoto, setEncodedPhoto] = useState<string | null>(null);
   const [thumbnail, setThumbnail] = useState<string | null>(null);
@@ -277,6 +278,10 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
 
   const onSubmit = async (data: any) => {
 
+    if (data?.description === "" || data?.description === null || data?.description === undefined) {
+      toast.error(Language === "en" ? "Please enter a caption" : "একটি ক্যাপশন লিখুন")
+      return
+    }
     if (Object.keys(district).length === 0) {
       toast.error(Language === "en" ? "Select a district" : " একটি জেলা নির্বাচন করুন")
       return;
@@ -285,7 +290,10 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
       toast.error(Language === "en" ? "Please select a category" : "একটি ক্যাটাগরি নির্বাচন করুন")
       return;
     }
-    console.log("hi")
+    if (SelectedCopyrightType === "") {
+      toast.error(Language === "en" ? "Please select a copyright type" : "একটি কপিরাইট টাইপ নির্বাচন করুন")
+      return
+    }
     if (!Base64photo) {
       return;
     }
@@ -326,13 +334,13 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
             colors,
 
             // Author Information
-            authorId: user,
+            author: user,
             district,
             // Metadata & Status
             exifData,
             uploadedTime,
             status: "approved",
-            copyright: "",
+            copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
             // Engagement Data
@@ -386,13 +394,13 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
             colors,
 
             // Author Information
-            authorId: user,
+            author: user,
             district,
             // Metadata & Status
             exifData,
             uploadedTime,
             status: "approved",
-            copyright: "",
+            copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
             // Engagement Data
@@ -446,13 +454,13 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
             colors,
 
             // Author Information
-            authorId: user,
+            author: user,
             district,
             // Metadata & Status
             exifData,
             uploadedTime,
             status: "approved",
-            copyright: "",
+            copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
             // Engagement Data
@@ -506,13 +514,13 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
             colors,
 
             // Author Information
-            authorId: user,
+            author: user,
             district,
             // Metadata & Status
             exifData,
             uploadedTime,
             status: "approved",
-            copyright: "",
+            copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
             // Engagement Data
@@ -560,7 +568,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
             onChange={handleImageChange}
           />
           {selectedImg ? (
-            <img src={selectedImg} alt="Selected" className="w-auto rounded-2xl h-auto max-h-[400px] " />
+            <img src={selectedImg} alt="Selected" className="w-auto  h-auto max-md:max-h-[300px] max-h-[400px] " />
           ) : (
             <div className="flex flex-col justify-center items-center">
               <svg className="w-20  h-20 max-md:w-18 max-md:h-18" viewBox="0 0 73 60" xmlns="http://www.w3.org/2000/svg">
@@ -592,6 +600,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory }
           <PhotoMetaData type="button" MetaData={exifData} />
           <div className="my-3 max-lg:block hidden h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
           <CategorySelector colors={colors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+          <CopyRightType SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
 
         </div>
         <div className="mt-3 max-lg:block hidden h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />

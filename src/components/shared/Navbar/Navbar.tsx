@@ -35,7 +35,7 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
 
   const { setTheme } = useTheme();
-  const [showProfileRoutes, setShowProfileRoutes] = useState(false);
+  const [showProfileRoutes, setShowProfileRoutes] = useState(window.screen.width < 1280 ? false : true);
   // Redux
   const Language = useSelector((state: any) => state.Language.value);
   const dispatch = useDispatch();
@@ -119,7 +119,7 @@ const Navbar = () => {
   }, [theme]);
   return (
     <div
-      className={`flex  xl:backdrop-blur bg-dark-primary-color/80 dark:bg-black/80 z-50 bg-black-100 justify-between w-full items-center overflow-hidden sticky -top-0.5 mx-auto  sm:p-5 p-5 h-[65px] `}
+      className={`flex ${isOpen2 || isOpen ? "" : "xl:backdrop-blur"}  bg-dark-primary-color/80 dark:bg-black/80 z-50 bg-black-100 justify-between w-full items-center overflow-hidden sticky -top-0.5 mx-auto  sm:p-5 p-5 h-[65px] `}
     >
       {/*-> Rahat code */}
       <div className="transform duration-300  max-md:scale-90 dark:hidden max-md:-ms-4">
@@ -207,7 +207,17 @@ const Navbar = () => {
           </label>
         </div>
 
-        <Link href="/UploadPhoto"
+        <button type="button" onClick={() => {
+          if (!user) {
+            // Save the current route to redirect back to after login
+
+            typeof window !== 'undefined' && localStorage.setItem('redirectUrl', "/UploadPhoto");
+            router.push('/SignIn');  // Redirect to sign in if no user
+          }
+          if (user) {
+            router.push('/UploadPhoto');
+          }
+        }}
           className={
             "border-2 py-1 xl:py-1.5 ms-5 px-6  xl:text-lg hover:bg-light-primary-color dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color dark:border-dark-primary-color  dark:text-dark-primary-color hover:text-dark-primary-color transform duration-300 rounded text-light-primary-color border-light-primary-color"
           }
@@ -215,11 +225,14 @@ const Navbar = () => {
           <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
             {Language === "BN" ? "আপলোড" : "Upload"}
           </p>
-        </Link>
+        </button>
 
         {
           user && <div>
-            <Image className="w-10 h-10 rounded-full hover:border-light-primary-color dark:hover:border-dark-primary-color/70 transform duration-200 border-2 border-light-secondary-color ms-5 " src={user?.picture} alt="" width={500} height={500} loading="lazy" />
+            <Image onClick={() => {
+              setIsOpen(!isOpen);
+              setIsOpen2(!isOpen2);
+            }} className="w-10 h-10 rounded-full hover:border-light-primary-color dark:hover:border-dark-primary-color/70 transform duration-200 border-2 border-light-secondary-color ms-5 " src={user?.picture} alt="" width={500} height={500} loading="lazy" />
           </div>
         }
       </div>
@@ -249,9 +262,12 @@ const Navbar = () => {
               {
                 user ? <div
                   onClick={() => {
-                    setShowProfileRoutes(!showProfileRoutes);
+                    if (window.screen.width < 1280) {
+
+                      setShowProfileRoutes(!showProfileRoutes);
+                    }
                   }}
-                  className="w-fit flex-nowrap text-nowrap px-5 h-full  items-center mt-5 rounded-xl   dark:bg-dark-primary-color flex mb-5 relative bg-black"
+                  className={`w-fit  flex-nowrap text-nowrap px-5 h-full  items-center mt-5 rounded-xl   dark:bg-dark-primary-color flex mb-5 relative bg-black`}
                 >
                   <div className="text-3xl flex items-center justify-center gap-x-2   w-full dark:text-black text-white">
                     <Image className="w-10 h-10 rounded-full  -ms-2 " src={user?.picture} alt="" width={500} height={500} loading="lazy" />
@@ -261,7 +277,7 @@ const Navbar = () => {
                       {user?.name.slice(0, 10)}
 
                     </p>
-                    <IoIosArrowDown className={`${!showProfileRoutes ? "rotate-180" : "rotate-0"} text-[18px] transform duration-300 -me-1  right-2 bottom-0`} />
+                    <IoIosArrowDown className={`${!showProfileRoutes ? "rotate-180" : "rotate-0"} ${window.screen.width < 1280 ? "block" : "hidden"} text-[18px] transform duration-300 -me-1  right-2 bottom-0`} />
                   </div>
                 </div> : <Link
                   href="/SignIn"

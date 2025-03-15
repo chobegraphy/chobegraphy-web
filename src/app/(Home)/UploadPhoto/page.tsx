@@ -2,6 +2,7 @@
 import PhotoMetaData from "@/components/PageWise/ImgDetails/PhotoMetaData";
 import Banner from "@/components/PageWise/UploadPhoto/Banner";
 import CategorySelector from "@/components/PageWise/UploadPhoto/CategorySelector";
+import CopyRightType from "@/components/PageWise/UploadPhoto/CopyRightType";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -21,14 +22,17 @@ const UploadPhotoPage = () => {
 
     });
     const [selectedCategory, setSelectedCategory] = useState<any>([]);
+    const [colors, setColors] = useState<Array<{ r: number; g: number; b: number; hex: string; area: number }>>([]);
+    const [SelectedCopyrightType, setSelectedCopyrightType] = useState("");
     return (
         <div className="grid grid-cols-10 max-lg:grid-cols-1 sm:px-10 px-5 py-5  dark:bg-gradient-to-br from-black to-light-primary-color gap-5 h-full">
-            <Banner selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} exifData={exifData} setExifData={setExifData} />
+            <Banner SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} colors={colors} setColors={setColors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} exifData={exifData} setExifData={setExifData} />
             <div className="max-lg:hidden col-span-4">
                 {
                     exifData && <PhotoMetaData type="button" MetaData={exifData} />
                 }
-                <CategorySelector selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+                <CategorySelector colors={colors} setColors={setColors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+                <CopyRightType SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
                 <button onClick={() => {
                     document.getElementById("uploadPicture")?.click();
                 }} className="flex items-center dark:bg-dark-primary-color  max-lg:scale-90 w-full bg-light-primary-color text-dark-primary-color rounded-xl mt-2 justify-center gap-x-2 dark:text-light-primary-color cursor-pointer  py-3 z-30"

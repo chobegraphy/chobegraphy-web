@@ -160,33 +160,32 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
       <Link
         href={`/ImgDetails/${imgData?._id}`}
         onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
-        style={{
-          backgroundImage: `url(${imgData?.encodedUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          filter: loadedImg ? "blur(0px)" : "blur(10px)",
-          transition: "filter 0.4s ease-in-out",
-          aspectRatio: `${width}/${height}`, // Set aspect ratio dynamically
-        }}
-        className="relative w-full rounded-2xl overflow-hidden"
+        className="relative w-full rounded-2xl overflow-hidden block"
+        style={{ aspectRatio: `${width}/${height}` }} // Maintain aspect ratio
       >
+        {/* Blurred Low-Quality Image */}
+        <img
+          src={imgData?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blur image
+          alt="Blurred preview"
+          className="absolute inset-0 w-full h-full object-cover blur-xl transition-opacity duration-500"
+          style={{ opacity: loadedImg ? 0 : 1 }} // Hide blurred image when main image loads
+        />
+
         {/* High-Quality Image */}
         <img
           width={width}
           height={height}
+          src={imgData?.thumbnail || "/placeholder.jpg"} // Main image
           onLoad={() => setLoadedImg(true)}
           loading="lazy"
-          src={imgData?.thumbnail || "/placeholder.jpg"} // Fallback if missing
           alt={imgData?.name || `Gallery ${i}`}
           className={clsx(
-            "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg",
-            loadedImg
-              ? "opacity-100 transition-opacity duration-500"
-              : "opacity-0"
+            "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+            loadedImg ? "opacity-100" : "opacity-0"
           )}
         />
-        <div className="rounded-2xl h-full bg-gradient-to-t from-black/10 to-black/0  absolute w-full  bottom-0 p-2 flex items-center justify-between text-sm text-white"></div>
       </Link>
+
 
       {/* Overlay for Icons */}
       {loadedImg && (
