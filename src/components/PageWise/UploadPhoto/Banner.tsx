@@ -189,6 +189,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
     reset,
     formState: { errors },
   } = useForm();
+  const [fileExt, setFileExt] = useState("");
   useEffect(() => {
     let fileExtension = "";
     const baseFileName = "Chobegraphy";
@@ -196,11 +197,14 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
       return
     }
     if (mainImgFile?.type === "image/jpeg") {
+      setFileExt(".jpeg");
       fileExtension = ".jpeg";
     } else if (mainImgFile?.type === "image/png") {
       fileExtension = ".png";
+      setFileExt(".png");
     } else if (mainImgFile?.type === "image/img") {
       fileExtension = ".img";
+      setFileExt(".img");
     } else {
       toast.error("Unsupported file type. Please upload a JPEG, PNG, or IMG.");
       return; // Exit if file type is unsupported
@@ -648,7 +652,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
       </form>
 
       {/* upload progress and after wards doing */}
-      <UploadProgress isOpen={isOpen} setIsOpen={setIsOpen} isOpen2={isOpen2} setIsOpen2={setIsOpen2} uploadProgress={uploadProgress} setUploadProgress={setUploadProgress} uploadedPictureId={uploadedPictureId} divRef={divRef} fileName={fileName.split("/")[fileName.split("/").length - 1]} />
+      <UploadProgress isOpen={isOpen} setIsOpen={setIsOpen} isOpen2={isOpen2} setIsOpen2={setIsOpen2} uploadProgress={uploadProgress} setUploadProgress={setUploadProgress} uploadedPictureId={uploadedPictureId} divRef={divRef} fileName={`Chobegraphy${fileExt}`} />
 
     </div >
   );
