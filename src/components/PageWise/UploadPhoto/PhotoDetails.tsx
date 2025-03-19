@@ -14,7 +14,7 @@ import {
 } from "react-icons/ri";
 import { TbCopy } from "react-icons/tb";
 import { useSelector } from "react-redux";
-const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, react, register, DetailsData, uploadedTime, colors, dimensions, fileSize, onSubmit, }: any) => {
+const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, react, register, DetailsData, setDescription, uploadedTime, colors, dimensions, fileSize, onSubmit, }: any) => {
   // auth data
   const { user } = useAuthData();
   const router = useRouter(); // Initialize router
@@ -73,13 +73,15 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
       <section className="  py-2 text-light-primary-color dark:text-dark-primary-color">
 
         <div className="font-Space relative mt-2 max-md:text-base ">
-          <p style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">
+          <p style={{ border: `2px solid ${colors.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">
             <span className="font-BanglaSubHeading">
               {Language === "BN" && "ক্যাপশন"}
             </span>{" "}
             {Language === "EN" && "Caption"} :{" "}
           </p>
-          <textarea style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000" }} {...register("description")} className={`p-5 rounded-xl  w-full outline-none bg-transparent border  border-light-secondary-color `}></textarea>
+          <textarea id="description" style={{ border: `2px solid ${colors.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000" }} onChange={(e) =>
+            setDescription(e.target.value)
+          } onPaste={(e) => setDescription(e.clipboardData.getData('text'))} className={`p-5 rounded-xl  w-full outline-none bg-transparent border  border-light-secondary-color `}></textarea>
         </div>
       </section>
       <section className="  relative text-light-primary-color dark:text-dark-primary-color mt-2">
@@ -123,12 +125,12 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               setShowDropdown(false);
             }}
             className="flex mt-3 relative flex-col items-start gap-x-1 transform  duration-300 font-Space">
-            <p style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">
+            <p style={{ border: `2px solid ${colors.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">
               <span className="font-BanglaSubHeading">
                 {Language === "BN" && "জেলা সিলেক্ট করুন"}
               </span>{" "}
               {Language === "EN" && "Select District"} :{" "}
-            </p> <input style={{ border: `2px solid ${colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000" }} id="district" value={district !== "" ? district : ""}
+            </p> <input style={{ border: `2px solid ${colors.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000" }} id="district" value={district !== "" ? district : ""}
               onChange={handleDistrictChange}
               onFocus={() => {
                 if (!zillaDatas.some(z => z.name.toLowerCase() === district.toLowerCase())) {
@@ -137,7 +139,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
               }}
 
               className={`${showDropdown && filteredZilla.length > 0 ? "border rounded-xl   rounded-b-none" : "border rounded-xl "} border dark:border-light-secondary-color border-light-secondary-color  outline-none  bg-transparent w-full px-3 py-3 pt-4`} />
-            <ul style={{ borderTop: "none", border: `2px solid ${showDropdown && filteredZilla.length > 0 ? colors[2]?.hex : colors[2]?.hex}` }} className={`${showDropdown && filteredZilla.length > 0 ? "border  rounded-xl  rounded-t-none border-t-0 h-full opacity-100 z-10" : " rounded-xl h-0 opacity-0 -z-20"}  border   rounded-xl transform duration-300 max-h-52 w-full border-light-secondary-color  overflow-y-scroll example`}>
+            <ul style={{ borderTop: "none", border: `2px solid ${showDropdown && filteredZilla.length > 0 ? colors[1]?.hex : colors[1]?.hex}` }} className={`${showDropdown && filteredZilla.length > 0 ? "border  rounded-xl  rounded-t-none border-t-0 h-full opacity-100 z-10" : " rounded-xl h-0 opacity-0 -z-20"}  border   rounded-xl transform duration-300 max-h-52 w-full border-light-secondary-color  overflow-y-scroll example`}>
               {filteredZilla.map((zilla: any) => (
                 <li
                   key={zilla.id}

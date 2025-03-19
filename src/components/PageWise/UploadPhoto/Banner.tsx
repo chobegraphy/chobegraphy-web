@@ -192,10 +192,31 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
   const oneConnect = async (file: any) => {
+    const fileType = file.type;
+    if (!fileType.match(/image\/(jpeg|png|img)/)) {
+      toast.error(Language === "EN" ? "Only JPEG, PNG, or IMG files are allowed." : "একটি JPEG, PNG, বা IMG ফাইল অপলোড করুন.");
+      return;
+    }
     setSelectedImg(URL.createObjectURL(file));
     extractExifData(file);
     getDimensions(file);
-    SetFileName(file.name);
+
+    const baseFileName = "Chobegraphy";  // The name you want to keep constant
+
+    let fileExtension = "";
+    if (fileType === "image/jpeg") {
+      fileExtension = ".jpeg";
+    } else if (fileType === "image/png") {
+      fileExtension = ".png";
+    } else if (fileType === "image/img") {
+      fileExtension = ".img";
+    } else {
+      toast.error("Unsupported file type. Please upload a JPEG, PNG, or IMG.");
+      return; // Exit if file type is unsupported
+    }
+    const finalFileName = description ? `${description} (${baseFileName})${fileExtension}` : `${baseFileName}${fileExtension}`;
+
+    SetFileName(finalFileName);
     const fileSizeInBytes = file.size;
     const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2);
     setFileSize(fileSizeInMB);
@@ -270,28 +291,42 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
     setDistrict({});
     setSelectedCategory([]);
     const districtElement = document.getElementById("district") as HTMLInputElement;
+    const descriptionElement = document.getElementById("description") as HTMLInputElement;
     if (districtElement) {
       districtElement.value = "";
+      descriptionElement.value = "";
     }
   };
 
 
   const onSubmit = async (data: any) => {
 
-    if (data?.description === "" || data?.description === null || data?.description === undefined) {
-      toast.error(Language === "en" ? "Please enter a caption" : "একটি ক্যাপশন লিখুন")
+    if (description === "") {
+      toast.error(Language === "en" ? "Please enter a caption" : "একটি ক্যাপশন লিখুন", {
+        id: "description"
+      })
       return
     }
     if (Object.keys(district).length === 0) {
-      toast.error(Language === "en" ? "Select a district" : " একটি জেলা নির্বাচন করুন")
+      toast.error(Language === "en" ? "Select a district" : " একটি জেলা নির্বাচন করুন"
+        , {
+          id: "district"
+        }
+      )
       return;
     }
     if (selectedCategory[0] === null) {
-      toast.error(Language === "en" ? "Please select a category" : "একটি ক্যাটাগরি নির্বাচন করুন")
+      toast.error(Language === "en" ? "Please select a category" : "একটি ক্যাটাগরি নির্বাচন করুন"
+        , {
+          id: "category"
+        }
+      )
       return;
     }
     if (SelectedCopyrightType === "") {
-      toast.error(Language === "en" ? "Please select a copyright type" : "একটি কপিরাইট টাইপ নির্বাচন করুন")
+      toast.error(Language === "en" ? "Please select a copyright type" : "একটি কপিরাইট টাইপ নির্বাচন করুন", {
+        id: "copyright"
+      })
       return
     }
     if (!Base64photo) {
@@ -353,7 +388,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
           if (AddUploadedPictureDataResponse) {
             resetForm();
             setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
-            reset({ "description": "" })
+
 
             setUploadProgress(100);
 
@@ -413,7 +448,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
           if (AddUploadedPictureDataResponse) {
             resetForm();
             setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
-            reset({ "description": "" })
+
 
             setUploadProgress(100);
 
@@ -473,7 +508,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
           if (AddUploadedPictureDataResponse) {
             resetForm();
             setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
-            reset({ "description": "" })
+
 
             setUploadProgress(100);
 
@@ -533,7 +568,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
           if (AddUploadedPictureDataResponse) {
             resetForm();
             setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
-            reset({ "description": "" })
+
 
             setUploadProgress(100);
 
@@ -553,12 +588,13 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
   return (
     <div className="col-span-6">
+
       <form onSubmit={handleSubmit(onSubmit)} className="w-full h-full col-span-6">
         <div
           className={`overflow-hidden rounded-2xl relative  ${selectedImg ? "min-h-0" : "min-h-[300px] max-md:min-h-[200px]"}  border-opacity-30 dark:border-opacity-30 ${selectedImg ? `` : "border-light-primary-color border dark:border-dark-primary-color"}    bg-gradient-to-br from-light-primary-color/10 dark:from-dark-primary-color/10 dark:via-black to-dark-primary-color/20 dark:to-light-primary-color/20  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-5 flex justify-center items-center`}
           onDrop={handleDrop}
           onDragOver={handleDragOver}
-          style={{ border: selectedImg ? `2px solid ${colors[2]?.hex}` : "" }}
+          style={{ border: selectedImg ? `2px solid ${colors[1]?.hex}` : "" }}
         >
           <input
 
@@ -597,10 +633,10 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
         {/* Picture meta data */}
         <div className="max-lg:block hidden">
-          <PhotoMetaData type="button" MetaData={exifData} />
+          <PhotoMetaData colors={colors} type="button" MetaData={exifData} />
           <div className="my-3 max-lg:block hidden h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
           <CategorySelector colors={colors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-          <CopyRightType SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
+          <CopyRightType colors={colors} SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
 
         </div>
         <div className="mt-3 max-lg:block hidden h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
@@ -608,7 +644,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
       </form>
 
       {/* upload progress and after wards doing */}
-      <UploadProgress isOpen={isOpen} setIsOpen={setIsOpen} isOpen2={isOpen2} setIsOpen2={setIsOpen2} uploadProgress={uploadProgress} setUploadProgress={setUploadProgress} uploadedPictureId={uploadedPictureId} divRef={divRef} fileName={fileName} />
+      <UploadProgress isOpen={isOpen} setIsOpen={setIsOpen} isOpen2={isOpen2} setIsOpen2={setIsOpen2} uploadProgress={uploadProgress} setUploadProgress={setUploadProgress} uploadedPictureId={uploadedPictureId} divRef={divRef} fileName={fileName.split("/")[fileName.split("/").length - 1]} />
 
     </div >
   );

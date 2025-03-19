@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes";
 import { CgEditExposure } from "react-icons/cg";
 import { HiOutlineCalendarDateRange } from "react-icons/hi2";
 import { LuAperture } from "react-icons/lu";
@@ -6,7 +7,8 @@ import { RiLightbulbFlashLine } from "react-icons/ri";
 import { SiBmcsoftware, SiProtools } from "react-icons/si";
 import { TbCamera, TbFocusCentered } from "react-icons/tb";
 import { useSelector } from "react-redux";
-const PhotoMetaData = ({ MetaData }: any) => {
+const PhotoMetaData = ({ MetaData, colors }: any) => {
+  const { theme } = useTheme()
   const formatDateTime = (dateString: string) => {
     // Extract year, month, day, hour, minute, second
     const parts = dateString?.match(
@@ -36,7 +38,7 @@ const PhotoMetaData = ({ MetaData }: any) => {
   return (
     <div>
       <section>
-        <h1 className=" rounded-md  text-light-primary-color font-Righteous dark:text-dark-primary-color w-fit mt-3">
+        <h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className=" rounded-2xl  text-light-primary-color font-Space px-2 dark:text-dark-primary-color w-fit mt-3">
           <span className="font-BanglaHeading">
             {Language === "BN" && "ছবির মেটাডেটা"}
           </span>

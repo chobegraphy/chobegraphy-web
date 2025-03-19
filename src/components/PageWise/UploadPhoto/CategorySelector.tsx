@@ -163,7 +163,7 @@ export default function CategorySelector({
                 }
             </div>
             <div id="dropdown" ref={dropdownRef}> <div className="relative mt-4">
-                <h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl font-Space items-center">
+                <h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl font-Space items-center">
 
                     <p>
                         <span className="font-BanglaSubHeading">
@@ -179,7 +179,7 @@ export default function CategorySelector({
                         setSearch(e.target.value);
                         setShowDropdown(true);
                     }}
-                    style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000" }}
+                    style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000" }}
                     className={`${showDropdown ? "border  rounded-xl  rounded-b-none" : "border rounded-xl"} font-Space   outline-none bg-transparent w-full px-3 py-3`}
                     onKeyDown={handleKeyDown}
                     onClick={() => {
@@ -202,8 +202,8 @@ export default function CategorySelector({
                 </div></div>
             </div>
                 {!showNewCollection && showDropdown && (
-                    <div style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000" }} className={`${showDropdown ? "border  rounded-xl  rounded-t-none" : "border rounded-xl "} font-Space border-light-secondary-color example overflow-y-auto h-full max-h-[200px]`}>
-                        {filteredCategories?.map((category, index) => (
+                    <div style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000" }} className={`${showDropdown ? "border  rounded-xl  rounded-t-none" : "border rounded-xl "} font-Space border-light-secondary-color example overflow-y-auto h-full max-h-[200px]`}>
+                        {filteredCategories.length > 0 ? filteredCategories?.map((category, index) => (
                             <button type="button"
                                 key={category.label}
                                 onClick={() => handleSelect(category)}
@@ -216,7 +216,14 @@ export default function CategorySelector({
                             >
                                 {category.label} / <span className="font-BanglaSubHeading">{category.value}</span>
                             </button>
-                        ))}
+                        )) : <>
+                            <p className="text-center py-3">
+                                <span className="font-BanglaSubHeading">
+                                    {Language === "BN" && "ক্যাটাগরি পাওয়া যায়নি"}
+                                </span>{" "}
+                                {Language === "EN" && "Category Not Found"}
+                            </p>
+                        </>}
                     </div>
                 )}</div>
             {showNewCollection && !showDropdown && (
@@ -225,18 +232,18 @@ export default function CategorySelector({
 
                         className="flex w-full gap-x-2 items-center justify-center"
                     >
-                        <h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">English :</h1> <input
+                        <h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">English :</h1> <input
                             onChange={(e) => setNewCollectionEnglishName(e.target.value)}
                             onPaste={(e) => setNewCollectionEnglishName(e.clipboardData.getData('text'))}
-                            style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }}
+                            style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }}
                             className={`rounded-xl font-Space border-2 border-light-secondary-color bg-transparent outline-none flex-grow px-3 py-3`}
                         />
 
                     </div><div
                         className="flex mt-4 w-full gap-x-2 items-center justify-center relative"
-                    ><h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">বাংলা :</h1>
+                    ><h1 style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">বাংলা :</h1>
                             <input onChange={(e) => setNewCollectionBanglaName(e.target.value)}
-                                style={{ border: `2px solid ${colors?.length > 0 ? colors[2]?.hex : theme === "dark" ? "#575757" : "#000"}` }}
+                                style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }}
                                 onPaste={(e) => setNewCollectionBanglaName(e.clipboardData.getData('text'))}
                                 className={`rounded-xl font-BanglaSubHeading border-2 border-light-secondary-color  outline-none bg-transparent flex-grow px-3 py-3`}
                             />

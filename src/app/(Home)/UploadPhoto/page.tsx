@@ -29,10 +29,10 @@ const UploadPhotoPage = () => {
             <Banner SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} colors={colors} setColors={setColors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} exifData={exifData} setExifData={setExifData} />
             <div className="max-lg:hidden col-span-4">
                 {
-                    exifData && <PhotoMetaData type="button" MetaData={exifData} />
+                    (exifData.iso || exifData.focalLength || exifData.exposureTime || exifData.aperture || exifData.datetimeOriginal || exifData.model || exifData.software || exifData.creatorTool || exifData.subjectDistance || exifData.flash) && <PhotoMetaData type="button" MetaData={exifData} colors={colors} />
                 }
                 <CategorySelector colors={colors} setColors={setColors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-                <CopyRightType SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
+                <CopyRightType colors={colors} SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
                 <button onClick={() => {
                     document.getElementById("uploadPicture")?.click();
                 }} className="flex items-center dark:bg-dark-primary-color  max-lg:scale-90 w-full bg-light-primary-color text-dark-primary-color rounded-xl mt-2 justify-center gap-x-2 dark:text-light-primary-color cursor-pointer  py-3 z-30"
