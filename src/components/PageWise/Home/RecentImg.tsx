@@ -63,7 +63,7 @@ const RecentImg = () => {
             </div>
           ))}
         </div>
-        <Link href={"/AllImg"}>
+        <Link href={"/AllImg?filter=recent&CurrentPage=1"}>
           <button
             className={
               "border-2 py-3 mt-6 px-6 mx-auto xl:text-lg bg-light-primary-color dark:bg-dark-primary-color dark:text-light-primary-color dark:hover:bg-dark-primary-color/40   dark:hover:text-dark-primary-color transform duration-300 rounded-xl flex items-center font-Righteous gap-x-2 text-dark-primary-color justify-center border-light-primary-color"

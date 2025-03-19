@@ -29,8 +29,7 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
 
       {/* High-Quality Image */}
       <img
-        width={width}
-        height={height}
+
         onLoad={() => setLoadedImg(true)}
         loading="lazy"
         src={mainImgLink || "/placeholder.jpg"} // Main image

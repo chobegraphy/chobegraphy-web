@@ -39,8 +39,8 @@ const Footer = () => {
             <span className="font-BanglaSubHeading text-lg ">
               {Language === "BN" && (
                 <>
-                  ২০২৫ জানুয়ারী থেকে নির্ভরযোগ্য <br />
-                  পরিষেবা প্রদান করা হচ্ছে
+                  ২০২৫ জানুয়ারি থেকে নির্ভরযোগ্য <br />
+                  পরিসেবা প্রদান করা হচ্ছে
                 </>
               )}
               <span className="font-Space ">

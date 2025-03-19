@@ -174,28 +174,35 @@ const Banner = () => {
           {Language === "EN" && "Copy Right info"}
         </p>
         <p className="mt-1 text-justify">
-          <span className="font-BanglaSubHeading ">
-            {Language === "BN" && (
-              <span>
-                এই ছবি শুধুমাত্র ব্যক্তিগত ও ব্যবসায়িক ডিজাইনে ব্যবহারের জন্য
-                অনুমোদিত, এক্ষেত্রে ব্যবহারকারীকে উক্ত কাজে এই ছবির ক্রেডিট{" "}
-                <span className="font-BanglaHeading underline">ছবিগ্রাফি</span>{" "}
-                কে দিতে হবে । তবে, ছবিটির ফাইল অন্য কোনো ওয়েবসাইট, ক্লাউড
-                স্টোরেজ, সামাজিক যোগাযোগ মাধ্যম বা অন্য কোনো মাধ্যমে কোনোভাবেই
-                বিতরণ করা যাবে না।
-              </span>
-            )}
-          </span>{" "}
-          {Language === "EN" && (
-            <span>
-              This image is only allowed for personal and commercial design use,
-              in which case the user must give credit to{" "}
-              <span className="font-Bayon underline">Chobegraphy</span> for the
-              use of this image. However, the image file may not be distributed
-              on any other website, cloud storage, social media, or any other
-              means.
-            </span>
-          )}
+          {
+            DetailsData.copyright === "CC-BY" && <><span className="font-BanglaSubHeading text-justify">
+              {Language === "BN" && (
+                <span>
+                  এই লাইসেন্সের অধীনে ব্যবহারকারী এই ছবি/ইমেজ বাণিজ্যিক/অবাণিজ্যিক কাজে ব্যবহার, কপি, মোডিফাই (পরিবর্তন) সরবরাহ এবং প্রকাশ করতে পারবেন। এক্ষেত্রে ব্যবহারকারীকে উক্ত কাজে এই ছবি/ইমেজের স্বত্বধারীর নাম উল্ল্যেখ করে ক্রেডিট দিতে হবে।
+                </span>
+              )}
+            </span>{" "}
+              {Language === "EN" && (
+                <span className="text-justify">
+                  Under this license, the user may use, copy, modify, distribute, and publish this image for commercial/non-commercial purposes. In this case, the user must give credit to the copyright holder of this image in the work.
+                </span>
+              )}</>
+          }
+          {
+            DetailsData.copyright === "CC-0" && <><span className="font-BanglaSubHeading text-justify">
+              {Language === "BN" && (
+                <span>
+                  এই লাইসেন্সের অধীনে ব্যবহারকারী এই ছবি/ইমেজ বাণিজ্যিক, অবাণিজ্যিক কাজে ব্যবহার, কপি, পরিবর্তন,প্রকাশ এবং সরবরাহ করতে পারবেন। এজন্য ব্যবহারকারীকে ইমেজের স্বত্বধারীর অনুমতি নিতে হবে না অথবা তার নাম উল্ল্যেখ করতে হবে না।
+                </span>
+              )}
+            </span>{" "}
+              {Language === "EN" && (
+                <span className="text-justify">
+                  Under this license, the user is free to use, copy, modify, publish, and distribute this image for commercial or non-commercial purposes. The user does not need to obtain permission from or attribute the image's copyright holder.
+                </span>
+              )}</>
+          }
+
         </p>
       </h1>
     </div>

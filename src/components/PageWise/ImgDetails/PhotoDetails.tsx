@@ -5,13 +5,16 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaMountainSun } from "react-icons/fa6";
 import { FiEye } from "react-icons/fi";
+import { ImSpinner } from "react-icons/im";
 import { MdPublishedWithChanges } from "react-icons/md";
 import {
   RiColorFilterFill,
   RiCustomSize,
   RiDownloadCloud2Fill,
 } from "react-icons/ri";
+import { SiTicktick } from "react-icons/si";
 import { TbCopy } from "react-icons/tb";
+import { VscError } from "react-icons/vsc";
 import { useSelector } from "react-redux";
 import { useIncreaseDownloadCountMutation } from "../../../../Redux/Features/Apis/UpdateDownloadCount/ApiSlice";
 
@@ -57,43 +60,44 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
   };
 
   // handle download
+  const [downloading, setDownloading] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const [downloadError, setDownloadError] = useState(false);
   const handleDownload = async () => {
-    if (!DetailsData?.url) {
-      toast.error("Image URL not found!");
-      return;
+    if (!downloadSuccess && !downloadError && !downloading) {
+      if (!DetailsData?.url) {
+        toast.error("Image URL not found!");
+        return;
+      }
+      setDownloading(true);
+
+
+      try {
+        const increaseDownloadCountResponse = await increaseDownloadCount({
+          id: DetailsData?._id,
+        }).unwrap();
+        setDetailsData(increaseDownloadCountResponse.updatedData);
+        const response = await fetch(DetailsData.url);
+        const blob = await response.blob();
+        const link = document.createElement("a");
+
+        link.href = URL.createObjectURL(blob);
+        link.download = DetailsData?.name || "image.jpg";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        toast.dismiss("download");
+        setDownloadSuccess(true);
+        setDownloading(false);
+        setTimeout(() => setDownloadSuccess(false), 2500);
+      } catch (error) {
+        setDownloading(false);
+        setDownloadError(true);
+        setTimeout(() => setDownloadError(false), 2500);
+        console.error("Download Error:", error);
+      }
     }
 
-    toast.loading(Language === "BN" ? "ডাউনলোড হচ্ছে.." : "Downloading...", {
-      id: "download",
-    });
-
-    try {
-      const increaseDownloadCountResponse = await increaseDownloadCount({
-        id: DetailsData?._id,
-      }).unwrap();
-      setDetailsData(increaseDownloadCountResponse.updatedData);
-      const response = await fetch(DetailsData.url);
-      const blob = await response.blob();
-      const link = document.createElement("a");
-
-      link.href = URL.createObjectURL(blob);
-      link.download = DetailsData?.name || "image.jpg";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      toast.dismiss("download");
-      toast.success(
-        Language === "EN" ? "Download Complete!" : "ডাউনলোড হয়েছে!"
-      );
-    } catch (error) {
-      toast.dismiss("download");
-      toast.error(
-        Language === "EN"
-          ? "Download failed! Try again."
-          : "ডাউনলোড ব্যর্থ হয়েছে! পুনরায় চেষ্টা করুন."
-      );
-      console.error("Download Error:", error);
-    }
   };
 
 
@@ -254,10 +258,76 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
         </div>
 
         {/* download button */}
+        <button id="downloadButton2"
+          onClick={handleDownload} className="flex items-center lg:hidden lg:right-20 right-3 max-lg:scale-90  cursor-pointer max-lg:fixed  max-lg:bg-light-primary-color
+        max-lg:text-dark-primary-color max-lg:dark:bg-dark-primary-color max-lg:dark:text-light-primary-color h-[70px] max-lg:w-full justify-center max-lg:right-0  max-lg:rounded-xl lg:top-0 gap-x-2 max-lg:bottom-2 max-lg:py-4 z-30"
+        >
+          {
+            !downloadSuccess && !downloadError && !downloading && <svg
+              className="w-10"
+              viewBox="0 0 30 30"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.2785 20.3364L15.003 25M15.003 25L19.7275 20.3364M15.003 25V14.5068M25.4914 21.6072C26.5183 20.8944 27.2883 19.8772 27.6898 18.7031C28.0913 17.529 28.1033 16.2592 27.7242 15.0779C27.345 13.8966 26.5944 12.8653 25.5812 12.1337C24.5681 11.402 23.3451 11.0081 22.0897 11.0091H20.6015C20.2463 9.64246 19.5816 8.37322 18.6575 7.29689C17.7335 6.22055 16.5741 5.36518 15.2666 4.79516C13.9592 4.22514 12.5378 3.95532 11.1094 4.00603C9.68107 4.05673 8.28298 4.42663 7.0204 5.08789C5.75783 5.74914 4.66367 6.68451 3.8203 7.82359C2.97693 8.96266 2.40633 10.2758 2.15145 11.664C1.89658 13.0523 1.96407 14.4795 2.34884 15.8383C2.73362 17.1971 3.42565 18.452 4.37284 19.5086"
+                className="dark:stroke-light-primary-color stroke-dark-primary-color"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          }
+          {
+            !downloadSuccess && !downloadError && downloading && <ImSpinner
+              className={`text-xl animate-spin `}
+            />}
+          {
+            downloadSuccess && !downloadError && !downloading && <SiTicktick
+              className={`text-xl  `}
+            />}
+          {
+            !downloadSuccess && downloadError && !downloading && <VscError
+              className={`text-xl  `}
+            />}
+          {
+            !downloadSuccess && !downloadError && !downloading && <span className="max-lg:block hidden">
+              <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
+                {Language === "BN" && "ছবি ডাউনলোড করুন"}
+              </p>
+              {Language === "EN" && <span className="font-Righteous text-xl">Download Picture</span>}
+            </span>
+          }
+          {
+            !downloadSuccess && !downloadError && downloading && <span className="max-lg:block hidden">
+              <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
+                {Language === "BN" && "ছবি ডাউনলোড করা হচ্ছে"}
+              </p>
+              {Language === "EN" && <span className="font-Righteous text-xl">Downloading Picture</span>}
+            </span>
+          }
+          {
+            downloadSuccess && !downloadError && !downloading && <span className="max-lg:block hidden">
+              <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
+                {Language === "BN" && "ছবি ডাউনলোড করা হয়েছে"}
+              </p>
+              {Language === "EN" && <span className="font-Righteous text-xl">Picture Downloaded</span>}
+            </span>
+          }
+          {
+            !downloadSuccess && downloadError && !downloading && <span className="max-lg:block hidden">
+              <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
+                {Language === "BN" && "ছবি ডাউনলোড করা যায়নি"}
+              </p>
+              {Language === "EN" && <span className="font-Righteous text-xl">Picture Downloading Failed</span>}
+            </span>
+          }
+
+        </button>
         <button
           id="downloadButton"
           onClick={handleDownload}
-          className="flex items-center absolute lg:right-20 right-3 max-md:scale-90  cursor-pointer top-8 max-md:top-12"
+          className="flex items-center max-lg:hidden absolute lg:right-20 right-3 max-md:scale-90  cursor-pointer top-8 max-md:top-12"
         >
           <svg
             className="w-20"

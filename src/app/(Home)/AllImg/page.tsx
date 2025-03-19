@@ -3,18 +3,24 @@ import FilterSearch from "@/components/PageWise/AllImg/FilterSearch";
 import ImgMappingComponent from "@/components/PageWise/AllImg/ImgMappingComponent";
 import Pagination from "@/components/PageWise/AllImg/Pagination";
 import Title from "@/components/PageWise/AllImg/Title";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
 import { useGetImgCountQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetImgCount/ApiSlice";
 import { useGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
 
 const AllImgPage = () => {
+  const params = useSearchParams();
+  const filter = params.get("filter");
   const [limit] = useState(window.innerWidth > 1024 ? 20 : 15);
-  const [currentPage, setCurrentPage] = useState(1);
+  const ParamsCurrentPage = params.get("CurrentPage");
+  const [currentPage, setCurrentPage] = useState(parseInt(ParamsCurrentPage || "1"));
   const [loading, setLoading] = useState(false); // To manage the loading state manually
 
+
+  console.log(ParamsCurrentPage);
   const { data: ImgData, isFetching, isError, error, refetch } = useGetPictureDataQuery({
-    filter: "recent",
+    filter: filter || "recent",
     page: currentPage,
     limit,
   });
@@ -32,14 +38,26 @@ const AllImgPage = () => {
   };
 
   useEffect(() => {
+    window.history.pushState({}, '', `/AllImg?filter=${filter}&CurrentPage=${currentPage}`);
     if (ImgData) {
       setLoading(false); // Stop loading when data is available
     }
   }, [ImgData]); // When ImgData changes, stop the loading state
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentPage]);
+    if (currentPage) {
+
+      refetch();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [currentPage, refetch]);
+  useEffect(() => {
+    const pageFromUrl = params.get("CurrentPage");
+    if (pageFromUrl) {
+      setCurrentPage(parseInt(pageFromUrl));
+    }
+  }, [params]);
+
 
   return (
     <>
