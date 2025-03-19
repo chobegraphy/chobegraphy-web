@@ -283,6 +283,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
     setDistrict1('');
     setMainImgFile(null);
     setDescription('');
+    SetFileName('');
     setExifData({
       aperture: "",
       exposureTime: "",
