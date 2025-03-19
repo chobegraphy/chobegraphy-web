@@ -15,7 +15,7 @@ const RecentImg = () => {
   const { data, error, isLoading, refetch } = useGetPictureDataQuery({
     filter: "recent",
     page: 1,
-    limit: 19,
+    limit: window.innerWidth > 1024 ? 20 : 15,
   });
   console.log(data);
   const [RecentImgData, setRecentImgData] = useState([]);
@@ -56,7 +56,7 @@ const RecentImg = () => {
           </p>
         </h1>
 
-        <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-6 max-xl:columns-4 gap-2 justify-center w-full ">
+        <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-5 max-xl:columns-4 gap-2 justify-center w-full ">
           {RecentImgData?.map((imgInfo: any, index: any) => (
             <div key={imgInfo?._id} className="relative ">
               <ImgCard setRecentImgData={setRecentImgData} RecentImgData={RecentImgData} imgData={imgInfo} i={index} />
