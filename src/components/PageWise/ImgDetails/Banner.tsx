@@ -198,7 +198,7 @@ const Banner = () => {
             </span>{" "}
               {Language === "EN" && (
                 <span className="text-justify">
-                  Under this license, the user is free to use, copy, modify, publish, and distribute this image for commercial or non-commercial purposes. The user does not need to obtain permission from or attribute the image's copyright holder.
+                  Under this license, the user is free to use, copy, modify, publish, and distribute this image for commercial or non-commercial purposes. The user does not need to obtain permission from or attribute the image&apos;s copyright holder.
                 </span>
               )}</>
           }
