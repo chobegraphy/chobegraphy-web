@@ -189,7 +189,26 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
     reset,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    let fileExtension = "";
+    const baseFileName = "Chobegraphy";
+    if (mainImgFile === null) {
+      return
+    }
+    if (mainImgFile?.type === "image/jpeg") {
+      fileExtension = ".jpeg";
+    } else if (mainImgFile?.type === "image/png") {
+      fileExtension = ".png";
+    } else if (mainImgFile?.type === "image/img") {
+      fileExtension = ".img";
+    } else {
+      toast.error("Unsupported file type. Please upload a JPEG, PNG, or IMG.");
+      return; // Exit if file type is unsupported
+    }
+    const finalFileName = description ? `${description} (${baseFileName})${fileExtension}` : `${baseFileName}${fileExtension}`;
 
+    SetFileName(finalFileName);
+  }, [description, mainImgFile]);
 
   const oneConnect = async (file: any) => {
     const fileType = file.type;
@@ -201,22 +220,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
     extractExifData(file);
     getDimensions(file);
 
-    const baseFileName = "Chobegraphy";  // The name you want to keep constant
 
-    let fileExtension = "";
-    if (fileType === "image/jpeg") {
-      fileExtension = ".jpeg";
-    } else if (fileType === "image/png") {
-      fileExtension = ".png";
-    } else if (fileType === "image/img") {
-      fileExtension = ".img";
-    } else {
-      toast.error("Unsupported file type. Please upload a JPEG, PNG, or IMG.");
-      return; // Exit if file type is unsupported
-    }
-    const finalFileName = description ? `${description} (${baseFileName})${fileExtension}` : `${baseFileName}${fileExtension}`;
-
-    SetFileName(finalFileName);
     const fileSizeInBytes = file.size;
     const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2);
     setFileSize(fileSizeInMB);
@@ -361,7 +365,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Image Details
             name: fileName,
             url: mainImgUrl,
-            description: data?.description,
+            description: description,
             thumbnail: thumbnailUrl,
             encodedUrl: encodedImgUrl,
             dimensions,
@@ -421,7 +425,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Image Details
             name: fileName,
             url: mainImgUrl,
-            description: data?.description,
+            description: description,
             thumbnail: thumbnailUrl,
             encodedUrl: encodedImgUrl,
             dimensions,
@@ -481,7 +485,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Image Details
             name: fileName,
             url: mainImgUrl,
-            description: data?.description,
+            description: description,
             thumbnail: thumbnailUrl,
             encodedUrl: encodedImgUrl,
             dimensions,
@@ -541,7 +545,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Image Details
             name: fileName,
             url: mainImgUrl,
-            description: data?.description,
+            description: description,
             thumbnail: thumbnailUrl,
             encodedUrl: encodedImgUrl,
             dimensions,
