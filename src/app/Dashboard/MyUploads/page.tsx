@@ -75,7 +75,7 @@ const MyUploads = () => {
 
                 <TabsContent value="Approved">
                     <ImgMappingComponent ImgData={ImgData?.data} />
-                    {ImgData.data?.length > 0 && <Pagination
+                    {ImgData?.data?.length > 0 && <Pagination
                         currentPage={currentPage}
                         totalPages={totalPages}
                         setCurrentPage={setCurrentPage}
@@ -84,7 +84,7 @@ const MyUploads = () => {
                 </TabsContent>
                 <TabsContent value="Pending">
                     <ImgMappingComponent ImgData={ImgData?.data} />
-                    {ImgData.data?.length > 0 && <Pagination
+                    {ImgData?.data?.length > 0 && <Pagination
                         currentPage={currentPage}
                         totalPages={totalPages}
                         setCurrentPage={setCurrentPage}
@@ -93,7 +93,7 @@ const MyUploads = () => {
                 </TabsContent>
                 <TabsContent value="Rejected">
                     <ImgMappingComponent ImgData={ImgData?.data} />
-                    {ImgData.data?.length > 0 && <Pagination
+                    {ImgData?.data?.length > 0 && <Pagination
                         currentPage={currentPage}
                         totalPages={totalPages}
                         setCurrentPage={setCurrentPage}
