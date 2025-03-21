@@ -36,23 +36,23 @@ export const NavRoutes: RouteType[] = [
 ]
 
 export const ProfileRoutes: RouteType[] = [
-    // {
-    //     path: "/Profile",
-    //     enName: "Profile",
-    //     bnName: "প্রোফাইল",
+    {
+        path: "/Dashboard",
+        enName: "Profile",
+        bnName: "প্রোফাইল",
 
-    // },
-    // {
-    //     path: "/MyUploads",
-    //     enName: "My Uploads",
-    //     bnName: "আমার আপলোড",
+    },
+    {
+        path: "/Dashboard/MyUploads?status=Approved&CurrentPage=1",
+        enName: "My Uploads",
+        bnName: "আমার আপলোড",
 
-    // },
-    // {
-    //     path: "/FavoritePictures",
-    //     enName: "Favorite Pictures",
-    //     bnName: "প্রিয় ছবি",
-    // },
+    },
+    {
+        path: "/Dashboard/FavoritePictures",
+        enName: "Favorite Pictures",
+        bnName: "প্রিয় ছবি",
+    },
     // {
     //     path: "/FavoritePresets",
     //     enName: "Favorite Lightroom Presets",
