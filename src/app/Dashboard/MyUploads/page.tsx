@@ -5,6 +5,7 @@ import Title from "@/components/PageWise/MyUploads/Title";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tab/Tab";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ImSpinner } from "react-icons/im";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../../../Provider/AuthProvider";
 import { useGetPictureDataByEmailQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetDataByEmail/ApiSlice";
@@ -57,53 +58,60 @@ const MyUploads = () => {
     }, [params]);
     console.log(ImgData?.data?.length)
     return (
-        <div className="min-h-[100dvh] dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color"><div className="w-full  xl:px-16 sm:px-10 px-5 py-10">
-            <Title />
+        <div className="min-h-[100dvh] dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color">
+            {isLoading && !ImgData ?
+                <div className="w-full h-dvh flex items-center justify-center absolute right-0 left-0 top-0 bottom-0 dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color z-50">
+                    <ImSpinner className="dark:text-white text-3xl text-light-primary-color animate-spin" />
+                </div> : <div className="w-full  xl:px-16 sm:px-10 px-5 py-10">
+                    <Title />
 
-            <Tabs value={status || ""} className="w-full flex flex-col justify-center items-center my-5">
-                <TabsList>
-                    <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Approved&CurrentPage=${currentPage}`)} value="Approved">
-                        <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "অ্যাপ্রুভড" : "Approved"}</p>
-                    </TabsTrigger>
-                    <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Pending&CurrentPage=${currentPage}`)} value="Pending">
-                        <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "পেন্ডিং" : "Pending"}</p>
-                    </TabsTrigger>
-                    <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Rejected&CurrentPage=${currentPage}`)} value="Rejected">
-                        <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "রিজেক্টেড" : "Rejected"}</p>
-                    </TabsTrigger>
-                </TabsList>
+                    <Tabs value={status || ""} className="w-full flex flex-col justify-center items-center my-5">
+                        <TabsList>
+                            <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Approved&CurrentPage=${currentPage}`)} value="Approved">
+                                <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "অ্যাপ্রুভড" : "Approved"}</p>
+                            </TabsTrigger>
+                            <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Pending&CurrentPage=${currentPage}`)} value="Pending">
+                                <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "পেন্ডিং" : "Pending"}</p>
+                            </TabsTrigger>
+                            <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Rejected&CurrentPage=${currentPage}`)} value="Rejected">
+                                <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "রিজেক্টেড" : "Rejected"}</p>
+                            </TabsTrigger>
+                        </TabsList>
 
-                <TabsContent value="Approved">
-                    <ImgMappingComponent ImgData={ImgData?.data} />
-                    {ImgData?.data?.length > 0 && <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        setCurrentPage={setCurrentPage}
-                        onPageChange={handlePageChange}
-                    />}
-                </TabsContent>
-                <TabsContent value="Pending">
-                    <ImgMappingComponent ImgData={ImgData?.data} />
-                    {ImgData?.data?.length > 0 && <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        setCurrentPage={setCurrentPage}
-                        onPageChange={handlePageChange}
-                    />}
-                </TabsContent>
-                <TabsContent value="Rejected">
-                    <ImgMappingComponent ImgData={ImgData?.data} />
-                    {ImgData?.data?.length > 0 && <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        setCurrentPage={setCurrentPage}
-                        onPageChange={handlePageChange}
-                    />}
-                </TabsContent>
-            </Tabs>
+                        <TabsContent value="Approved">
+                            <ImgMappingComponent ImgData={ImgData?.data} />
+                            {ImgData?.data?.length > 0 && <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                setCurrentPage={setCurrentPage}
+                                onPageChange={handlePageChange}
+                            />}
+                        </TabsContent>
+                        <TabsContent value="Pending">
+                            <ImgMappingComponent ImgData={ImgData?.data} />
+                            {ImgData?.data?.length > 0 && <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                setCurrentPage={setCurrentPage}
+                                onPageChange={handlePageChange}
+                            />}
+                        </TabsContent>
+                        <TabsContent value="Rejected">
+                            <ImgMappingComponent ImgData={ImgData?.data} />
+                            {ImgData?.data?.length > 0 && <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                setCurrentPage={setCurrentPage}
+                                onPageChange={handlePageChange}
+                            />}
+                        </TabsContent>
+                    </Tabs>
 
 
-        </div></div>
+                </div>
+            }
+
+        </div>
     );
 };
 
