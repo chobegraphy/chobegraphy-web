@@ -3,6 +3,7 @@ import PhotoMetaData from "@/components/PageWise/ImgDetails/PhotoMetaData";
 import Banner from "@/components/PageWise/UploadPhoto/Banner";
 import CategorySelector from "@/components/PageWise/UploadPhoto/CategorySelector";
 import CopyRightType from "@/components/PageWise/UploadPhoto/CopyRightType";
+import UploadInfo from "@/components/PageWise/UploadPhoto/UploadInfo";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -33,6 +34,7 @@ const UploadPhotoPage = () => {
                 }
                 <CategorySelector colors={colors} setColors={setColors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
                 <CopyRightType colors={colors} SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
+                <UploadInfo />
                 <button onClick={() => {
                     document.getElementById("uploadPicture")?.click();
                 }} className="flex items-center dark:bg-dark-primary-color  max-lg:scale-90 w-full bg-light-primary-color text-dark-primary-color rounded-xl mt-2 justify-center gap-x-2 dark:text-light-primary-color cursor-pointer  py-3 z-30"

@@ -18,7 +18,7 @@ const CopyRightType = ({ SelectedCopyrightType, setSelectedCopyrightType, colors
                 <div className="text-lg">CC-0</div>
 
                 <div className="flex items-center justify-center gap-x-1">
-                    <div className="w-4 h-4 -mt-0.5 rounded-xl border-2"><div className={`${SelectedCopyrightType === "CC-0" ? "dark:bg-dark-primary-color w-full h-full" : " w-0 h-0 bg-transparent"} rounded-xl border-none transform duration-300 flex  m-auto justify-center items-center`}></div></div>
+                    <div className="w-4 h-4 -mt-0.5 rounded-xl border-2 border-light-secondary-color dark:border-dark-primary-color"><div className={`${SelectedCopyrightType === "CC-0" ? "bg-light-primary-color dark:bg-dark-primary-color w-full h-full" : " w-0 h-0 bg-transparent"} rounded-xl border-none transform duration-300 flex  m-auto justify-center items-center`}></div></div>
                 </div>
             </div>
             <h1 className="px-2 font-Space text-justify"> <span className="font-BanglaSubHeading">
@@ -26,10 +26,10 @@ const CopyRightType = ({ SelectedCopyrightType, setSelectedCopyrightType, colors
             </span>{" "}
                 {Language === "EN" && " Under this license, the user is free to use, copy, modify, publish, and distribute this image for commercial or non-commercial purposes. The user does not need to obtain permission from or attribute the image's copyright holder."} </h1>
 
-            <div className="my-3 h-[1px] w-full bg-light-secondary-color rounded-full opacity-50 " />
+            <div className="my-3 h-[1px] w-full bg-light-secondary-color  rounded-full opacity-50 " />
             <div onClick={() => setSelectedCopyrightType("CC-BY")} className="flex  items-center cursor-pointer justify-between px-2 w-[80px]">
                 <div className="text-lg">CC-BY</div>
-                <div className="flex items-center justify-center gap-x-1"><div className="w-4 h-4 -mt-0.5 rounded-xl border-2"><div className={`${SelectedCopyrightType === "CC-BY" ? "dark:bg-dark-primary-color w-full h-full" : " w-0 h-0 bg-transparent"} rounded-xl border-none transform duration-300 flex m-auto justify-center items-center`}></div></div>
+                <div className="flex items-center justify-center gap-x-1"><div className="w-4 h-4 -mt-0.5 rounded-xl border-2 border-light-secondary-color dark:border-dark-primary-color"><div className={`${SelectedCopyrightType === "CC-BY" ? "bg-light-primary-color dark:bg-dark-primary-color w-full h-full" : " w-0 h-0 bg-transparent"} rounded-xl border-none transform duration-300 flex m-auto justify-center items-center`}></div></div>
                 </div>
             </div>
             <h1 className="px-2 font-Space text-justify"> <span className="font-BanglaSubHeading">

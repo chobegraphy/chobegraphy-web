@@ -1,4 +1,5 @@
 "use client";
+import CheckUser from "@/components/shared/CheckUser/CheckUser";
 import Footer from "@/components/shared/Footer/Footer";
 import Navbar from "@/components/shared/Navbar/Navbar";
 import LoadingAnimation from "@/components/ui/loadingAnimation/loadingAnimation";
@@ -30,6 +31,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
           <motion.div style={{ y }} className="min-h-screen">
             {pathName !== "/SignUp" && pathName !== "/SignIn" && <Navbar />}
             <Analytics />
+            <CheckUser />
             {children}
 
             {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />}
