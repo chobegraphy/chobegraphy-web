@@ -8,7 +8,7 @@ const UploadInfo = ({ colors }: any) => {
     const { theme } = useTheme()
     const [showGuidelines, setShowGuidelines] = useState(false)
     return (
-        <div>
+        <div className="z-10">
             {/* note */}
             <section id="note"><p style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="mt-2 mb-2  rounded-xl w-fit px-2 font-Space">
                 <span className="font-BanglaHeading">
@@ -34,7 +34,7 @@ const UploadInfo = ({ colors }: any) => {
                     {Language === "EN" && "Picture Upload Guidelines"} :
                 </p><FaCircleChevronDown className={`${showGuidelines ? "rotate-180" : ""} transform duration-300 text-2xl me-2`} /></div>
                 <div className={`${showGuidelines && "hidden"} my-0 h-[1.5px] w-full bg-light-secondary-color  rounded-full opacity-50 `} />
-                <div className={`${showGuidelines ? "h-full w-full opacity-100  pb-1.5" : "h-0  opacity-0 -z-40"} transform duration-300 font-Space px-2`}><li> <span className="font-BanglaSubHeading">
+                <div className={`${showGuidelines ? "h-full w-full opacity-100  pb-1.5" : "h-0  opacity-0 -z-40 hidden"} transform duration-300 font-Space px-2`}><li> <span className="font-BanglaSubHeading">
                     {Language === "BN" && "আপলোড করা সমস্ত ছবি উচ্চমানের, পরিষ্কার এবং অস্পষ্টতা বা পিক্সেলেশন মুক্ত হওয়া উচিত।"}
                 </span>{" "}
                     {Language === "EN" && "Ensure all uploaded images are of high quality, clear, and free from blurriness or pixelation."}</li>
