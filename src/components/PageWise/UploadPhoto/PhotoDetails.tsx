@@ -215,6 +215,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
             </div>
           </div>
         </div>
+
         {/* upload button */}
         <button id="uploadPicture" onClick={() => onSubmit()} className="flex items-center lg:hidden lg:right-20 right-3 max-lg:scale-90  cursor-pointer max-lg:fixed  max-lg:bg-light-primary-color
         max-lg:text-dark-primary-color max-lg:dark:bg-dark-primary-color max-lg:dark:text-light-primary-color max-md:h-fit max-lg:w-full justify-center max-lg:right-0  max-lg:rounded-xl lg:top-0 gap-x-2 max-lg:bottom-2 max-lg:py-4 z-30"

@@ -20,6 +20,7 @@ import CategorySelector from "./CategorySelector";
 import CopyRightType from "./CopyRightType";
 import PhotoDetails from "./PhotoDetails";
 import PhotoMetaData from "./PhotoMetaData";
+import UploadInfo from "./UploadInfo";
 import UploadProgress from "./UploadProgress";
 
 const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, colors, setColors, SelectedCopyrightType, setSelectedCopyrightType }: any) => {
@@ -669,8 +670,8 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
           <CategorySelector colors={colors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
           <CopyRightType colors={colors} SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
 
+          <UploadInfo colors={colors} />
         </div>
-        <div className="mt-3 max-lg:block hidden h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
 
       </form>
 
