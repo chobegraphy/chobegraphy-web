@@ -19,11 +19,12 @@ const AllImgPage = () => {
 
 
   console.log(ParamsCurrentPage);
-  const { data: ImgData, isFetching, isError, error, refetch } = useGetPictureDataQuery({
+  const { data, isFetching, isError, error, refetch } = useGetPictureDataQuery({
     filter: filter || "recent",
     page: currentPage,
     limit,
   });
+  const [ImgData, setImgData] = useState([]);
   const { data: imgCount } = useGetImgCountQuery({});
 
   const isLoading = isFetching;
@@ -38,10 +39,11 @@ const AllImgPage = () => {
   };
 
   useEffect(() => {
-    if (ImgData) {
+    if (data) {
+      setImgData(data.data);
       setLoading(false); // Stop loading when data is available
     }
-  }, [ImgData]); // When ImgData changes, stop the loading state
+  }, [data]); // When ImgData changes, stop the loading state
 
   useEffect(() => {
     if (currentPage) {
@@ -80,8 +82,8 @@ const AllImgPage = () => {
             <div
 
             >
-              <ImgMappingComponent ImgData={ImgData?.data} />
-              {ImgData?.data.length >= 19 && isFetching === true && (
+              <ImgMappingComponent ImgData={ImgData} />
+              {ImgData?.length >= 19 && isFetching === true && (
                 <div className="flex items-center justify-center">
                   <ImSpinner className="dark:text-white text-light-primary-color animate-spin" />
                 </div>

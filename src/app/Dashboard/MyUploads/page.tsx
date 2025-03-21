@@ -20,17 +20,17 @@ const MyUploads = () => {
     const [currentPage, setCurrentPage] = useState(parseInt(ParamsCurrentPage || "1"));
     const [limit] = useState(window.innerWidth > 1024 ? 20 : 15);
     const [loading, setLoading] = useState(false); // To manage the loading state manually
-
-    const { data: ImgData, isFetching, isError, error, refetch } = useGetPictureDataByEmailQuery({
+    const [ImgData, setImgData] = useState([]);
+    const { data, isFetching, isError, error, refetch } = useGetPictureDataByEmailQuery({
         email: user?.email,
         page: currentPage,
         limit, status: status?.toLowerCase()
     });
 
-    const isLoading = isFetching;
+    const [isLoading, setIsLoading] = useState(isFetching);
 
     // Calculate total pages based on the total data count and limit
-    const totalPages = ImgData?.data?.length ? Math.ceil(ImgData?.data?.length / limit) : 1;
+    const totalPages = ImgData?.length ? Math.ceil(ImgData?.length / limit) : 1;
 
     // Update the page when pagination changes
     const handlePageChange = (newPage: number) => {
@@ -39,10 +39,11 @@ const MyUploads = () => {
     };
 
     useEffect(() => {
-        if (ImgData) {
+        if (data?.data) {
             setLoading(false); // Stop loading when data is available
+            setImgData(data?.data);
         }
-    }, [ImgData]); // When ImgData changes, stop the loading state
+    }, [data]); // When ImgData changes, stop the loading state
 
     useEffect(() => {
         if (currentPage) {
@@ -56,7 +57,7 @@ const MyUploads = () => {
             setCurrentPage(parseInt(pageFromUrl));
         }
     }, [params]);
-    console.log(ImgData?.data?.length)
+    console.log(ImgData)
     return (
         <div className="min-h-[100dvh] dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color">
             {isLoading && !ImgData ?
@@ -67,20 +68,35 @@ const MyUploads = () => {
 
                     <Tabs value={status || ""} className="w-full flex flex-col justify-center items-center my-5">
                         <TabsList>
-                            <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Approved&CurrentPage=${currentPage}`)} value="Approved">
+                            <TabsTrigger onClick={() => {
+                                setIsLoading(true)
+                                setImgData([])
+                                router.push(`/Dashboard/MyUploads?status=Approved&CurrentPage=${currentPage}`)
+                            }} value="Approved" className={`${status === "Approved" && "disabled pointer-events-none"}`}>
                                 <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "অ্যাপ্রুভড" : "Approved"}</p>
                             </TabsTrigger>
-                            <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Pending&CurrentPage=${currentPage}`)} value="Pending">
+                            <TabsTrigger className={`${status === "Pending" && "disabled pointer-events-none"}`} onClick={() => {
+                                setIsLoading(true)
+                                setImgData([])
+                                router.push(`/Dashboard/MyUploads?status=Pending&CurrentPage=${currentPage}`)
+                            }} value="Pending">
                                 <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "পেন্ডিং" : "Pending"}</p>
                             </TabsTrigger>
-                            <TabsTrigger onClick={() => router.push(`/Dashboard/MyUploads?status=Rejected&CurrentPage=${currentPage}`)} value="Rejected">
+                            <TabsTrigger className={`${status === "Rejected" && "disabled pointer-events-none"}`} onClick={() => {
+                                setIsLoading(true)
+                                setImgData([])
+                                router.push(`/Dashboard/MyUploads?status=Rejected&CurrentPage=${currentPage}`)
+                            }} value="Rejected">
                                 <p className={`${Language === "BN" && "font-BanglaHeading"}`}>{Language === "BN" ? "রিজেক্টেড" : "Rejected"}</p>
                             </TabsTrigger>
                         </TabsList>
 
                         <TabsContent value="Approved">
-                            <ImgMappingComponent ImgData={ImgData?.data} />
-                            {ImgData?.data?.length > 0 && <Pagination
+                            {
+                                status === "Approved" && (!isLoading || !isFetching) && ImgData.length === 0 ? <p className={`${Language === "BN" && "font-BanglaHeading"} mt-20`}>{Language === "BN" ? " কোন ছবি অ্যাপ্রুভড করা হয়নি" : "No Picture Is Approved"}</p> : <ImgMappingComponent ImgData={ImgData} />
+                            }
+
+                            {ImgData?.length > 0 && <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
                                 setCurrentPage={setCurrentPage}
@@ -88,8 +104,10 @@ const MyUploads = () => {
                             />}
                         </TabsContent>
                         <TabsContent value="Pending">
-                            <ImgMappingComponent ImgData={ImgData?.data} />
-                            {ImgData?.data?.length > 0 && <Pagination
+                            {
+                                status === "Pending" && (!isLoading || !isFetching) && ImgData.length === 0 ? <p className={`${Language === "BN" && "font-BanglaHeading"} mt-20`}>{Language === "BN" ? "কোন ছবি পেন্ডিং করা হয়নি" : "No Picture Is Pending For Approval"}</p> : <ImgMappingComponent ImgData={ImgData} />
+                            }
+                            {ImgData?.length > 0 && <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
                                 setCurrentPage={setCurrentPage}
@@ -97,8 +115,10 @@ const MyUploads = () => {
                             />}
                         </TabsContent>
                         <TabsContent value="Rejected">
-                            <ImgMappingComponent ImgData={ImgData?.data} />
-                            {ImgData?.data?.length > 0 && <Pagination
+                            {
+                                status === "Rejected" && (!isLoading || !isFetching) && ImgData.length === 0 ? <p className={`${Language === "BN" && "font-BanglaHeading"} mt-20`}>{Language === "BN" ? "কোন ছবি রিজেক্ট হয় নি" : "No Picture Is Rejected"}</p> : <ImgMappingComponent ImgData={ImgData} />
+                            }
+                            {ImgData?.length > 0 && <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
                                 setCurrentPage={setCurrentPage}

@@ -38,7 +38,7 @@ const Popular = () => {
                 <Link href={`/AllImg?filter=popular&CurrentPage=1`}>
                     <button
                         className={
-                            " py-3 transform duration-300 dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color hover:bg-light-primary-color hover:text-dark-primary-color  text-dark-primary-color rounded-2xl hover:px-6 mx-auto xl:text-lg  flex items-center font-Righteous gap-x-2 dark:text-dark-primary-color justify-center "
+                            " py-3 transform duration-300 dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color hover:bg-light-primary-color hover:text-dark-primary-color  text-light-primary-color rounded-2xl hover:px-6 mx-auto xl:text-lg  flex items-center font-Righteous gap-x-2 dark:text-dark-primary-color justify-center "
                         }
                     >
                         <span>

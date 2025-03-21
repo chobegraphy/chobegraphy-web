@@ -15,6 +15,7 @@ import {
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 
 import { RiHourglassFill } from "react-icons/ri";
+import { TbEditCircle } from "react-icons/tb";
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
@@ -193,6 +194,10 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
       {/* Overlay for Icons */}
       {status === "Pending" && <RiHourglassFill className="absolute top-3 right-3 text-xl text-white" />}
       {status === "Rejected" && <TiCancel className="absolute top-3 right-3 text-xl text-white" />}
+      {status === "Rejected" &&
+        <div className="cursor-pointer transform 
+         duration-300  hover:bg-dark-primary-color hover:text-light-primary-color w-8 h-8 flex items-center text-dark-primary-color justify-center rounded-full absolute  bottom-3 right-3">  <TbEditCircle className=" text-xl " /></div>
+      }
       {loadedImg && status !== "Pending" && status !== "Rejected" && (
         <div className="rounded-2xl h-[30px]   absolute  bottom-0 p-2 flex items-center justify-between text-sm text-white">
 
@@ -227,6 +232,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
           </div>
         </div>
       )}
+
     </div>
   );
 };
