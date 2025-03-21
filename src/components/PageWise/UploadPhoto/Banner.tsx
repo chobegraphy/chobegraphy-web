@@ -383,7 +383,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Metadata & Status
             exifData,
             uploadedTime,
-            status: "approved",
+            status: user?.teamMember === true ? "approved" : "pending",
             copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
@@ -400,7 +400,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
             setUploadProgress(100);
-
+            if (!user.teamMember) {
+              toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
+              setIsOpen(false);
+              setTimeout(() => setIsOpen2(false), 100);
+              setUploadProgress(0)
+            }
 
 
           }
@@ -443,7 +448,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Metadata & Status
             exifData,
             uploadedTime,
-            status: "approved",
+            status: user?.teamMember === true ? "approved" : "pending",
             copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
@@ -460,7 +465,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
             setUploadProgress(100);
-
+            if (!user.teamMember) {
+              toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
+              setIsOpen(false);
+              setTimeout(() => setIsOpen2(false), 100);
+              setUploadProgress(0)
+            }
 
 
           }
@@ -503,7 +513,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Metadata & Status
             exifData,
             uploadedTime,
-            status: "approved",
+            status: user?.teamMember === true ? "approved" : "pending",
             copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
@@ -520,7 +530,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
             setUploadProgress(100);
-
+            if (!user.teamMember) {
+              toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
+              setIsOpen(false);
+              setTimeout(() => setIsOpen2(false), 100);
+              setUploadProgress(0)
+            }
 
 
           }
@@ -563,7 +578,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             // Metadata & Status
             exifData,
             uploadedTime,
-            status: "approved",
+            status: user?.teamMember === true ? "approved" : "pending",
             copyright: SelectedCopyrightType,
             collections: selectedCategory,
 
@@ -580,6 +595,13 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
             setUploadProgress(100);
+
+            if (!user.teamMember) {
+              toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
+              setIsOpen(false);
+              setTimeout(() => setIsOpen2(false), 100);
+              setUploadProgress(0)
+            }
 
 
 

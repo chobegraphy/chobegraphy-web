@@ -6,9 +6,11 @@ import { PiShareNetworkBold } from "react-icons/pi";
 import { RiUploadCloudFill } from "react-icons/ri";
 import { SiSparkpost } from "react-icons/si";
 import { useSelector } from "react-redux";
+import { useAuth } from "../../../../Provider/AuthProvider";
 
 const UploadProgress = ({ isOpen, setIsOpen, isOpen2, setIsOpen2, uploadProgress, setUploadProgress, uploadedPictureId, divRef, fileName }: any) => {
     const Language = useSelector((state: any) => state.Language.value);
+    const { user } = useAuth()
     const handleShare = async () => {
         if (navigator.share) {
             try {
@@ -39,7 +41,7 @@ const UploadProgress = ({ isOpen, setIsOpen, isOpen2, setIsOpen2, uploadProgress
                     } absolute transform duration-500 bg-dark-primary-color border-2 dark:bg-black left-0 right-0 max-md:w-[95%] w-3/4 rounded-2xl mx-auto p-4 border-light-secondary-color lg:scale-125 dark:text-dark-primary-color text-light-primary-color md:max-w-[320px] ${uploadProgress === 100 ? "h-[185px]" : "h-[200px]"}`}
             >
                 {
-                    uploadProgress === 100 && <div><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3`}>
+                    user.teamMember === true && uploadProgress === 100 && <div><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3`}>
                         {Language === "BN" && "আপলোড সফল হয়েছে"}
                         {Language === "EN" && <span className="font-Righteous text-xl">Uploading Success</span>}
                     </p>
@@ -93,7 +95,7 @@ const UploadProgress = ({ isOpen, setIsOpen, isOpen2, setIsOpen2, uploadProgress
                     </div>
                 }
                 {
-                    uploadProgress! < 100 && <div className="text-center"><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3`}>
+                    uploadProgress! < 100 && <div className="text-center"><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3 `}>
                         {Language === "BN" && "আপলোড করা হচ্ছে"}
                     </p>
                         {Language === "EN" && <span className="font-Righteous text-xl mb-3">Uploading Picture</span>}
