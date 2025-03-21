@@ -158,16 +158,16 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
         >
             {/* Blurred Low-Quality Background */}
             <Link
-                href={`/ImgDetails/${imgData?._id}`}
+                href={`/ImgDetails?id=${imgData?._id}`}
                 onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
-                className="relative w-full h-full max-h-[200px] max-lg:h-[150px] max-md:h-[100px] rounded-2xl overflow-hidden block "
+                className="relative w-full h-[200px] max-lg:h-[150px] max-md:h-[100px] rounded-2xl overflow-hidden block "
 
             >
                 {/* Blurred Low-Quality Image */}
                 <img
                     src={imgData?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blur image
                     alt="Blurred preview"
-                    className="absolute inset-0 w-full  h-full max-h-[200px] max-lg:h-[150px] max-md:h-[100px] object-center object-cover blur-xl transition-opacity duration-500"
+                    className="absolute inset-0 w-full  h-[200px] max-lg:h-[150px] max-md:h-[100px] object-center object-cover blur-xl transition-opacity duration-500"
                     style={{ opacity: loadedImg ? 0 : 1 }} // Hide blurred image when main image loads
                 />
 
@@ -180,7 +180,7 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
                     loading="lazy"
                     alt={imgData?.name || `Gallery ${i}`}
                     className={clsx(
-                        "w-full max-lg:h-[150px] max-md:h-[100px]  h-full max-h-[200px] object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+                        "w-full max-lg:h-[150px] max-md:h-[100px] h-[200px] object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
                         loadedImg ? "opacity-100" : "opacity-0"
                     )}
                 />

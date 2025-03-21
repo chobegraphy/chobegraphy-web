@@ -1,18 +1,18 @@
 "use client";
 import Banner from "@/components/PageWise/ImgDetails/Banner";
 import RelatedImages from "@/components/PageWise/ImgDetails/RelatedImages";
-import { useParams, usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { ImSpinner } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import { useIncreaseViewCountMutation } from "../../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
-import { useGetSingleImgDetailsQuery } from "../../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
-import { SetImgDetailsData } from "../../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
+import { useIncreaseViewCountMutation } from "../../../../Redux/Features/Apis/IncreaseViewCount/ApiSlice";
+import { useGetSingleImgDetailsQuery } from "../../../../Redux/Features/Apis/SingleImgData/ApiSlice";
+import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 
 
 const ImdDetailsPage = () => {
-  const id = useParams()?.id
-
+  const params = useSearchParams();
+  const id = params.get("id");
   const dispatch = useDispatch();
   const pathName = usePathname();
   // imgDetailsData
@@ -65,7 +65,7 @@ const ImdDetailsPage = () => {
 
   return (
     <div>
-      {!ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
+      {isLoading || !ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
         <div className="w-full   h-screen">
           <div className="h-dvh dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color w-full   z-50 top-0 bottom-0 flex fixed justify-center items-center">
             <ImSpinner

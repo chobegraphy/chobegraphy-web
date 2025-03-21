@@ -38,7 +38,6 @@ const AllImgPage = () => {
   };
 
   useEffect(() => {
-    window.history.pushState({}, '', `/AllImg?filter=${filter}&CurrentPage=${currentPage}`);
     if (ImgData) {
       setLoading(false); // Stop loading when data is available
     }

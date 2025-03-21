@@ -158,7 +158,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
     >
       {/* Blurred Low-Quality Background */}
       <Link
-        href={`/ImgDetails/${imgData?._id}`}
+        href={`/ImgDetails?id=${imgData?._id}`}
         onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
         className="relative w-full rounded-2xl overflow-hidden block"
         style={{ aspectRatio: `${width}/${height}` }} // Maintain aspect ratio
