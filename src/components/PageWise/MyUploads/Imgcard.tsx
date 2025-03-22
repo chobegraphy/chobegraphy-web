@@ -202,7 +202,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         setIsOpen2(true)
       }} className="absolute top-0 right-0 text-xl  bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color cursor-pointer dark:bg-light-primary-color rounded-s-xl p-2.5 w-10 h-10" />}
       {status === "Rejected" &&
-        <TbEditCircle className="absolute bottom-0 right-0 text-xl  bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color cursor-pointer dark:bg-light-primary-color rounded-s-xl p-2.5 w-10 h-10" />
+        <TbEditCircle onClick={() => router.push(`/Dashboard/EditPicture?id=${imgData?._id}`)} className="absolute bottom-0 right-0 text-xl  bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color cursor-pointer dark:bg-light-primary-color rounded-s-xl p-2.5 w-10 h-10" />
       }
       {loadedImg && status !== "Pending" && status !== "Rejected" && (
         <div className="rounded-2xl h-[30px]   absolute  bottom-0 p-2 flex items-center justify-between text-sm text-white">
@@ -247,7 +247,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
       >
         <div
           ref={divRef}
-          className={`${isOpen ? "bottom-8 max-md:bottom-2" : "-bottom-[120%]"
+          className={`${isOpen ? "bottom-8 max-lg:bottom-2" : "-bottom-[120%]"
             } absolute transform duration-500 bg-dark-primary-color border-2 dark:bg-black left-0 right-0 max-md:w-[95%] w-3/4 rounded-2xl mx-auto p-4 border-light-secondary-color lg:scale-125 dark:text-dark-primary-color text-light-primary-color md:max-w-[320px] min-h-[100px] `}
         >
           <FiPlus onClick={() => {

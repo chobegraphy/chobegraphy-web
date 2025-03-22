@@ -16,7 +16,7 @@ export const convertToBanglaNum = (num: any) => {
     };
 
     return num
-        .toString()
+        ?.toString()
         .split(" ")
         .map((word: string) => {
             if (monthMap[word]) {
