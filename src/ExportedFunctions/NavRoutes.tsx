@@ -63,8 +63,8 @@ export const ProfileRoutes: RouteType[] = [
 
 export const teamMemberRoutes: RouteType[] = [
     {
-        path: "/TeamMember/NewUploads",
-        enName: "New Uploads",
-        bnName: "নতুন আপলোড",
+        path: "/TeamMember/Pending?status=Pending&CurrentPage=1",
+        enName: "Pending Uploads",
+        bnName: "পেন্ডিং আপলোড",
     }
 ]

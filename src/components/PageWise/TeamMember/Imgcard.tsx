@@ -2,18 +2,18 @@ import useAuthData from "@/ExportedFunctions/useAuthData";
 import clsx from "clsx"; // Utility for conditional class names
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { FiEye, FiPlus } from "react-icons/fi";
+import { FiEye } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
+import { TiCancel } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLike/ApiSlice";
 import {
   usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 
-import { BiMessageSquareError } from "react-icons/bi";
 import { RiHourglassFill } from "react-icons/ri";
 import { TbEditCircle } from "react-icons/tb";
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
@@ -151,9 +151,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
       }
     }
   };
-  const [isOpen2, setIsOpen2] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const divRef = useRef<HTMLDivElement>(null);
+
   return (
     <div
 
@@ -164,7 +162,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
     >
       {/* Blurred Low-Quality Background */}
       <Link
-        href={`/ImgDetails?id=${imgData?._id}`}
+        href={`/TeamMember/ImgDetails?id=${imgData?._id}`}
         onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
         className="relative w-full rounded-2xl overflow-hidden block"
         style={{ aspectRatio: `${width}/${height}` }} // Maintain aspect ratio
@@ -195,14 +193,10 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
 
       {/* Overlay for Icons */}
       {status === "Pending" && <RiHourglassFill className="absolute top-3 right-3 text-xl text-white" />}
-      {status === "Rejected" && <BiMessageSquareError onClick={() => {
-        setTimeout(() => {
-          setIsOpen(true);
-        }, 100);
-        setIsOpen2(true)
-      }} className="absolute top-0 right-0 text-xl  bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color cursor-pointer dark:bg-light-primary-color rounded-s-xl p-2.5 w-10 h-10" />}
+      {status === "Rejected" && <TiCancel className="absolute top-3 right-3 text-xl text-white" />}
       {status === "Rejected" &&
-        <TbEditCircle className="absolute bottom-0 right-0 text-xl  bg-dark-primary-color text-light-primary-color dark:text-dark-primary-color cursor-pointer dark:bg-light-primary-color rounded-s-xl p-2.5 w-10 h-10" />
+        <div className="cursor-pointer transform 
+         duration-300  hover:bg-dark-primary-color hover:text-light-primary-color w-8 h-8 flex items-center text-dark-primary-color justify-center rounded-full absolute  bottom-3 right-3">  <TbEditCircle className=" text-xl " /></div>
       }
       {loadedImg && status !== "Pending" && status !== "Rejected" && (
         <div className="rounded-2xl h-[30px]   absolute  bottom-0 p-2 flex items-center justify-between text-sm text-white">
@@ -239,53 +233,6 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         </div>
       )}
 
-
-
-      <div
-        className={`${isOpen2 ? "h-[100dvh] w-screen opacity-100 " : "opacity-0"
-          } fixed z-50 right-0 flex justify-center items-center overflow-hidden top-0 left-0 bg-black/90`}
-      >
-        <div
-          ref={divRef}
-          className={`${isOpen ? "bottom-8 max-md:bottom-2" : "-bottom-[120%]"
-            } absolute transform duration-500 bg-dark-primary-color border-2 dark:bg-black left-0 right-0 max-md:w-[95%] w-3/4 rounded-2xl mx-auto p-4 border-light-secondary-color lg:scale-125 dark:text-dark-primary-color text-light-primary-color md:max-w-[320px] min-h-[100px] `}
-        >
-          <FiPlus onClick={() => {
-            setIsOpen(false);
-            setTimeout(() => setIsOpen2(false), 200);
-          }} className="absolute top-2 right-2 text-xl  dark:bg-dark-primary-color dark:text-light-primary-color text-dark-primary-color rotate-45 cursor-pointer bg-black rounded-xl p-0.5 w-5 h-5" />
-          <p className={`${Language === "BN" && "font-BanglaHeading"} text-center mb-3 `}>
-            {Language === "BN" && "ছবি রিজেক্ট করার কারণ"}
-            {Language === "EN" && <span className="font-Righteous text-xl">Reasons of rejecting </span>}
-          </p>
-          <p className={`${Language === "BN" && "font-BanglaSubHeading"} text-center mb-3`}>
-            {Language === "BN" && <>{imgData?.rejectionReason}</>}
-            {Language === "EN" && (
-              <span className="font-Space ">
-                {imgData?.rejectionReason === "ছবি উচ্চমানের নয়" && "The picture is not high quality."}
-                {imgData?.rejectionReason === "ছবি পরিষ্কার নয়" && "The picture is not clear."}
-                {imgData?.rejectionReason === "ছবি অস্পষ্ট" && "The picture is blurry."}
-                {imgData?.rejectionReason === "ছবি ওয়াটারমার্ক,লোগো বা লেখা সংযুক্ত" &&
-                  "The picture contains watermarks, logos, or any text overlays."}
-                {imgData?.rejectionReason ===
-                  "ছবি সকল দর্শকের জন্য যা নিরাপদ নয় । অশ্লীল, সহিংস বা আপত্তিকর ছবি সম্পূর্ণ নিষিদ্ধ।" &&
-                  "The picture contains content that is not safe for all viewers. Pornographic, violent, or offensive images are completely prohibited."}
-                {imgData?.rejectionReason === "সঠিক ক্যাটাগরি নির্বাচন করা হয়নি।" &&
-                  "The correct category was not selected."}
-                {![
-                  "ছবি উচ্চমানের নয়",
-                  "ছবি পরিষ্কার নয়",
-                  "ছবি অস্পষ্ট",
-                  "ছবি ওয়াটারমার্ক,লোগো বা লেখা সংযুক্ত",
-                  "ছবি সকল দর্শকের জন্য যা নিরাপদ নয় । অশ্লীল, সহিংস বা আপত্তিকর ছবি সম্পূর্ণ নিষিদ্ধ।",
-                  "সঠিক ক্যাটাগরি নির্বাচন করা হয়নি।"
-                ].includes(imgData?.rejectionReason) && imgData?.rejectionReason}
-              </span>
-            )}
-
-          </p>
-        </div>
-      </div>
     </div>
   );
 };

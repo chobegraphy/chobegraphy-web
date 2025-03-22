@@ -1,6 +1,6 @@
 "use client";
 import CustomButton from "@/components/ui/CustomButton/CustomButton";
-import { NavRoutes, ProfileRoutes } from "@/ExportedFunctions/NavRoutes";
+import { NavRoutes, ProfileRoutes, teamMemberRoutes } from "@/ExportedFunctions/NavRoutes";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import Image from "next/image";
@@ -367,7 +367,31 @@ const Navbar = () => {
               }
             </motion.div>
 
-
+            {user?.teamMember === true && <><h1 className="mt-3"><p className={`${Language === "BN" && "font-BanglaSubHeading font-bold"}`}>
+              {Language === "BN" ? "টীম অপশন" : "Team Options"} :
+            </p></h1>
+              <motion.div
+                initial={{ opacity: 0, top: -50, rotate: 0 }}
+                animate={{ opacity: 1, top: 0, rotate: 0 }}
+                exit={{ opacity: 0, top: -50, rotate: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+              >
+                {
+                  teamMemberRoutes.map((route, index) => <CustomButton
+                    key={index}
+                    onClick={() => {
+                      setIsOpen(false);
+                      setTimeout(() => setIsOpen2(false), 200);
+                    }}
+                    className={` text-2xl  hover:text-3xl  my-1 px-0 `}
+                    path={route.path}
+                  >
+                    <p className={`${Language === "BN" && "font-BanglaSubHeading font-bold"}`}>
+                      {Language === "BN" ? route?.bnName : route?.enName}
+                    </p>
+                  </CustomButton>)
+                }
+              </motion.div></>}
 
             <div className="flex items-center">
               <button

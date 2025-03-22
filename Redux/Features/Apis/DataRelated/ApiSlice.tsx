@@ -10,7 +10,7 @@ export const DataRelatedApiSlice = createApi({
         "Get-Suggestion-Data",
         "Get-Collection-Data",
         "Add-Collection-Data", "PictureLike", "Get-Img-Data", "PictureIncreaseLikeCount", "PictureDecreaseLikeCount",
-        "GetDataByEmail",
+        "GetDataByEmail", "TeamGetDataByStatus", "TeamPictureApprove", "TeamRejectApprove"
     ],
     baseQuery: fetchBaseQuery({
         // baseUrl: "http://localhost:3000/api",

@@ -9,7 +9,7 @@ const Title = () => {
         className="font-Righteous text-4xl max-xl:text-3xl text-center text-light-primary-color dark:text-dark-primary-color"
       >
         <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-          {Language === "BN" && "আমার আপলোড"}
+          {Language === "BN" && "পেন্ডিং আপলোড করা ছবি"}
         </p>
         <p>{Language === "EN" && "My Uploads"}</p>
       </h1>
@@ -19,7 +19,7 @@ const Title = () => {
       >
         <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
           {Language === "BN" &&
-            "আপলোড করা ছবি ⏳ যদি 'Pending' থাকে, অপেক্ষা করুন; যদি 'Rejected' হয়, পুনরায় চেষ্টা করুন; আর যদি 'Approved' হয়, সবার জন্য দৃশ্যমান! ✅📸"}
+            "আপলোড করা ছবি ⏳ যদি 'Pending' থাকে,তাহলে রিভিও করে ছবির 'Status' আপডেট করুন ✅📸"}
         </p>
         <p>
           {Language === "EN" &&
