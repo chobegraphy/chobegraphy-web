@@ -150,7 +150,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
       }
     }
   };
-
+  console.log(imgData);
   return (
     <div
 

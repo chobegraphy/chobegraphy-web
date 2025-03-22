@@ -142,10 +142,10 @@ const ApproveOrDecline = () => {
                 }} className="flex items-center dark:bg-dark-primary-color    w-full bg-light-primary-color text-dark-primary-color rounded-xl mt-2 justify-center gap-x-2 z-50 dark:text-light-primary-color cursor-pointer  h-14 "
                 >
                     {
-                        PictureApproveLoading && <ImSpinner className="text-3xl animate-spin " />
+                        PictureRejectLoading && <ImSpinner className="text-3xl animate-spin " />
                     }
                     {
-                        !PictureApproveLoading && <><TiCancel className="text-2xl" />
+                        !PictureRejectLoading && <><TiCancel className="text-2xl" />
                             <span className="">
                                 <p className={`${Language === "BN" && "font-BanglaHeading"} text-lg`}>
                                     {Language === "BN" && "ছবি রিজেক্ট করুন"}
