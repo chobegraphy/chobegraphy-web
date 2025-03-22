@@ -21,14 +21,15 @@ const EditPhotoPage = () => {
     const [selectedCategory, setSelectedCategory] = useState<any>(data?.collections);
     const [colors, setColors] = useState<Array<{ r: number; g: number; b: number; hex: string; area: number }>>(data?.colors);
     const [SelectedCopyrightType, setSelectedCopyrightType] = useState(data?.copyright);
-    console.log(data);
+
 
     useEffect(() => {
         setColors(data?.colors);
         setSelectedCategory(data?.collections);
         setSelectedCopyrightType(data?.copyright);
         setExifData(data?.exifData);
-
+        setSelectedCategory(data?.collections);
+        setSelectedCopyrightType(data?.copyright);
     }, [data])
     return (
         <div className="grid grid-cols-10 max-lg:grid-cols-1 sm:px-10 px-5 py-5  dark:bg-gradient-to-br from-black to-light-primary-color gap-5 h-full">

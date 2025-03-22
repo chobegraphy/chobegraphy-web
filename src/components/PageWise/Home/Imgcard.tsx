@@ -77,10 +77,10 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
 
 
   const handleLike = async () => {
-    console.log("👍 handleLike function called!");
+
 
     if (!user) {
-      console.log("⚠️ User not logged in. Redirecting to SignIn...");
+
       router.push("/SignIn");
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
       return;

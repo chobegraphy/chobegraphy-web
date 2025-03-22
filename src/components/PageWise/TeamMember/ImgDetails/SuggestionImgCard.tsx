@@ -9,25 +9,22 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
-import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLike/ApiSlice";
-import {
-    usePictureUnLikeMutation,
-} from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
+import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
+import { usePictureLikeMutation, usePictureUnLikeMutation } from "../../../../../Redux/Features/Apis/PictureLike/ApiSlice";
+import { useGetTopPicturesQuery } from "../../../../../Redux/Features/Apis/TopPictures/ApiSlice";
+import { SetImgDetailsId } from "../../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
+import { SetPictureLikeIds } from "../../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 
-import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
-import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
-import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
-import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const SuggestionImgCard = ({ imgData, i }: any) => {
     // framer motion
     const { user } = useAuthData();
-    console.log(user?._id);
+
     const router = useRouter(); // Initialize router
 
     // Redux dispatch function
     const dispatch = useDispatch();
     const [loadedImg, setLoadedImg] = useState(false);
-    console.log(loadedImg)
+
     const [likeLoading, setLikeLoading] = useState(false);
     const LikedPictureData = useSelector(
         (state: any) => state.StoreLikedPictureData.value
@@ -35,7 +32,7 @@ const SuggestionImgCard = ({ imgData, i }: any) => {
     const Language = useSelector((state: any) => state.Language.value);
     const { data, error, isLoading, refetch } = useGetTopPicturesQuery([]);
 
-    console.log(imgData);
+
 
     const [
         LikedData,

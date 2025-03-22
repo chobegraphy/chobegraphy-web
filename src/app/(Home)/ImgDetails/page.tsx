@@ -50,7 +50,7 @@ const ImdDetailsPage = () => {
       const UpdateViewCountResponse = await increaseViewCount({
         id: id,
       }).unwrap();
-      console.log(UpdateViewCountResponse);
+
       dispatch(SetImgDetailsData(UpdateViewCountResponse?.updatedData));
     }
   };

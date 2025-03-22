@@ -48,13 +48,13 @@ const RegisterForm = () => {
     setbuttonLoading(true);
     try {
       const firebaseData = await EmailPassWordSignUp(data?.email, data?.password);
-      console.log(firebaseData);
+
       const formData = new FormData();
       formData.append('photo', Imgfile);
       formData.append('filename', fileName);
       let uploadedImgUrl; // Use a local variable
       const response = await uploadProfilePictureMutation({ formData }).unwrap();
-      console.log("Upload successful:", response?.imageUrl);
+
       uploadedImgUrl = response.imageUrl;
 
       const userData = {
@@ -69,7 +69,7 @@ const RegisterForm = () => {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      console.log("User registered successfully on backend:", response2.data.data);
+
       setUser(response2.data.data);
       toast.success(Language === "BN" ? "নতুন ব্যবহারকারী যুক্ত হয়েছে" : "New User Added Successfully");
 
@@ -89,7 +89,7 @@ const RegisterForm = () => {
     setGbuttonLoadin(true);
     GoogleSignIn()
       .then(async (firebaseData) => {
-        console.log(firebaseData);
+
 
         const userData = {
           name: firebaseData.user.displayName || "Unknown",
@@ -110,10 +110,7 @@ const RegisterForm = () => {
               ? "নতুন ব্যবহারকারী যুক্ত হয়েছে"
               : "New User Added Successfully"
           );
-          console.log(
-            "User registered successfully on backend:",
-            response.data
-          );
+
           setUser(response.data.data);
           // Redirect to the saved route or the home page
           const redirectUrl = localStorage.getItem('redirectUrl') || '/';

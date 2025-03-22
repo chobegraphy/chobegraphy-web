@@ -17,7 +17,7 @@ const RecentImg = () => {
     page: 1,
     limit: window.innerWidth > 1024 ? 20 : 15,
   });
-  console.log(data);
+
   const [RecentImgData, setRecentImgData] = useState([]);
   const [hovered, SetHovered] = useState(false);
   const [hovered2, SetHovered2] = useState(false);

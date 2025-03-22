@@ -21,7 +21,7 @@ const UploadProgress = ({ isOpen, setIsOpen, isOpen2, setIsOpen2, uploadProgress
                             : "এই চমৎকার ছবিটি দেখুন!",
                     url: `https://chobegraphy.vercel.app/ImgDetails/${uploadedPictureId}`,
                 });
-                console.log("Share was successful.");
+
             } catch (error) {
                 console.error("Error sharing:", error);
             }

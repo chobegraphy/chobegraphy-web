@@ -67,9 +67,9 @@ const Banner = () => {
               : "এই চমৎকার ছবিটি দেখুন!",
           url: window.location.href,
         });
-        console.log("Share was successful.");
+
       } catch (error) {
-        console.error("Error sharing:", error);
+
       }
     } else {
       toast.error("Your browser doesn't support sharing.");
@@ -92,7 +92,7 @@ const Banner = () => {
         PictureId: DetailsData._id,
       }).unwrap();
       const fetchData = await fetchImageDetails(DetailsData._id).unwrap();
-      console.log(liked);
+
       dispatch(SetImgDetailsData(fetchData));
       dispatch(SetPictureLikeIds(LikedResponse?.updatedData?.PictureLiked));
       setLikeLoading(false);
@@ -117,7 +117,7 @@ const Banner = () => {
       }).unwrap();
       const fetchData = await fetchImageDetails(DetailsData._id).unwrap();
       // dispatch(SetImgDetailsData(fetchData));
-      console.log(fetchData);
+
       dispatch(SetPictureLikeIds(UnLikedResponse?.updatedData?.PictureLiked));
       setLikeLoading(false);
     }

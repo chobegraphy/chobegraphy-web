@@ -7,6 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import AuthProvider from "../../../Provider/AuthProvider";
 import { store } from "../../../Redux/Store";
@@ -33,7 +34,13 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
             <Analytics />
             <CheckUser />
             {children}
-
+            <Toaster
+              toastOptions={{
+                className: "ToastClass",
+              }}
+              position="bottom-center"
+              reverseOrder={false}
+            />
             {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />}
           </motion.div>
         )}

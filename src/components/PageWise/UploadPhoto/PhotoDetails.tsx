@@ -38,7 +38,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
     );
     setFilteredZilla(matchedZillas);
     setShowDropdown(matchedZillas.length > 1 || (matchedZillas.length === 1 && matchedZillas[0].name.toLowerCase() !== value.toLowerCase()));
-    console.log(filteredZilla)
+
   };
 
   const handleSelectDistrict = (selectedDistrict: any) => {
@@ -67,7 +67,7 @@ const PhotoDetails = ({ setDistrict1, district, setDistrict, download, view, rea
 
 
 
-  console.log(DetailsData);
+
   return (
     <div>
       <section className="  py-2 text-light-primary-color dark:text-dark-primary-color">

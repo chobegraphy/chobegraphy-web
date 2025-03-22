@@ -1,8 +1,8 @@
 "use client";
 import { useSelector } from "react-redux";
-import { useGetSuggestionsDataQuery } from "../../../../Redux/Features/Apis/Suggestions/ApiSlice";
 
-import { useGetSuggestionDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetSuggestionData/ApiSlice";
+import { useGetSuggestionDataQuery } from "../../../../../Redux/Features/Apis/DataRelated/Apis/GetSuggestionData/ApiSlice";
+import { useGetSuggestionsDataQuery } from "../../../../../Redux/Features/Apis/Suggestions/ApiSlice";
 import SuggestionImgCard from "./SuggestionImgCard";
 
 const RelatedImages = () => {
@@ -12,7 +12,7 @@ const RelatedImages = () => {
   const ImgDetailsData = useSelector(
     (state: any) => state.StoreImgDetailsData.value
   );
-  console.log("🚀 ~ RelatedImages ~ ImgDetailsData:", ImgDetailsData);
+
 
   //  RTK Query hook to get picture suggestions
   const { data, error, isLoading } = useGetSuggestionsDataQuery({
@@ -20,7 +20,7 @@ const RelatedImages = () => {
     excludedId: ImgDetailsData?._id,
   });
   const { data: SuggestionData } = useGetSuggestionDataQuery({ collections: ImgDetailsData?.collections })
-  console.log("🚀 ~ RelatedImages ~ data:", SuggestionData);
+
   return (
     <div className={`${SuggestionData !== undefined && SuggestionData.length === 1 && "hidden"} xl:px-3`}>
       <h1 className="text-2xl font-Righteous">

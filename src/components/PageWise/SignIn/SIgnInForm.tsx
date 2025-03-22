@@ -34,7 +34,7 @@ const SignInForm = () => {
     setbuttonLoading(true);
     EmailPasswordLogin(data?.email, data?.password)
       .then(async (firebaseData) => {
-        console.log(firebaseData);
+
 
         toast.success(
           Language === "BN" ? "সাইন ইন সফল হয়েছে" : "Sign In Successfull"
@@ -46,7 +46,7 @@ const SignInForm = () => {
         setbuttonLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+
         setbuttonLoading(false);
         toast.error(error.message.split("Firebase:")[1], {
           id: "5",
@@ -58,7 +58,7 @@ const SignInForm = () => {
     setGbuttonLoadin(true);
     GoogleSignIn()
       .then((data) => {
-        console.log(data);
+
         setGbuttonLoadin(false);
         toast.success(
           Language === "BN" ? "সাইন ইন সফল হয়েছে" : "Sign In Successfull"
@@ -69,7 +69,7 @@ const SignInForm = () => {
         router.push(redirectUrl);
       })
       .catch((error) => {
-        console.log(error);
+
         setGbuttonLoadin(false);
         toast.error(error.message.split("Firebase:")[1], {
           id: "4",
@@ -101,7 +101,7 @@ const SignInForm = () => {
       })
       .catch((error) => {
         setbuttonLoading(false);
-        console.log(error);
+
         toast.error(error.message.split("Firebase:")[1], {
           id: "5",
         });

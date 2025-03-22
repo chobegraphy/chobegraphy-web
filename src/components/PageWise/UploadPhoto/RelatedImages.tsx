@@ -9,14 +9,13 @@ const RelatedImages = () => {
   const ImgDetailsData = useSelector(
     (state: any) => state.StoreImgDetailsData.value
   );
-  console.log("🚀 ~ RelatedImages ~ ImgDetailsData:", ImgDetailsData);
+  
 
   //  RTK Query hook to get picture suggestions
   const { data, error, isLoading } = useGetSuggestionsDataQuery({
     categories: ImgDetailsData?.collections,
     excludedId: ImgDetailsData?._id,
   });
-  console.log("🚀 ~ RelatedImages ~ data:", data);
   return (
     <div className="xl:px-3">
       <h1 className="text-2xl font-Righteous">

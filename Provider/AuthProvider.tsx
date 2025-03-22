@@ -175,7 +175,7 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
           try {
             const { email } = currentUser;
             if (!email) return;
-            console.log("Email:", email);
+
             // Get JWT token from backend
             const { data: token } = await axios.post(
               `${BaseApiUrl}/jwt`,
@@ -202,7 +202,7 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
       return () => unSub();
     }
   }, []);
-  console.log(user);
+
   return (
     <AuthContext.Provider
       value={{

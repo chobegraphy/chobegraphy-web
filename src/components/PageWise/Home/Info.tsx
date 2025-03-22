@@ -20,7 +20,7 @@ const Info = () => {
   // user count rtk query
   const { data: UserCountData } = useGetUserCountQuery({});
   const { data: ImgCountData } = useGetImgCountQuery({});
-  console.log(UserCountData?.totalDataCount);
+
 
   // Motion value for count
   const countImg = useMotionValue(0);

@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { DataRelatedApiSlice } from "./Features/Apis/DataRelated/ApiSlice";
+import { FileRelatedApiSlice } from "./Features/Apis/FileRelated/ApiSlice";
 import { apiSlice } from "./Features/ApiSlice/ApiSlice";
 import { FeRenderServerApiSlice } from "./Features/FeRenderServerApiSlice/ApiSlice";
 import LanguageReducer from "./Features/Language/Language";
@@ -16,6 +17,7 @@ export const store = configureStore({
     [apiSlice.reducerPath]: apiSlice.reducer,
     [RenderApiSlice.reducerPath]: RenderApiSlice.reducer,
     [DataRelatedApiSlice.reducerPath]: DataRelatedApiSlice.reducer,
+    [FileRelatedApiSlice.reducerPath]: FileRelatedApiSlice.reducer,
     [FeRenderServerApiSlice.reducerPath]: FeRenderServerApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -23,7 +25,8 @@ export const store = configureStore({
       apiSlice.middleware,
       RenderApiSlice.middleware,
       FeRenderServerApiSlice.middleware,
-      DataRelatedApiSlice.middleware
+      DataRelatedApiSlice.middleware,
+      FileRelatedApiSlice.middleware
     ),
 });
 

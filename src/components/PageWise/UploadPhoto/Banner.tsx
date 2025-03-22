@@ -232,7 +232,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
     convertToBase64(file).then((base64) => { // Convert file to base64
       setBase64photo(base64 as string);
       extractColors(`data:image/jpeg;base64,${base64}`).then((col) => {
-        console.log(col);
+
         const formattedColors = col.map(color => ({
           r: color.red,
           g: color.green,
@@ -352,12 +352,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(25);
         let encodedImgUrl = uploadEncodedPictureResponse?.imageUrl;
         setEncodedImgUrl(encodedImgUrl)
-        console.log(uploadEncodedPictureResponse?.imageUrl)
+
         const uploadThumbnailPictureResponse = await UploadThumbnailPicture({ formData: { photo: thumbnail, filename: fileName } }).unwrap();
         setUploadProgress(50);
         let thumbnailUrl = uploadThumbnailPictureResponse?.imageUrl;
         setThumbnailUrl(thumbnailUrl)
-        console.log(encodedImgUrl, thumbnailUrl)
+
         const formData = new FormData();
         formData.append("photo", mainImgFile);
         formData.append("filename", fileName);
@@ -365,7 +365,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(75);
         let mainImgUrl = uploadMainPictureResponse?.imageUrl;
         setMainImgUrl(mainImgUrl)
-        console.log(encodedImgUrl, thumbnailUrl, mainImgUrl)
+
         if (encodedImgUrl && thumbnailUrl && mainImgUrl) {
           const PictureData = {
             // Image Details
@@ -417,12 +417,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(25);
         let encodedImgUrl = uploadEncodedPictureResponse?.imageUrl;
         setEncodedImgUrl(encodedImgUrl)
-        console.log(uploadEncodedPictureResponse?.imageUrl)
+
         const uploadThumbnailPictureResponse = await UploadThumbnailPicture({ formData: { photo: thumbnail, filename: fileName } }).unwrap();
         setUploadProgress(50);
         let thumbnailUrl = uploadThumbnailPictureResponse?.imageUrl;
         setThumbnailUrl(thumbnailUrl)
-        console.log(encodedImgUrl, thumbnailUrl)
+
         const formData = new FormData();
         formData.append("photo", mainImgFile);
         formData.append("filename", fileName);
@@ -430,7 +430,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(75);
         let mainImgUrl = uploadMainPictureResponse?.imageUrl;
         setMainImgUrl(mainImgUrl)
-        console.log(encodedImgUrl, thumbnailUrl, mainImgUrl)
+
         if (encodedImgUrl && thumbnailUrl && mainImgUrl) {
           const PictureData = {
             // Image Details
@@ -482,12 +482,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(25);
         let encodedImgUrl = uploadEncodedPictureResponse?.imageUrl;
         setEncodedImgUrl(encodedImgUrl)
-        console.log(uploadEncodedPictureResponse?.imageUrl)
+
         const uploadThumbnailPictureResponse = await UploadThumbnailPicture({ formData: { photo: thumbnail, filename: fileName } }).unwrap();
         setUploadProgress(50);
         let thumbnailUrl = uploadThumbnailPictureResponse?.imageUrl;
         setThumbnailUrl(thumbnailUrl)
-        console.log(encodedImgUrl, thumbnailUrl)
+
         const formData = new FormData();
         formData.append("photo", mainImgFile);
         formData.append("filename", fileName);
@@ -495,7 +495,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(75);
         let mainImgUrl = uploadMainPictureResponse?.imageUrl;
         setMainImgUrl(mainImgUrl)
-        console.log(encodedImgUrl, thumbnailUrl, mainImgUrl)
+
         if (encodedImgUrl && thumbnailUrl && mainImgUrl) {
           const PictureData = {
             // Image Details
@@ -547,12 +547,12 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(25);
         let encodedImgUrl = uploadEncodedPictureResponse?.imageUrl;
         setEncodedImgUrl(encodedImgUrl)
-        console.log(uploadEncodedPictureResponse?.imageUrl)
+
         const uploadThumbnailPictureResponse = await UploadThumbnailPicture({ formData: { photo: thumbnail, filename: fileName } }).unwrap();
         setUploadProgress(50);
         let thumbnailUrl = uploadThumbnailPictureResponse?.imageUrl;
         setThumbnailUrl(thumbnailUrl)
-        console.log(encodedImgUrl, thumbnailUrl)
+
         const formData = new FormData();
         formData.append("photo", mainImgFile);
         formData.append("filename", fileName);
@@ -560,7 +560,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
         setUploadProgress(75);
         let mainImgUrl = uploadMainPictureResponse?.imageUrl;
         setMainImgUrl(mainImgUrl)
-        console.log(encodedImgUrl, thumbnailUrl, mainImgUrl)
+
         if (encodedImgUrl && thumbnailUrl && mainImgUrl) {
           const PictureData = {
             // Image Details

@@ -18,7 +18,7 @@ const AllImgPage = () => {
   const [loading, setLoading] = useState(false); // To manage the loading state manually
 
 
-  console.log(ParamsCurrentPage);
+
   const { data, isFetching, isError, error, refetch } = useGetPictureDataQuery({
     filter: filter || "recent",
     page: currentPage,

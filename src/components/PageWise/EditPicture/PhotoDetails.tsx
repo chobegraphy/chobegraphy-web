@@ -4,6 +4,7 @@ import { ZillaData } from "@/ExportedFunctions/ZillaData";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegHeart } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
 import { MdPublishedWithChanges } from "react-icons/md";
@@ -38,7 +39,7 @@ const PhotoDetails = ({ description, setDistrict1, district, setDistrict, downlo
     );
     setFilteredZilla(matchedZillas);
     setShowDropdown(matchedZillas.length > 1 || (matchedZillas.length === 1 && matchedZillas[0].name.toLowerCase() !== value.toLowerCase()));
-    console.log(filteredZilla)
+
   };
 
   const handleSelectDistrict = (selectedDistrict: any) => {
@@ -67,7 +68,6 @@ const PhotoDetails = ({ description, setDistrict1, district, setDistrict, downlo
 
 
 
-  console.log(DetailsData);
   return (
     <div>
       <section className="  py-2 text-light-primary-color dark:text-dark-primary-color">
@@ -75,13 +75,15 @@ const PhotoDetails = ({ description, setDistrict1, district, setDistrict, downlo
         <div className="font-Space relative mt-2 max-md:text-base ">
           <p style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}` }} className="flex absolute scale-90 -top-5 left-3 bg-dark-primary-color dark:bg-light-primary-color mt-2 mb-1 gap-x-0.5 px-2 rounded-xl items-center">
             <span className="font-BanglaSubHeading">
-              {Language === "BN" && "ক্যাপশন"}
+              {Language === "BN" ? "ক্যাপশন পরিবর্তন করা যাবেনা" : "You can't edit the caption"}
             </span>{" "}
-            {Language === "EN" && "Caption"} :{" "}
+
           </p>
           <textarea defaultValue={description} id="description" style={{ border: `2px solid ${colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000"}`, caretColor: colors?.length > 0 ? colors[1]?.hex : theme === "dark" ? "#575757" : "#000" }} onChange={(e) =>
             setDescription(e.target.value)
-          } onPaste={(e) => setDescription(e.clipboardData.getData('text'))} className={`p-5 rounded-xl  w-full outline-none bg-transparent border  border-light-secondary-color `}></textarea>
+          } disabled onFocus={() => {
+            toast.error(Language === "BN" ? "ক্যাপশন পরিবর্তন করা যাবেনা" : "You can't edit the caption")
+          }} onPaste={(e) => setDescription(e.clipboardData.getData('text'))} className={`p-5 rounded-xl  w-full outline-none bg-transparent border  border-light-secondary-color `}></textarea>
         </div>
       </section>
       <section className="  relative text-light-primary-color dark:text-dark-primary-color mt-2">

@@ -23,7 +23,7 @@ const Popular = () => {
             setPopularImgData(data.data);
         }
     }, [data, pathName]);
-    console.log(PopularImgData);
+
     return (
         <div className="max-w-7xl xl:px-16 sm:px-10 px-5 pt-10 pb-20 w-full mx-auto">
             <div className="w-full  flex justify-between items-center"><h1

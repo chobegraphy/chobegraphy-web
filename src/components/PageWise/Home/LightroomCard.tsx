@@ -22,7 +22,7 @@ import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/St
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const LightroomCard = ({ imgData, i }: any) => {
     const { user } = useAuthData();
-    console.log(user?._id);
+
     const router = useRouter(); // Initialize router
 
     // Redux dispatch function
@@ -35,7 +35,7 @@ const LightroomCard = ({ imgData, i }: any) => {
     const Language = useSelector((state: any) => state.Language.value);
     const { data, error, isLoading, refetch } = useGetTopPicturesQuery([]);
 
-    console.log(LikedPictureData);
+
 
     const [
         LikedData,

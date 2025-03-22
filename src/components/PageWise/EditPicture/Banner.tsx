@@ -11,10 +11,11 @@ import { useAuth } from "../../../../Provider/AuthProvider";
 
 
 
-import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/AddUploadPictureData/ApiSlice";
-import { useUploadEncodedPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadEncodedPhoto/ApiSlice";
-import { useUploadMainPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadMainPhoto/ApiSlice";
-import { useUploadThumbnailPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadThumbnailPhoto/ApiSlice";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useUpdatePictureDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/UpdatePictureData/ApiSlice";
+import { useUpdateEncodedPictureMutation } from "../../../../Redux/Features/Apis/FileRelated/Apis/UpdateEncodedPhoto/ApiSlice";
+import { useUpdateMainPictureMutation } from "../../../../Redux/Features/Apis/FileRelated/Apis/UpdateMainPicture/ApiSlice";
+import { useUpdateThumbnailPictureMutation } from "../../../../Redux/Features/Apis/FileRelated/Apis/UpdateThumbnailPhoto/ApiSlice";
 import "./Banner.css";
 import CategorySelector from "./CategorySelector";
 import CopyRightType from "./CopyRightType";
@@ -29,11 +30,14 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
   // user data 
   const { user } = useAuth();
   const Language = useSelector((state: any) => state.Language.value);
+  const params = useSearchParams()
+  const router = useRouter();
+  const id = params.get("id");
   // redux uplaod image
-  const [UploadEncodedPicture, { error: UploadEncodedPhotoError }] = useUploadEncodedPictureMutation()
-  const [UploadThumbnailPicture, { error: UploadThumbnailPhotoError }] = useUploadThumbnailPictureMutation()
-  const [UploadMainPicture, { error: UploadMainPhotoError }] = useUploadMainPictureMutation()
-  const [AddUploadedPictureData] = useAddUploadedPictureDataMutation()
+  const [UploadEncodedPicture, { error: UploadEncodedPhotoError }] = useUpdateEncodedPictureMutation()
+  const [UploadThumbnailPicture, { error: UploadThumbnailPhotoError }] = useUpdateThumbnailPictureMutation()
+  const [UploadMainPicture, { error: UploadMainPhotoError }] = useUpdateMainPictureMutation()
+  const [AddUploadedPictureData] = useUpdatePictureDataMutation()
   const [selectedImg, setSelectedImg] = useState<string | null>(imgData?.url);
   const [dimensions, setDimensions] = useState(imgData?.dimensions);
   const [fileSize, setFileSize] = useState<string | number>(imgData?.fileSize);
@@ -50,6 +54,7 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
   const [district1, setDistrict1] = useState("");
   const [mainImgFile, setMainImgFile] = useState<any>(null);
   const [description, setDescription] = useState<string>(imgData?.description);
+  const [oldDescription, setOldDescription] = useState(imgData?.description);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadedPictureId, setUploadedPictureId] = useState('');
   // img urls
@@ -87,6 +92,7 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
       setThumbnailUrl(imgData.thumbnail);
       setMainImgUrl(imgData.url);
       setEncodedImgUrl(imgData.encodedUrl);
+      setOldDescription(imgData.description)
     }
   }, [imgData])
   // get EXIF data from image
@@ -361,13 +367,12 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
       })
       return
     }
-    if (!Base64photo) {
-      return;
-    }
+
     try {
       setIsOpen(true);
       setTimeout(() => setIsOpen2(true), 200);
       setUploadProgress(0);
+
       if (changedPicture === true) {
         const uploadEncodedPictureResponse = await UploadEncodedPicture({ formData: { photo: encodedPhoto, filename: fileName } }).unwrap();
         setUploadProgress(25);
@@ -415,7 +420,7 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
             react,
           };
 
-          const AddUploadedPictureDataResponse = await AddUploadedPictureData({ PictureData }).unwrap();
+          const AddUploadedPictureDataResponse = await AddUploadedPictureData({ _id: id, newData: PictureData }).unwrap();
           if (AddUploadedPictureDataResponse) {
             resetForm();
             setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
@@ -425,7 +430,11 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
             if (!user.teamMember) {
               toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
               setIsOpen(false);
+
               setTimeout(() => setIsOpen2(false), 100);
+              setTimeout(() => {
+                router.replace(`/Dashboard/MyUploads?status=Rejected&CurrentPage=1`)
+              }, 2000);
               setUploadProgress(0)
             }
 
@@ -433,7 +442,8 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
           }
         }
       }
-      if (changedPicture === false) {
+      else {
+        console.log(description)
 
         if (encodedImgUrl && thumbnailUrl && mainImgUrl) {
           const PictureData = {
@@ -463,7 +473,7 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
             react,
           };
 
-          const AddUploadedPictureDataResponse = await AddUploadedPictureData({ PictureData }).unwrap();
+          const AddUploadedPictureDataResponse = await AddUploadedPictureData({ _id: id, newData: PictureData }).unwrap();
           if (AddUploadedPictureDataResponse) {
             resetForm();
             setUploadedPictureId(AddUploadedPictureDataResponse?.data?._id);
@@ -474,6 +484,10 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
               toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
               setIsOpen(false);
               setTimeout(() => setIsOpen2(false), 100);
+
+              setTimeout(() => {
+                router.replace(`/Dashboard/MyUploads?status=Rejected&CurrentPage=1`)
+              }, 2000);
               setUploadProgress(0)
             }
 

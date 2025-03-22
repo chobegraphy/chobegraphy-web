@@ -39,7 +39,7 @@ const Navbar = () => {
   // Redux
   const Language = useSelector((state: any) => state.Language.value);
   const dispatch = useDispatch();
-  console.log(Language);
+
 
   // Set language from local storage (on mount)
   useEffect(() => {

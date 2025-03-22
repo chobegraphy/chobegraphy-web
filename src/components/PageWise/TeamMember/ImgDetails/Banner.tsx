@@ -52,7 +52,7 @@ const Banner = () => {
               : "এই চমৎকার ছবিটি দেখুন!",
           url: window.location.href,
         });
-        console.log("Share was successful.");
+
       } catch (error) {
         console.error("Error sharing:", error);
       }

@@ -18,11 +18,11 @@ interface Category {
 
 export default function CategorySelector({
     selectedCategory, setSelectedCategory, colors }: any) {
-    console.log(colors)
+
     const { theme } = useTheme()
     const { data: initialCategories, refetch } = useGetCollectionsDataQuery({})
     const [AddCollectionData, { isLoading }] = useAddNewCollectionDataMutation()
-    console.log(initialCategories)
+
     const Language = useSelector((state: any) => state.Language.value);
 
     const [search, setSearch] = useState("");

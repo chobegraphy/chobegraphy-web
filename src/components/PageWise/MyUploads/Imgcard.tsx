@@ -26,7 +26,9 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
   const { user } = useAuthData();
 
   const router = useRouter(); // Initialize router
-
+  const [isOpen2, setIsOpen2] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
   // Redux dispatch function
   const dispatch = useDispatch();
   const [loadedImg, setLoadedImg] = useState(false);
@@ -81,10 +83,10 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
 
 
   const handleLike = async () => {
-    console.log("👍 handleLike function called!");
+
 
     if (!user) {
-      console.log("⚠️ User not logged in. Redirecting to SignIn...");
+
       router.push("/SignIn");
       toast.error(Language === "BN" ? "সাইন ইন করুন" : "Please SignIn First");
       return;
@@ -151,9 +153,8 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
       }
     }
   };
-  const [isOpen2, setIsOpen2] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const divRef = useRef<HTMLDivElement>(null);
+
+
   return (
     <div
 
@@ -164,7 +165,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
     >
       {/* Blurred Low-Quality Background */}
       <Link
-        href={`/ImgDetails?id=${imgData?._id}`}
+        href={status === "Approved" ? `/ImgDetails?id=${imgData?._id}` : '#'}
         onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
         className="relative w-full rounded-2xl overflow-hidden block"
         style={{ aspectRatio: `${width}/${height}` }} // Maintain aspect ratio

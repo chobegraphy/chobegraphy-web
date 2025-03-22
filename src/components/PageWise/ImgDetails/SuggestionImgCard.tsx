@@ -21,13 +21,13 @@ import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureD
 const SuggestionImgCard = ({ imgData, i }: any) => {
     // framer motion
     const { user } = useAuthData();
-    console.log(user?._id);
+
     const router = useRouter(); // Initialize router
 
     // Redux dispatch function
     const dispatch = useDispatch();
     const [loadedImg, setLoadedImg] = useState(false);
-    console.log(loadedImg)
+
     const [likeLoading, setLikeLoading] = useState(false);
     const LikedPictureData = useSelector(
         (state: any) => state.StoreLikedPictureData.value
@@ -35,7 +35,7 @@ const SuggestionImgCard = ({ imgData, i }: any) => {
     const Language = useSelector((state: any) => state.Language.value);
     const { data, error, isLoading, refetch } = useGetTopPicturesQuery([]);
 
-    console.log(imgData);
+
 
     const [
         LikedData,
