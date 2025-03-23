@@ -401,7 +401,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
             setUploadProgress(100);
-            if (!user.teamMember) {
+            if (!user?.teamMember) {
               toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
               setIsOpen(false);
               setTimeout(() => setIsOpen2(false), 100);
@@ -466,7 +466,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
             setUploadProgress(100);
-            if (!user.teamMember) {
+            if (!user?.teamMember) {
               toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
               setIsOpen(false);
               setTimeout(() => setIsOpen2(false), 100);
@@ -531,7 +531,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
 
             setUploadProgress(100);
-            if (!user.teamMember) {
+            if (!user?.teamMember) {
               toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
               setIsOpen(false);
               setTimeout(() => setIsOpen2(false), 100);
@@ -597,7 +597,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
             setUploadProgress(100);
 
-            if (!user.teamMember) {
+            if (!user?.teamMember) {
               toast.success(Language === "BN" ? "ছবি আপলোড করা হয়েছে অ্যাডমিনের অ্যাপ্রুভড করার জন্য অপেক্ষা করুন" : "Picture Uploaded Wait for Admin Approval")
               setIsOpen(false);
               setTimeout(() => setIsOpen2(false), 100);

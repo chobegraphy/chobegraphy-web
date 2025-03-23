@@ -41,7 +41,7 @@ const UploadProgress = ({ isOpen, setIsOpen, isOpen2, setIsOpen2, uploadProgress
                     } absolute transform duration-500 bg-dark-primary-color border-2 dark:bg-black left-0 right-0 max-md:w-[95%] w-3/4 rounded-2xl mx-auto p-4 border-light-secondary-color lg:scale-125 dark:text-dark-primary-color text-light-primary-color md:max-w-[320px] ${uploadProgress === 100 ? "h-[185px]" : "h-[200px]"}`}
             >
                 {
-                    user.teamMember === true && uploadProgress === 100 && <div><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3`}>
+                    user?.teamMember === true && uploadProgress === 100 && <div><p className={`${Language === "BN" && "font-BanglaHeading"} text-lg text-center mb-3`}>
                         {Language === "BN" && "আপলোড সফল হয়েছে"}
                         {Language === "EN" && <span className="font-Righteous text-xl">Uploading Success</span>}
                     </p>
