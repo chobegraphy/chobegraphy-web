@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import {
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -12,28 +11,19 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-
-import { BaseApiUrl } from "@/ExportedFunctions/BaseApiUrl";
 import { usePathname } from "next/navigation";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useGetPictureLikeDataQuery } from "../Redux/Features/Apis/PictureLike/ApiSlice";
+
+
+
+import axios from "axios";
+import { useLazyGetUserDataQuery } from "../Redux/Features/Apis/DataRelated/Apis/GetUserData/ApiSlice";
 import { SetImgDetailsId } from "../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
-import { SetPictureLikeIds } from "../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 import app from "../src/Firebase/Firebase.config";
 
 interface AuthProviderDataProps {
   children: ReactNode;
-}
-
-interface LanguageState {
-  language: string;
 }
 
 interface AuthContextData {
@@ -72,136 +62,104 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }: AuthProviderDataProps) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
-  const pathName = usePathname();
   const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(true);
-  // redux writing for picture like data
   const dispatch = useDispatch();
+  const pathName = usePathname();
+  // Fetch user data with RTK Query
+  const [fetchUserData, { data: userData, error, isLoading }] = useLazyGetUserDataQuery();
+  // Load user from local storage initially
+  useEffect(() => {
+    const localStorageUser = typeof window !== "undefined" && localStorage.getItem("userData");
+    if (localStorageUser) {
+      setUser(JSON.parse(localStorageUser));
+      setLoading(false);
+    }
+  }, []);
 
+  // Firebase Auth State Change Listener
+  useEffect(() => {
+    const unSub = onAuthStateChanged(auth, async (currentUser) => {
+      setLoading(false);
+
+      if (currentUser) {
+        console.log(currentUser);
+        try {
+          const { email } = currentUser;
+          console.log(email)
+          if (!email) return;
+
+          // Get JWT token from backend
+          const JwtTokenReponse = await axios.post(`https://chobegraphyserver.onrender.com/api/jwt`, { email });
+          if (JwtTokenReponse?.data && typeof window !== "undefined" && !localStorage.getItem("userData")) {
+            typeof window !== "undefined" && localStorage.setItem("ChobegraphyAccess", JwtTokenReponse?.data);
+            const userData = await fetchUserData({ email }).unwrap();
+            setUser(userData);
+            typeof window !== "undefined" && localStorage.setItem("userData", JSON.stringify(userData));
+
+          }
+          // User data is now managed via RTK Query, no direct API call needed
+        } catch (error) {
+          console?.error("Error fetching JWT token:", error);
+          typeof window !== "undefined" && localStorage.removeItem("ChobegraphyAccess");
+          typeof window !== "undefined" && localStorage.removeItem("userData");
+          setUser(null);
+        }
+      } else {
+        // Clear local storage when logged out
+        typeof window !== "undefined" && localStorage.removeItem("ChobegraphyAccess");
+        typeof window !== "undefined" && localStorage.removeItem("userData");
+        setUser(null);
+      }
+    });
+
+    return () => unSub();
+  }, [fetchUserData]);
+
+
+
+
+  useEffect(() => {
+    if (userData) {
+      setUser(userData);
+      typeof window !== "undefined" && localStorage.setItem("userData", JSON.stringify(userData));
+    }
+  }, [userData]);
+
+  // Handle Redux Store updates for liked pictures
   useEffect(() => {
     if (pathName !== "/ImgDetails") {
       dispatch(SetImgDetailsId(""));
-
       typeof window !== "undefined" && localStorage.removeItem("ImgDetailsId");
     }
   }, [pathName]);
-  const {
-    data: PictureLikedData,
-    error: PictureLikedError,
-    isLoading: PictureLikedLoading,
-  } = useGetPictureLikeDataQuery(
-    { id: user?._id },
-    {
-      skip: !user || Object.keys(user).length === 0,
-    }
-  );
 
-  // use effect for picture liked data
-  useEffect(() => {
-    if (PictureLikedData) {
-      dispatch(SetPictureLikeIds(PictureLikedData?.likedPictures));
-    }
-  }, [PictureLikedData]);
-  // Sign up with email and password (no backend post)
-  const EmailPassWordSignUp = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
-  };
+  // Auth functions
+  const EmailPassWordSignUp = (email: string, password: string) =>
+    createUserWithEmailAndPassword(auth, email, password);
 
-  // Login with email and password
-  const EmailPasswordLogin = (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password);
-  };
+  const EmailPasswordLogin = (email: string, password: string) =>
+    signInWithEmailAndPassword(auth, email, password);
 
-  // Sign in with Google (no backend post)
-  const GoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    return signInWithPopup(auth, provider);
-  };
+  const GoogleSignIn = async () =>
+    signInWithPopup(auth, new GoogleAuthProvider());
 
-  // GitHub login (no backend post)
-  const GitHubLogin = () => {
-    return signInWithPopup(auth, new GithubAuthProvider());
-  };
+  const GitHubLogin = () =>
+    signInWithPopup(auth, new GithubAuthProvider());
 
-  // Logout
   const logOut = async () => {
     try {
       await signOut(auth);
-      localStorage?.removeItem("ChobegraphyAccess");
-      localStorage?.removeItem("userData");
+      localStorage.removeItem("ChobegraphyAccess");
+      localStorage.removeItem("userData");
       setUser(null);
     } catch (error) {
       console.error("Error logging out:", error);
     }
   };
 
-  // password reset
-  const passwordReset = async (email: string) => {
-    return sendPasswordResetEmail(auth, email); (email);
-  };
-
-  // Fetch User Data from Backend
-  const fetchUserByEmail = async (email: string) => {
-    const token = localStorage.getItem("ChobegraphyAccess");
-    if (!token) return;
-
-    try {
-      const response = await axios.get(
-        `${BaseApiUrl}/get-user?email=${email}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      setUser(response.data);
-      localStorage.setItem("userData", JSON.stringify(response.data));
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      setUser(null);
-    }
-  };
-
-  useEffect(() => {
-    const localStorageUser = localStorage?.getItem("userData");
-    if (localStorageUser) {
-      setUser(JSON.parse(localStorageUser));
-      setLoading(false);
-    } else {
-      const unSub = onAuthStateChanged(auth, async (currentUser) => {
-        setLoading(false);
-        if (currentUser) {
-          try {
-            const { email } = currentUser;
-            if (!email) return;
-
-            // Get JWT token from backend
-            const { data: token } = await axios.post(
-              `${BaseApiUrl}/jwt`,
-              { email },
-              {
-                headers: { "Content-Type": "application/json" },
-              }
-            );
-
-            localStorage.setItem("ChobegraphyAccess", token);
-
-            // Fetch user data from backend
-            await fetchUserByEmail(email);
-          } catch (error) {
-            console.error("Error fetching JWT token:", error);
-          }
-        } else {
-          localStorage.removeItem("ChobegraphyAccess");
-          localStorage.removeItem("userData");
-          setUser(null);
-        }
-      });
-
-      return () => unSub();
-    }
-  }, []);
+  const passwordReset = async (email: string) =>
+    sendPasswordResetEmail(auth, email);
 
   return (
     <AuthContext.Provider
@@ -216,7 +174,8 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
         logOut,
         user,
         signIn,
-        setSignIn, passwordReset,
+        setSignIn,
+        passwordReset,
       }}
     >
       {children}
