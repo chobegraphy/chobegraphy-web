@@ -1,4 +1,5 @@
 import { convertToBanglaNum } from "@/ExportedFunctions/ConvertToBanglaNum";
+import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { BiSolidCategoryAlt } from "react-icons/bi";
@@ -346,11 +347,11 @@ const PhotoDetails = ({ DetailsData, setDetailsData }: any) => {
           {/* <span className="font-Righteous text-xl">Download</span> */}
         </button>
       </section>
-      <div className="flex  items-center ms-1.5 lg:ms-3 w-fit  gap-x-1 font-Righteous mt-3 ">
+      <Link href={`/ViewImgProfile?AuthorMail=${DetailsData?.author?.email}&status=About%20Me&CurrentPage=1`} className="flex  items-center ms-1.5 lg:ms-3 w-fit  gap-x-1 font-Righteous mt-3 ">
 
         <img className="w-10 border-2 border-light-secondary-color h-10 rounded-2xl  -ms-2 " src={DetailsData?.author?.picture} alt="" width={500} height={500} loading="lazy" />
         {DetailsData?.author?.name}
-      </div>
+      </Link>
     </div>
   );
 };

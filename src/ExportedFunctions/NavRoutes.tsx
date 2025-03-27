@@ -36,12 +36,11 @@ export const NavRoutes: RouteType[] = [
 ]
 
 export const ProfileRoutes: RouteType[] = [
-    // {
-    //     path: "/Dashboard",
-    //     enName: "Profile",
-    //     bnName: "প্রোফাইল",
-
-    // },
+    {
+        path: "/Dashboard?status=About%20Me&CurrentPage=1",
+        enName: "Profile",
+        bnName: "প্রোফাইল",
+    },
     {
         path: "/Dashboard/MyUploads?status=Approved&CurrentPage=1",
         enName: "My Uploads",

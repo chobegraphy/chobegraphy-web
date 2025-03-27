@@ -1,10 +1,13 @@
 "use client";
 
-import AccountInfo from "@/components/PageWise/MyProfile/AccountInfo";
-import Banner from "@/components/PageWise/MyProfile/Banner";
 
-import ImgMappingComponent from "@/components/PageWise/MyProfile/ImgMappingComponent";
-import Pagination from "@/components/PageWise/MyProfile/Pagination";
+
+
+
+import AccountInfo from "@/components/PageWise/ViewImgProfile/AccountInfo";
+import Banner from "@/components/PageWise/ViewImgProfile/Banner";
+import ImgMappingComponent from "@/components/PageWise/ViewImgProfile/ImgMappingComponent";
+import Pagination from "@/components/PageWise/ViewImgProfile/Pagination";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tab/Tab";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,10 +16,11 @@ import { useAuth } from "../../../../Provider/AuthProvider";
 import { useGetPictureDataByEmailQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetDataByEmail/ApiSlice";
 import { useGetPictureDataByEmailForProfileQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureDataByEmailForProfile/ApiSlice";
 
-const ProfilePage = () => {
+const ViewProfilePage = () => {
     const params = useSearchParams();
     const router = useRouter();
     const status = params.get("status") || "About Me";
+    const authorEmail = params.get("AuthorMail");
     const Language = useSelector((state: any) => state.Language.value);
     const { user } = useAuth();
 
@@ -27,12 +31,18 @@ const ProfilePage = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const { data, isFetching, refetch } = useGetPictureDataByEmailQuery({
-        email: user?.email,
+        email: authorEmail,
         page: currentPage,
         limit,
         status: "approved",
     });
+    const { data: PictureDataByEmailForProfile } = useGetPictureDataByEmailForProfileQuery({ email: authorEmail })
+    useEffect(() => {
+        if (PictureDataByEmailForProfile) {
 
+            setBannerPicture(PictureDataByEmailForProfile?.data[0])
+        }
+    }, [PictureDataByEmailForProfile])
     useEffect(() => {
         if (data?.data) {
             setPrevImgData(data.data);
@@ -59,12 +69,6 @@ const ProfilePage = () => {
 
     const totalPages = data?.data.length ? Math.ceil(data.total / limit) : 1;
     const [BannerPicture, setBannerPicture] = useState<any>(null);
-    const { data: PictureDataByEmailForProfile } = useGetPictureDataByEmailForProfileQuery({ email: user?.email })
-    useEffect(() => {
-        if (PictureDataByEmailForProfile) {
-            setBannerPicture(PictureDataByEmailForProfile?.data[0])
-        }
-    }, [PictureDataByEmailForProfile])
     return (
         <div className="min-h-[100dvh]">
             <Banner BannerPicture={BannerPicture} />
@@ -76,7 +80,7 @@ const ProfilePage = () => {
                         <TabsTrigger
                             key={tab}
                             onClick={() => {
-                                router.push(`/Dashboard?status=${tab}&CurrentPage=1`);
+                                router.push(`/ViewImgProfile?AuthorMail=${authorEmail}&status=${tab}&CurrentPage=1`);
                             }}
                             value={tab}
                             className={`${status === tab && "disabled pointer-events-none"}`}
@@ -139,4 +143,4 @@ const ProfilePage = () => {
     );
 };
 
-export default ProfilePage;
+export default ViewProfilePage;
