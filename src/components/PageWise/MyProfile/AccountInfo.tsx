@@ -79,7 +79,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
             setAboutMe(user?.aboutMe)
             setTeamRole(user?.TeamRole)
         }
-    }, [PictureDataByEmailForProfile, user])
+    }, [PictureDataByEmailForProfile, user, Edit])
 
     const handleUpdate = async () => {
         console.log(whatsapp)
@@ -192,7 +192,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
                         </span>{" "}
                         {Language === "EN" && "Name (max. 27 characters)"} :{" "}
                     </p>
-                    <input value={profileName} type="text" style={{ border: `2px solid ${theme === "dark" ? "#575757" : "#000"}` }} onChange={(e) => {
+                    <input defaultValue={profileName} type="text" style={{ border: `2px solid ${theme === "dark" ? "#575757" : "#000"}` }} onChange={(e) => {
                         switch (true) {
                             case e.target.value.length <= 27:
                                 setProfileName(e.target.value);
@@ -486,7 +486,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
                     </span>{" "}
                     {Language === "EN" && "Team Role"} :{" "}
                 </p>
-                <textarea value={TeamRole} style={{ border: `2px solid ${theme === "dark" ? "#575757" : "#000"}` }} onChange={(e) => {
+                <textarea defaultValue={user?.teamRole} style={{ border: `2px solid ${theme === "dark" ? "#575757" : "#000"}` }} onChange={(e) => {
                     setTeamRole(e.target.value);
                 }
                 } onPaste={(e) => setTeamRole(e.clipboardData.getData('text'))} className={`p-5 rounded-xl  w-full outline-none bg-transparent border  border-light-secondary-color `} />

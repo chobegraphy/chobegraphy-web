@@ -17,7 +17,7 @@ const Banner = ({ BannerPicture }: any) => {
                     <img
                         src={BannerPicture?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blurred background
                         alt="Blurred preview"
-                        className="absolute inset-0 w-full h-full object-cover blur-xl transition-opacity duration-500"
+                        className="absolute inset-0 w-full max-lg:h-[200px] h-[300px] max-md:h-[150px] object-cover blur-xl transition-opacity duration-500"
                         style={{ opacity: loadedImg ? 0 : 1 }} // Hide blurred image when main image loads
                     />
 
@@ -29,12 +29,12 @@ const Banner = ({ BannerPicture }: any) => {
                         src={BannerPicture?.thumbnail || "/placeholder.jpg"} // Main image
                         alt={`Gallery `}
                         className={clsx(
-                            "w-full object-cover object-center  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+                            "w-full max-lg:h-[200px] h-[300px] max-md:h-[150px] object-cover object-center  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
                             loadedImg ? "opacity-100" : "opacity-0"
                         )}
                     />
                 </div>
-                <div className="w-[250px] max-lg:h-[140px]  max-lg:w-[140px] h-[250px] bg-red-500 rounded-full max-lg:-bottom-[66px] absolute   -bottom-24  border-2 border-light-secondary-color">
+                <div className="w-[250px] max-lg:h-[140px]  max-lg:w-[140px] h-[250px]  rounded-full max-lg:-bottom-[66px] absolute   -bottom-24  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10">
                     <img src={user?.picture} width={500} height={500} className="w-full h-full rounded-full" alt="" />
                 </div>
 

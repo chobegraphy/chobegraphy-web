@@ -32,17 +32,17 @@ const Featured = () => {
 
       <div className="relative justify-center">
         <section className="grid lg:w-[85%] xl:w-[70%] mx-auto mt-10 gap-1 relative grid-cols-3 grid-rows-4">
-          <div className="bg-red-500 h-[230px] col-span-2  max-md:h-[110px] border-2"></div>
-          <div className="bg-red-500 row-span-2 border-2 "></div>
-          <div className="bg-red-500 max-md:h-[110px] h-[230px]  border-2"></div>
-          <div className="bg-red-500 max-md:h-[110px] h-[230px]  border-2"></div>
-          <div className="bg-red-500 row-span-2 border-2 "></div>
-          <div className="bg-red-500 max-md:h-[110px] h-[230px]  border-2"></div>
-          <div className="bg-red-500 max-md:h-[110px] h-[230px]  border-2"></div>
-          <div className="bg-red-500 max-md:h-[110px] h-[230px]  border-2"></div>
-          <div className="bg-red-500 max-md:h-[110px] h-[230px]  border-2"></div>
+          <div className=" h-[230px] col-span-2  max-md:h-[110px] border-2"></div>
+          <div className=" row-span-2 border-2 "></div>
+          <div className=" max-md:h-[110px] h-[230px]  border-2"></div>
+          <div className=" max-md:h-[110px] h-[230px]  border-2"></div>
+          <div className=" row-span-2 border-2 "></div>
+          <div className=" max-md:h-[110px] h-[230px]  border-2"></div>
+          <div className=" max-md:h-[110px] h-[230px]  border-2"></div>
+          <div className=" max-md:h-[110px] h-[230px]  border-2"></div>
+          <div className=" max-md:h-[110px] h-[230px]  border-2"></div>
         </section>
-        <div className="bg-red-500 h-[260px] border-2 top-[40%] max-lg:scale-[85%]  w-[260px] rotate-[20deg]   max-lg:left-[200px] max-md:top-[37%] max-md:w-[130px] max-md:h-[130px] max-xl:left-[330px] xl:left-[452px] max-md:hidden max-md:left-[117px]  absolute "></div>
+        <div className=" h-[260px] border-2 top-[40%] max-lg:scale-[85%]  w-[260px] rotate-[20deg]   max-lg:left-[200px] max-md:top-[37%] max-md:w-[130px] max-md:h-[130px] max-xl:left-[330px] xl:left-[452px] max-md:hidden max-md:left-[117px]  absolute "></div>
       </div>
     </section>
   );

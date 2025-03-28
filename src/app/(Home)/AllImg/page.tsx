@@ -67,8 +67,8 @@ const AllImgPage = () => {
 
       >
         {isLoading && !ImgData ? (
-          <div className="w-full h-dvh flex items-center justify-center absolute right-0 left-0 top-0 bottom-0 dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color z-50">
-            <ImSpinner className="dark:text-white text-3xl text-light-primary-color animate-spin" />
+          <div className="w-full my-10 h-dvh flex items-center justify-center absolute right-0 left-0 top-0 bottom-0 dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color z-50">
+            <ImSpinner className="dark:text-white text-4xl text-light-primary-color animate-spin" />
           </div>
         ) : (
           <div className="w-full dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color xl:px-16 sm:px-10 px-5 py-10">
@@ -82,10 +82,10 @@ const AllImgPage = () => {
             <div
 
             >
-              <ImgMappingComponent ImgData={ImgData} />
+              {!isLoading && <ImgMappingComponent ImgData={ImgData} />}
               {ImgData?.length >= 19 && isFetching === true && (
-                <div className="flex items-center justify-center">
-                  <ImSpinner className="dark:text-white text-light-primary-color animate-spin" />
+                <div className="flex  my-10 items-center justify-center">
+                  <ImSpinner className="dark:text-white text-4xl text-light-primary-color animate-spin" />
                 </div>
               )}
             </div>

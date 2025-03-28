@@ -1,7 +1,7 @@
 import useAuthData from "@/ExportedFunctions/useAuthData";
 import clsx from "clsx"; // Utility for conditional class names
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -20,7 +20,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
   // framer motion
 
   const { user } = useAuthData();
-
+  const pathname = usePathname();
   const router = useRouter(); // Initialize router
 
   // Redux dispatch function
@@ -152,9 +152,10 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
     <div
 
       className={clsx(
-        i !== 0 && "my-2",
+        // i !== 0 && pathname === "/" ? "my-1" : "my-0", // No margin for the first card
         "block relative overflow-hidden rounded-2xl"
       )}
+
     >
       {/* Blurred Low-Quality Background */}
       <Link

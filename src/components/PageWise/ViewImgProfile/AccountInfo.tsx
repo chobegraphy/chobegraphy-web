@@ -230,7 +230,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
                     </p>
 
                     <div className="flex items-center mt-2" > <span className="font-BanglaSubHeading flex items-center ">
-                        {authorData?.aboutMe}
+                        {authorData?.aboutMe || Language === "BN" ? "তথ্য প্রদান করা হয়নি" : "Not Provided"}
                     </span></div>
                 </h1></section>
             <section><div className="w-[100%] my-3 h-[1px] bg-light-secondary-color"></div>
@@ -245,7 +245,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
                     </p>
 
                     <div className="flex items-center mt-2" > <span className="font-BanglaSubHeading flex items-center ">
-                        {authorData?.teamRole}
+                        {authorData?.teamRole || Language === "BN" ? "তথ্য প্রদান করা হয়নি" : "Not Provided"}
                     </span></div>
                 </h1></section>
 

@@ -31,7 +31,7 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
       <img
 
         onLoad={() => setLoadedImg(true)}
-        loading="lazy"
+
         src={mainImgLink || "/placeholder.jpg"} // Main image
         alt={`Gallery ${i}`}
         className={clsx(

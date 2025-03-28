@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
+import Masonry from "react-masonry-css";
 import { useGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
 import ImgCard from "./Imgcard";
 const RecentImg = () => {
@@ -29,7 +30,14 @@ const RecentImg = () => {
   useEffect(() => {
     refetch()
   }, [pathName])
-
+  const breakpointColumnsObj = {
+    default: 5, // 5 columns on large screens
+    1280: 5,    // 4 columns for screens >= 1280px
+    1024: 4,    // 3 columns for screens >= 1024px
+    768: 3,     // 2 columns for tablets
+    640: 2,      // 1 column for small screens
+    300: 1,
+  };
   return (
     <section className="w-full  dark:bg-light-primary-color bg-dark-primary-color ">
 
@@ -56,13 +64,17 @@ const RecentImg = () => {
           </p>
         </h1>
 
-        <div className="my-10 max-sm:columns-2 max-md:columns-3 max-lg:columns-3 overflow-hidden xl:columns-5 max-xl:columns-4 gap-2 justify-center w-full ">
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="flex gap-2 gap-y-4"
+          columnClassName="masonry-column"
+        >
           {RecentImgData?.map((imgInfo: any, index: any) => (
-            <div key={imgInfo?._id} className="relative ">
+            <div key={imgInfo?._id} className="relative mb-2">
               <ImgCard setRecentImgData={setRecentImgData} RecentImgData={RecentImgData} imgData={imgInfo} i={index} />
             </div>
           ))}
-        </div>
+        </Masonry>
         <Link href={"/AllImg?filter=recent&CurrentPage=1"}>
           <button
             className={
