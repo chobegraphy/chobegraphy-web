@@ -86,7 +86,8 @@ const AccountInfo = ({ setBannerPicture }: any) => {
 
             </section>
             {/* current profile data */}
-            <section><h1 className="flex items-center gap-x-1 font-Space">
+            <section>
+                {/* <h1 className="flex items-center gap-x-1 font-Space">
 
                 <p className="">
                     {" "}
@@ -95,7 +96,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
                     </span>{" "}
                     {Language === "EN" && "Name"} :<br /> {authorData?.name}
                 </p>
-            </h1>
+            </h1> */}
                 <h1 className="flex mt-2 items-center gap-x-1 font-Space">
 
                     <p className="">
@@ -230,7 +231,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
                     </p>
 
                     <div className="flex items-center mt-2" > <span className="font-BanglaSubHeading flex items-center ">
-                        {authorData?.aboutMe || Language === "BN" ? "তথ্য প্রদান করা হয়নি" : "Not Provided"}
+                        {!authorData?.aboutMe ? (Language === "BN" ? "তথ্য প্রদান করা হয়নি" : "Not Provided") : authorData?.aboutMe}
                     </span></div>
                 </h1></section>
             <section><div className="w-[100%] my-3 h-[1px] bg-light-secondary-color"></div>
@@ -245,7 +246,7 @@ const AccountInfo = ({ setBannerPicture }: any) => {
                     </p>
 
                     <div className="flex items-center mt-2" > <span className="font-BanglaSubHeading flex items-center ">
-                        {authorData?.teamRole || Language === "BN" ? "তথ্য প্রদান করা হয়নি" : "Not Provided"}
+                        {!authorData?.teamRole ? Language === "BN" ? "তথ্য প্রদান করা হয়নি" : "Not Provided" : authorData?.teamRole}
                     </span></div>
                 </h1></section>
 

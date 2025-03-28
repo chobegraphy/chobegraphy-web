@@ -1,5 +1,4 @@
 "use client";
-import FilterSearch from "@/components/PageWise/AllImg/FilterSearch";
 import ImgMappingComponent from "@/components/PageWise/AllImg/ImgMappingComponent";
 import Pagination from "@/components/PageWise/AllImg/Pagination";
 import Title from "@/components/PageWise/AllImg/Title";
@@ -66,7 +65,7 @@ const AllImgPage = () => {
       <div
 
       >
-        {isLoading && !ImgData ? (
+        {isFetching && !isLoading && !ImgData ? (
           <div className="w-full my-10 h-dvh flex items-center justify-center absolute right-0 left-0 top-0 bottom-0 dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color z-50">
             <ImSpinner className="dark:text-white text-4xl text-light-primary-color animate-spin" />
           </div>
@@ -77,13 +76,13 @@ const AllImgPage = () => {
             {/* title component */}
             <Title />
             {/* filter search button components */}
-            <FilterSearch />
+            {/* <FilterSearch /> */}
             {/* ImgMappingComponent with ref */}
             <div
 
             >
               {!isLoading && <ImgMappingComponent ImgData={ImgData} />}
-              {ImgData?.length >= 19 && isFetching === true && (
+              {(!ImgData || isFetching) && (
                 <div className="flex  my-10 items-center justify-center">
                   <ImSpinner className="dark:text-white text-4xl text-light-primary-color animate-spin" />
                 </div>
@@ -91,12 +90,12 @@ const AllImgPage = () => {
             </div>
 
             {/* pagination component */}
-            <Pagination
+            {!isLoading && <Pagination
               currentPage={currentPage}
               totalPages={totalPages} // Pass totalPages to Pagination component
               setCurrentPage={setCurrentPage}
               onPageChange={handlePageChange}
-            />
+            />}
           </div>
         )}
       </div>

@@ -128,7 +128,7 @@ const ViewProfilePage = () => {
                             }
                             {
                                 tab === "Pictures" &&
-                                <div className="w-full max-w-7xl max-md:px-5 mx-auto px-10"><ImgMappingComponent ImgData={prevImgData} />{!isLoading && prevImgData.length > 0 && (
+                                <div className="w-full max-w-7xl max-md:px-0 mx-auto px-10"><ImgMappingComponent ImgData={prevImgData} />{!isLoading && prevImgData.length > 0 && (
                                     <Pagination
                                         currentPage={currentPage}
                                         totalPages={totalPages}

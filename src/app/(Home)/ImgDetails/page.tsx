@@ -30,7 +30,7 @@ const ImdDetailsPage = () => {
     },
   ] = useIncreaseViewCountMutation();
   // Fetch image details if ImgDetailsData is empty
-  const { data, error, isLoading } = useGetSingleImgDetailsQuery(id, {
+  const { data, error, isLoading, isFetching } = useGetSingleImgDetailsQuery(id, {
     skip: !id, // Skip the API call if pictureId or ImgDetailsData is not available
   });
   useEffect(() => {
@@ -65,7 +65,7 @@ const ImdDetailsPage = () => {
 
   return (
     <div>
-      {isLoading || !ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
+      {isFetching || isLoading || !ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
         <div className="w-full   h-screen">
           <div className="h-dvh dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color w-full   z-50 top-0 bottom-0 flex fixed justify-center items-center">
             <ImSpinner
