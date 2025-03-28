@@ -116,7 +116,7 @@ const SuggestionImgCard = ({ imgData, i }: any) => {
         <div
 
             className={clsx(
-                i !== 0 && "my-2",
+
                 "block relative overflow-hidden rounded-2xl"
             )}
         >

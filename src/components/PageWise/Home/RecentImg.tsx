@@ -66,11 +66,11 @@ const RecentImg = () => {
 
         <Masonry
           breakpointCols={breakpointColumnsObj}
-          className="flex gap-2 gap-y-4"
+          className="flex gap-2 gap-y-4 mt-5"
           columnClassName="masonry-column"
         >
           {RecentImgData?.map((imgInfo: any, index: any) => (
-            <div key={imgInfo?._id} className="relative mb-2">
+            <div key={imgInfo?._id} className="relative mb-2 ">
               <ImgCard setRecentImgData={setRecentImgData} RecentImgData={RecentImgData} imgData={imgInfo} i={index} />
             </div>
           ))}
