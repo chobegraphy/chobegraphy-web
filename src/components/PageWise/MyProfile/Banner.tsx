@@ -34,7 +34,7 @@ const Banner = ({ BannerPicture }: any) => {
                         )}
                     />
                 </div>
-                <div className="w-[250px] max-lg:h-[140px]  max-lg:w-[140px] h-[250px]  rounded-full max-lg:-bottom-[66px] absolute   -bottom-24  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10">
+                <div className="w-[250px] max-lg:h-[140px]  max-lg:w-[140px] h-[250px]  rounded-full max-lg:-bottom-[66px] absolute   -bottom-24  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 bg-dark-primary-color dark:bg-light-primary-color">
                     <img src={user?.picture} width={500} height={500} className="w-full h-full rounded-full" alt="" />
                 </div>
 
