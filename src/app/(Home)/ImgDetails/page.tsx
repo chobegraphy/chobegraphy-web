@@ -38,12 +38,15 @@ const ImdDetailsPage = () => {
       dispatch(SetImgDetailsData(data));
     }
   }, [data, dispatch]);
+
   // Reset ImgDetailsData when navigating away
   useEffect(() => {
+
     return () => {
       dispatch(SetImgDetailsData({})); // Clear the data on unmount or navigation
     };
   }, [pathName, dispatch]);
+
 
   const updateViewCount = async () => {
     if (id) {
@@ -65,7 +68,7 @@ const ImdDetailsPage = () => {
 
   return (
     <div>
-      {isFetching || isLoading || !ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
+      {isLoading || !ImgDetailsData || Object.keys(ImgDetailsData).length === 0 ? (
         <div className="w-full   h-screen">
           <div className="h-dvh dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color w-full   z-50 top-0 bottom-0 flex fixed justify-center items-center">
             <ImSpinner

@@ -18,6 +18,7 @@ import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRela
 
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
 import { useGetTopPicturesQuery } from "../../../../Redux/Features/Apis/TopPictures/ApiSlice";
+import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const LightroomCard = ({ imgData, i }: any) => {
@@ -125,7 +126,10 @@ const LightroomCard = ({ imgData, i }: any) => {
             {/* Blurred Low-Quality Background */}
             <Link
                 href={`/ImgDetails`}
-                onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
+                onClick={() => {
+                    dispatch(SetImgDetailsData({}))
+                    dispatch(SetImgDetailsId(imgData?._id))
+                }}
                 style={{
                     backgroundImage: `url(${imgData?.encodedUrl})`,
                     backgroundSize: "cover",

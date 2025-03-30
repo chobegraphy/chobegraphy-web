@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
 import { usePictureLikeMutation, usePictureUnLikeMutation } from "../../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 import { useGetTopPicturesQuery } from "../../../../../Redux/Features/Apis/TopPictures/ApiSlice";
+import { SetImgDetailsData } from "../../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetImgDetailsId } from "../../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 
@@ -123,7 +124,10 @@ const SuggestionImgCard = ({ imgData, i }: any) => {
             {/* Blurred Low-Quality Background */}
             <Link
                 href={`/ImgDetails?id=${imgData?._id}`}
-                onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
+                onClick={() => {
+                    dispatch(SetImgDetailsData({}))
+                    dispatch(SetImgDetailsId(imgData?._id))
+                }}
                 style={{
                     backgroundImage: `url(${imgData?.encodedUrl})`,
                     backgroundSize: "cover",

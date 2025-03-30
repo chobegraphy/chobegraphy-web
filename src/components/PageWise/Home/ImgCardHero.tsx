@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 const ImgCardHero = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
     // Initialize router
@@ -35,7 +36,10 @@ const ImgCardHero = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
             {/* Blurred Low-Quality Background */}
             <Link
                 href={`/ImgDetails?id=${imgData?._id}`}
-                onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
+                onClick={() => {
+                    dispatch(SetImgDetailsData({}))
+                    dispatch(SetImgDetailsId(imgData?._id))
+                }}
                 style={{
                     backgroundImage: `url(${imgData?.encodedUrl})`,
                     backgroundSize: "cover",

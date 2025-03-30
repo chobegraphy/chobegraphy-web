@@ -14,6 +14,7 @@ import {
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
+import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
 import { SetPictureLikeIds } from "../../../../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) => {
@@ -159,7 +160,10 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
             {/* Blurred Low-Quality Background */}
             <Link
                 href={`/ImgDetails?id=${imgData?._id}`}
-                onClick={() => dispatch(SetImgDetailsId(imgData?._id))}
+                onClick={() => {
+                    dispatch(SetImgDetailsData({}))
+                    dispatch(SetImgDetailsId(imgData?._id))
+                }}
                 className="relative w-full h-[200px] max-lg:h-[150px] max-md:h-[100px] rounded-2xl overflow-hidden block "
 
             >
