@@ -203,7 +203,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
           <div className="flex items-center gap-x-3 absolute bottom-3 left-3">
             {likeLoading !== true && (
               <span>
-                {LikedPictureData.includes(imgData?._id) ? (
+                {LikedPictureData?.includes(imgData?._id) ? (
                   <FaHeart
                     onClick={handleUnlike}
                     className="text-pink-600 cursor-pointer"
@@ -215,7 +215,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
             )}
             {likeLoading === true && (
               <ImSpinner
-                className={`${LikedPictureData.includes(imgData?._id)
+                className={`${LikedPictureData?.includes(imgData?._id)
                   ? "text-pink-600"
                   : "text-white"
                   } animate-spin `}

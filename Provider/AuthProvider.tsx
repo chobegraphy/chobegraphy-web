@@ -19,7 +19,9 @@ import { useDispatch } from "react-redux";
 
 import axios from "axios";
 import { useLazyGetUserDataQuery } from "../Redux/Features/Apis/DataRelated/Apis/GetUserData/ApiSlice";
+import { useGetPictureLikeDataQuery } from "../Redux/Features/Apis/PictureLike/ApiSlice";
 import { SetImgDetailsId } from "../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
+import { SetPictureLikeIds } from "../Redux/Features/StoreLikedPictureData/StoreLikedPictureData";
 import app from "../src/Firebase/Firebase.config";
 
 interface AuthProviderDataProps {
@@ -117,7 +119,11 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
   }, [fetchUserData]);
 
 
-
+  const { data: LikedDataOfUser } = useGetPictureLikeDataQuery({ id: user?._id }, { skip: !user?._id });
+  useEffect(() => {
+    // console.log("LikedDataOfUser", LikedDataOfUser);
+    dispatch(SetPictureLikeIds(LikedDataOfUser?.likedPictures));
+  }, [user?._id, LikedDataOfUser, dispatch]);
 
   useEffect(() => {
     if (userData) {

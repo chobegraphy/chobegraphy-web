@@ -10,7 +10,7 @@ import { ImSpinner } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import { usePictureLikeMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLike/ApiSlice";
 import {
-  usePictureUnLikeMutation,
+  usePictureUnLikeMutation
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
@@ -147,7 +147,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
       }
     }
   };
-
+  // console.log(LikedPictureData)
   return (
     <div
 
@@ -194,7 +194,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
           <div className="flex items-center gap-x-3 absolute bottom-3 left-3">
             {likeLoading !== true && (
               <span>
-                {LikedPictureData.includes(imgData?._id) ? (
+                {LikedPictureData?.includes(imgData?._id) ? (
                   <FaHeart
                     onClick={handleUnlike}
                     className="text-pink-600 cursor-pointer"
@@ -206,7 +206,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
             )}
             {likeLoading === true && (
               <ImSpinner
-                className={`${LikedPictureData.includes(imgData?._id)
+                className={`${LikedPictureData?.includes(imgData?._id)
                   ? "text-pink-600"
                   : "text-white"
                   } animate-spin `}

@@ -73,7 +73,7 @@ const Banner = () => {
         /><div className="text-2xl absolute right-5 bottom-5 max-md:right-3 max-md:bottom-3 max-md:text-lg max-md:gap-x-3  w-fit   flex gap-x-3 cursor-pointer ">
           {likeLoading !== true && (
             <span className="dark:bg-light-primary-color bg-dark-primary-color lg:p-2.5 p-2 rounded-full">
-              {LikedPictureData.includes(DetailsData?._id) ? (
+              {LikedPictureData?.includes(DetailsData?._id) ? (
                 <FaHeart
 
                   className="text-pink-600 cursor-pointer"
@@ -85,7 +85,7 @@ const Banner = () => {
           )}
           {likeLoading === true && (
             <span className="dark:bg-light-primary-color bg-dark-primary-color lg:p-2.5 p-2 rounded-full"> <ImSpinner
-              className={`${LikedPictureData.includes(DetailsData?._id)
+              className={`${LikedPictureData?.includes(DetailsData?._id)
                 ? "text-pink-600"
                 : "text-white"
                 } animate-spin `}
