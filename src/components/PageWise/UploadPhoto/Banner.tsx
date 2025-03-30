@@ -665,7 +665,8 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
         {/* Picture meta data */}
         <div className="max-lg:block hidden">
-          <PhotoMetaData colors={colors} type="button" MetaData={exifData} />
+          {(exifData.iso !== "" || exifData.focalLength !== "" || exifData.exposureTime !== "" || exifData.aperture !== "" || exifData.datetimeOriginal !== "" || exifData.model !== "" || exifData.software !== "" || exifData.creatorTool !== "" || exifData.subjectDistance !== "" || exifData.flash !== "") && <PhotoMetaData colors={colors} type="button" MetaData={exifData} />}
+
           <div className="my-3 max-lg:block hidden h-[1px] w-full bg-light-secondary-color rounded-full opacity-50" />
           <CategorySelector colors={colors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
           <CopyRightType colors={colors} SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />

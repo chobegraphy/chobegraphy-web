@@ -30,7 +30,7 @@ const UploadPhotoPage = () => {
             <Banner SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} colors={colors} setColors={setColors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} exifData={exifData} setExifData={setExifData} />
             <div className="max-lg:hidden col-span-4">
                 {
-                    (exifData.iso || exifData.focalLength || exifData.exposureTime || exifData.aperture || exifData.datetimeOriginal || exifData.model || exifData.software || exifData.creatorTool || exifData.subjectDistance || exifData.flash) && <PhotoMetaData type="button" MetaData={exifData} colors={colors} />
+                    (exifData.iso !== "" || exifData.focalLength !== "" || exifData.exposureTime !== "" || exifData.aperture !== "" || exifData.datetimeOriginal !== "" || exifData.model !== "" || exifData.software !== "" || exifData.creatorTool !== "" || exifData.subjectDistance !== "" || exifData.flash !== "") && <PhotoMetaData type="button" MetaData={exifData} colors={colors} />
                 }
                 <CategorySelector colors={colors} setColors={setColors} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
                 <CopyRightType colors={colors} SelectedCopyrightType={SelectedCopyrightType} setSelectedCopyrightType={setSelectedCopyrightType} />
