@@ -19,7 +19,7 @@ const UploadProgress = ({ isOpen, setIsOpen, isOpen2, setIsOpen2, uploadProgress
                         Language === "EN"
                             ? "Check out this amazing image!"
                             : "এই চমৎকার ছবিটি দেখুন!",
-                    url: `https://chobegraphy.vercel.app/ImgDetails/${uploadedPictureId}`,
+                    url: `https://chobegraphy.vercel.app//ImgDetails?id=${uploadedPictureId}`,
                 });
 
             } catch (error) {
@@ -63,7 +63,7 @@ const UploadProgress = ({ isOpen, setIsOpen, isOpen2, setIsOpen2, uploadProgress
                                     {Language === "EN" && <span className="font-Space font-bold text-[10px]">Share Link</span>}
                                 </span>
                             </div>
-                            <Link href={`/ImgDetails/${uploadedPictureId}`} onClick={() => {
+                            <Link href={`/ImgDetails?id=${uploadedPictureId}`} onClick={() => {
                                 setIsOpen(false);
                                 setTimeout(() => setIsOpen2(false), 200);
                                 setUploadProgress(0)

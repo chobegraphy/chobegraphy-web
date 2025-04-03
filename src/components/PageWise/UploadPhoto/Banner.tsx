@@ -306,11 +306,18 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
       districtElement.value = "";
       descriptionElement.value = "";
     }
+    setSelectedCopyrightType("");
+
   };
 
-
+  let isSubmitting = false;
   const onSubmit = async (data: any) => {
+    if (isSubmitting) return;
+    isSubmitting = true;
 
+    setTimeout(() => {
+      isSubmitting = false;
+    }, 2000);
     if (description === "") {
       toast.error(Language === "en" ? "Please enter a caption" : "একটি ক্যাপশন লিখুন", {
         id: "description"
