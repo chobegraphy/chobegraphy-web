@@ -1,12 +1,13 @@
-import ImgCardHero from "@/components/PageWise/Home/ImgCardHero";
-import { useGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
-
+import img1 from "../../../Assets/BannerImg/1.jpg";
+import img2 from "../../../Assets/BannerImg/2.jpg";
+import img3 from "../../../Assets/BannerImg/3.jpg";
+import img4 from "../../../Assets/BannerImg/4.jpg";
+import img5 from "../../../Assets/BannerImg/5.jpg";
+import img6 from "../../../Assets/BannerImg/6.jpg";
+import img7 from "../../../Assets/BannerImg/7.jpg";
+import img8 from "../../../Assets/BannerImg/8.jpg";
+import img9 from "../../../Assets/BannerImg/9.jpeg";
 const SharedHero = () => {
-    const { data, error, isLoading } = useGetPictureDataQuery({
-        filter: "popular",
-        page: 1,
-        limit: 9,
-    })
 
 
     return (
@@ -15,48 +16,48 @@ const SharedHero = () => {
             <div className="w-[450px] h-[450px] grid-cols-3 max-md:w-[290px] max-md:h-[290px] rotate-45 scale-90 gap-3 grid grid-rows-3">
                 <div
 
-                    className="bg-red-100 rounded-3xl overflow-hidden border-2 border-light-secondary-color rounded-br-none w-full h-full"
+                    className="dark:border-2 border-opacity-25 rounded-3xl overflow-hidden  border-light-secondary-color rounded-br-none w-full h-full"
                 >
-                    <div className="object-cover object-center w-full h-full scale-150 -rotate-45"><ImgCardHero imgData={data?.data[0]} i={0} /></div>
+                    <div className="object-cover object-center  w-full h-full scale-150 -rotate-45"><img src={img1.src} alt="" /></div>
                 </div>
 
                 <div
 
-                    className="bg-red-200 w-full h-full rounded-3xl rounded-bl-none border-2 border-light-secondary-color overflow-hidden"
-                ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[1]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 w-full h-full rounded-3xl rounded-bl-none  border-light-secondary-color overflow-hidden"
+                ><div className="object-cover object-center relative top-0 w-[115%] h-[130%] scale-125 -rotate-45"><img src={img2.src} alt="" /></div></div>
 
                 <div
 
-                    className="bg-red-300 rounded-full w-full h-full border-2 border-light-secondary-color overflow-hidden"
-                ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[2]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 rounded-full w-full h-full  border-light-secondary-color overflow-hidden"
+                ><div className="object-cover object-center relative top-0 w-[115%] h-[130%] scale-125 left-3 -rotate-45"><img src={img3.src} alt="" /></div></div>
 
                 <div
 
-                    className="bg-red-400 rounded-3xl border-2 border-light-secondary-color rounded-tr-none w-full overflow-hidden h-full"
-                ><div className="object-cover object-center relative top-5 w-[160%] h-[160%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[3]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 rounded-3xl  border-light-secondary-color rounded-tr-none w-full overflow-hidden h-full"
+                ><div className="object-cover object-center relative -top-5 w-[160%] h-[160%] scale-125 -rotate-45"><img src={img4.src} alt="" /></div></div>
 
                 <div
 
-                    className="bg-red-600 rounded-b-full overflow-hidden rounded-tr-full w-full h-full border-2 border-light-secondary-color"
-                ><div className="object-cover object-center relative  w-[160%] h-[160%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[4]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 rounded-b-full overflow-hidden rounded-tr-full w-full h-full  border-light-secondary-color"
+                ><div className="object-cover object-center relative  w-[115%] -top-5 -left-2 h-[115%] scale-125 -rotate-45"><img src={img8.src} alt="" /></div></div>
 
                 <div
 
-                    className="bg-red-700 rounded-t-full overflow-hidden rounded-br-full w-full h-full border-2 border-light-secondary-color"
-                ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[5]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 rounded-t-full overflow-hidden rounded-br-full w-full h-full  border-light-secondary-color"
+                ><div className="object-cover object-center relative -top-3 -left-3 w-[115%] h-[115%] scale-125 -rotate-45"><img src={img6.src} alt="" /></div></div>
 
                 <div
-                    className="bg-red-800 rounded-full overflow-hidden w-full h-full border-2 border-light-secondary-color"
-                ><div className="object-cover object-center relative w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[6]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 rounded-full overflow-hidden w-full h-full  border-light-secondary-color"
+                ><div className="object-cover object-center relative w-[115%] h-[115%] scale-125 -rotate-45"><img src={img7.src} alt="" /></div></div>
 
                 <div
-                    className="bg-red-900 rounded-b-full rounded-tl-full w-full h-full border-2 border-light-secondary-color overflow-hidden"
-                ><div className="object-cover object-center relative top-5 w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[7]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 rounded-b-full rounded-tl-full w-full h-full  border-light-secondary-color overflow-hidden"
+                ><div className="object-cover object-center relative -top-5 w-[115%] h-[115%] scale-125 -rotate-45"><img src={img5.src} alt="" /></div></div>
 
                 <div
 
-                    className="bg-pink-800 w-full h-full rounded-b-full rounded-tr-full border-2 border-light-secondary-color overflow-hidden"
-                ><div className="object-cover object-center relative   w-[130%] h-[130%] scale-150 -rotate-45"><ImgCardHero imgData={data?.data[8]} i={0} /></div></div>
+                    className="dark:border-2 border-opacity-25 w-full h-full rounded-b-full rounded-tr-full  border-light-secondary-color overflow-hidden"
+                ><div className="object-cover object-center -top-3 -left-3 relative   w-[132%] max-lg:scale-150 h-[132%] max-lg:top-0 max-lg:left-0 scale-125 -rotate-45"><img src={img9.src} alt="" /></div></div>
             </div>
         </div>
     );
