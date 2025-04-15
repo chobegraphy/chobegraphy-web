@@ -172,7 +172,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         <img
           src={imgData?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blur image
           alt="Blurred preview"
-          className="absolute  w-full h-full object-cover  transition-opacity duration-500"
+          className="absolute blur-2xl w-full h-full object-cover  transition-opacity duration-500"
           style={{
             opacity: loadedImg ? 0 : 1,
             imageRendering: 'pixelated', // key change here

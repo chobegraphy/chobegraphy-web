@@ -34,7 +34,7 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
       <img
         src={encodedUrl || "/placeholder.jpg"}
         alt="Blurred preview"
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+        className="absolute blur-2xl inset-0 w-full h-full object-cover transition-opacity duration-500"
         style={{
           opacity: loadedImg ? 0 : 1,
           imageRendering: "pixelated",

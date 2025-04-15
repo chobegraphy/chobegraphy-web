@@ -171,7 +171,7 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
                 <img
                     src={imgData?.encodedUrl || "/placeholder.jpg"}
                     alt="Pixelated preview"
-                    className="absolute inset-0 w-full h-[200px] max-lg:h-[150px] max-md:h-[100px] object-center object-cover transition-opacity duration-500"
+                    className="absolute inset-0 w-full h-[200px] max-lg:h-[150px] blur-2xl max-md:h-[100px] object-center object-cover transition-opacity duration-500"
                     style={{
                         opacity: loadedImg ? 0 : 1,
                         imageRendering: 'pixelated', // key change here
