@@ -1,12 +1,12 @@
-import img1 from "../../../Assets/BannerImg/1.jpg";
-import img2 from "../../../Assets/BannerImg/2.jpg";
-import img3 from "../../../Assets/BannerImg/3.jpg";
-import img4 from "../../../Assets/BannerImg/4.jpg";
-import img5 from "../../../Assets/BannerImg/5.jpg";
-import img6 from "../../../Assets/BannerImg/6.jpg";
-import img7 from "../../../Assets/BannerImg/7.jpg";
-import img8 from "../../../Assets/BannerImg/8.jpg";
-import img9 from "../../../Assets/BannerImg/9.jpeg";
+import img1 from "../../../Assets/BannerImg/1.webp";
+import img2 from "../../../Assets/BannerImg/2.webp";
+import img3 from "../../../Assets/BannerImg/3.webp";
+import img4 from "../../../Assets/BannerImg/4.webp";
+import img5 from "../../../Assets/BannerImg/5.webp";
+import img6 from "../../../Assets/BannerImg/6.webp";
+import img7 from "../../../Assets/BannerImg/7.webp";
+import img8 from "../../../Assets/BannerImg/8.webp";
+import img9 from "../../../Assets/BannerImg/9.webp";
 const SharedHero = () => {
 
 

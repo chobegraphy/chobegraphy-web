@@ -169,10 +169,14 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
             >
                 {/* Blurred Low-Quality Image */}
                 <img
-                    src={imgData?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blur image
-                    alt="Blurred preview"
-                    className="absolute inset-0 w-full  h-[200px] max-lg:h-[150px] max-md:h-[100px] object-center object-cover blur-xl transition-opacity duration-500"
-                    style={{ opacity: loadedImg ? 0 : 1 }} // Hide blurred image when main image loads
+                    src={imgData?.encodedUrl || "/placeholder.jpg"}
+                    alt="Pixelated preview"
+                    className="absolute inset-0 w-full h-[200px] max-lg:h-[150px] max-md:h-[100px] object-center object-cover transition-opacity duration-500"
+                    style={{
+                        opacity: loadedImg ? 0 : 1,
+                        imageRendering: 'pixelated', // key change here
+                        transform: 'scale(1)',    // optional: gives a more retro pixel effect
+                    }}
                 />
 
                 {/* High-Quality Image */}
