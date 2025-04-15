@@ -10,12 +10,17 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
     : [1920, 1080];
 
   useEffect(() => {
-    if (mainImgRef.current?.complete) {
-      mainImgRef.current.decode().then(() => {
-        setLoadedImg(true);
-      });
-    }
-  }, []);
+    if (!mainImgLink) return;
+
+    // Preload main image immediately
+    const img = new Image();
+    img.src = mainImgLink;
+    img.onload = () => {
+      img.decode()
+        .then(() => setLoadedImg(true))
+        .catch(() => setLoadedImg(true)); // Fail-safe: mark as loaded even if decode fails
+    };
+  }, [mainImgLink]);
 
   return (
     <div
@@ -41,14 +46,9 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
       {/* High-Quality Image */}
       <img
         ref={mainImgRef}
-        onLoad={() => {
-          if (mainImgRef.current) {
-            mainImgRef.current.decode().then(() => {
-              setLoadedImg(true);
-            });
-          }
-        }}
         src={mainImgLink || "/placeholder.jpg"}
+        loading="eager"
+        fetchPriority="high"
         alt={`Gallery ${i}`}
         className={clsx(
           "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
