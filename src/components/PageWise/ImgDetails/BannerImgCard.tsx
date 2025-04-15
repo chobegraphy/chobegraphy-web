@@ -5,8 +5,6 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
   const [loadedImg, setLoadedImg] = useState(false);
   const mainImgRef = useRef<HTMLImageElement>(null);
 
-  if (!dimensions) return null;
-
   const [width, height] = dimensions
     ? dimensions.split(" x ").map((num: string) => parseInt(num, 10))
     : [1920, 1080];
