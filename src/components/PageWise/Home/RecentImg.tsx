@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import Masonry from "react-masonry-css";
 import { useGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureData/ApiSlice";
 import ImgCard from "./Imgcard";
 const RecentImg = () => {
@@ -16,7 +15,7 @@ const RecentImg = () => {
   const { data, error, isLoading, refetch } = useGetPictureDataQuery({
     filter: "recent",
     page: 1,
-    limit: window.innerWidth > 1024 ? 20 : 15,
+    limit: window.innerWidth > 1024 ? 30 : 25,
   });
 
   const [RecentImgData, setRecentImgData] = useState([]);
@@ -64,17 +63,16 @@ const RecentImg = () => {
           </p>
         </h1>
 
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="flex gap-2 gap-y-4 mt-5"
-          columnClassName="masonry-column"
-        >
-          {RecentImgData?.map((imgInfo: any, index: any) => (
-            <div key={imgInfo?._id} className="relative mb-2 ">
-              <ImgCard setRecentImgData={setRecentImgData} RecentImgData={RecentImgData} imgData={imgInfo} i={index} />
+        <div className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-2 mt-10">
+          {RecentImgData?.map((imgInfo: any, index: number) => (
+            <div
+              key={imgInfo?._id}
+              className="mb-4 break-inside-avoid"
+            >
+              <ImgCard imgData={imgInfo} i={index} />
             </div>
           ))}
-        </Masonry>
+        </div>
         <Link href={"/AllImg?filter=recent&CurrentPage=1"}>
           <button
             className={
@@ -88,7 +86,7 @@ const RecentImg = () => {
             </span>
           </button>
         </Link></div>
-    </section>
+    </section >
   );
 };
 

@@ -15,7 +15,7 @@ const Popular = () => {
     const { data, error, isLoading, refetch } = useGetPictureDataQuery({
         filter: "popular",
         page: 1,
-        limit: window.innerWidth > 1024 ? 15 : window.innerWidth > 425 ? 12 : 9,
+        limit: window.innerWidth > 1024 ? 15 : window.innerWidth > 425 ? 12 : 12,
     });
     const [PopularImgData, setPopularImgData] = useState([]);
     useEffect(() => {
