@@ -198,7 +198,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
 
           )}
           style={{
-            display: !loadedImg ? "none" : "block",
+            opacity: !loadedImg ? 0 : 1,
             transition: "opacity 0.5s ease-in-out",
           }}
         />

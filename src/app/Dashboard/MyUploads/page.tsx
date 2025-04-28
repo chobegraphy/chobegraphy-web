@@ -19,7 +19,7 @@ const MyUploads = () => {
 
     const ParamsCurrentPage = params.get("CurrentPage");
     const [currentPage, setCurrentPage] = useState(parseInt(ParamsCurrentPage || "1"));
-    const [limit] = useState(typeof window !== "undefined" && window.innerWidth > 1024 ? 20 : 15);
+    const [limit] = useState(typeof window !== "undefined" && window.innerWidth > 1024 ? 30 : 30);
     const [prevImgData, setPrevImgData] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -58,7 +58,7 @@ const MyUploads = () => {
 
     return (
         <div className="min-h-[100dvh] dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color">
-            <div className="w-full xl:px-16 sm:px-10 px-5 py-10">
+            <div className="w-full  xl:px-16 sm:px-10 px-5 py-10">
                 <Title />
 
                 <Tabs value={status} className="w-full flex flex-col justify-center items-center my-5">

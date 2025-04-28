@@ -19,7 +19,7 @@ const Pending = () => {
 
     const ParamsCurrentPage = params.get("CurrentPage");
     const [currentPage, setCurrentPage] = useState(parseInt(ParamsCurrentPage || "1"));
-    const [limit] = useState(typeof window !== "undefined" && window.innerWidth > 1024 ? 20 : 15);
+    const [limit] = useState(typeof window !== "undefined" && window.innerWidth > 1024 ? 30 : 30);
     const [prevImgData, setPrevImgData] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(false);
 

@@ -39,12 +39,8 @@ const Banner = ({ BannerPicture }: any) => {
                         alt={`Gallery `}
                         className={clsx(
                             "w-full max-lg:h-[200px] h-[300px] max-md:h-[150px] object-cover object-center  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
-
+                            loadedImg ? "opacity-100" : "opacity-0"
                         )}
-                        style={{
-                            display: !loadedImg ? "none" : "block",
-                            transition: "opacity 0.5s ease-in-out",
-                        }}
                     />
                 </div>
                 <div className="w-[250px] max-lg:h-[140px]  max-lg:w-[140px] h-[250px]  rounded-full max-lg:-bottom-[66px] absolute   -bottom-24  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 bg-dark-primary-color dark:bg-light-primary-color">

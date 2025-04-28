@@ -1,4 +1,5 @@
 import clsx from "clsx"; // Utility for conditional class names
+import Image from "next/image";
 import { useState } from "react";
 
 const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
@@ -19,31 +20,39 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
       )}
       style={{ aspectRatio: `${width}/${height}` }} // Maintain aspect ratio
     >
-      {/* Blurred Low-Quality Image */}
-      <img
-        src={encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blurred background
-        alt="Blurred preview"
-        className="absolute inset-0 w-full h-full object-cover blur-xl transition-opacity duration-500"
-        style={{
-          display: loadedImg ? "none" : "block",
-          transition: "opacity 0.5s ease-in-out",
-        }} // Hide blurred image when main image loads
-      />
+      {!loadedImg && (
+        <Image
+          src={encodedUrl || "/placeholder.jpg"}
+          alt="Blurred preview"
+          fill
+          className="object-cover blur-sm transition-opacity duration-500"
+          style={{
+            opacity: loadedImg ? 0 : 1,
+            transition: "opacity 0.5s ease-in-out",
+          }}
+          quality={10} // Very low for blur image
+          sizes="100vw"
+        />
+      )}
 
-      {/* High-Quality Image */}
-      <img
-
-        onLoad={() => setLoadedImg(true)}
-        loading="lazy"
-        src={mainImgLink || "/placeholder.jpg"} // Main image
+      {/* ✅ High-Quality Image */}
+      <Image
+        src={mainImgLink || "/placeholder.jpg"}
         alt={`Gallery ${i}`}
+        width={width}
+        height={height}
+        loading="eager" // Load immediately
+        fetchPriority="high"
+        onLoadingComplete={() => setLoadedImg(true)} // ✅ Mark as loaded
         className={clsx(
           "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
-
-        )} style={{
-          display: !loadedImg ? "none" : "block",
-          transition: "opacity 0.5s ease-in-out",
+        )}
+        style={{
+          opacity: loadedImg ? 1 : 0,
+          transition: "opacity 0.5s ease-in-out"
         }}
+        quality={75} // 75% quality for better banner image
+        sizes="100vw" // full width
       />
     </div>
   );

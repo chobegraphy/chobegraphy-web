@@ -13,6 +13,7 @@ import {
     usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 
+import Image from "next/image";
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
 import { SetImgDetailsData } from "../../../../Redux/Features/StoreImgDetailsData/StoreImgDetailsData";
 import { SetImgDetailsId } from "../../../../Redux/Features/StoreImgDetailsId/StoreImgDetailsId";
@@ -158,44 +159,53 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
             )}
         >
             {/* Blurred Low-Quality Background */}
+
             <Link
                 href={`/ImgDetails?id=${imgData?._id}`}
                 onClick={() => {
-                    dispatch(SetImgDetailsData({}))
-                    dispatch(SetImgDetailsId(imgData?._id))
+                    dispatch(SetImgDetailsData({}));
+                    dispatch(SetImgDetailsId(imgData?._id));
                 }}
-                className="relative w-full h-[200px] max-lg:h-[150px] max-md:h-[100px] rounded-2xl overflow-hidden block "
-
+                className="relative w-full h-[200px] max-lg:h-[150px] max-md:h-[100px] rounded-2xl overflow-hidden block"
             >
-                {/* Blurred Low-Quality Image */}
-                <img
-                    src={imgData?.encodedUrl || "/placeholder.jpg"}
-                    alt="Pixelated preview"
-                    className="absolute inset-0 w-full h-[200px] max-lg:h-[150px] blur-sm max-md:h-[100px] object-center object-cover transition-opacity duration-500"
-                    style={{
-                        display: loadedImg ? "none" : "block",
-                        transition: "opacity 0.5s ease-in-out",
-                    }}
-                />
+                {/* ✅ Blurred Low-Quality Image (using next/image) */}
+                {!loadedImg && (
+                    <Image
+                        src={imgData?.encodedUrl || "/placeholder.jpg"}
+                        alt="Blurred preview"
+                        fill // ✅ Automatically fill the parent div
+                        className="object-cover object-center blur-sm transition-opacity duration-500"
+                        style={{
+                            opacity: loadedImg ? 0 : 1,
+                            transition: "opacity 0.5s ease-in-out",
+                        }}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // ✅ important for responsive
+                        quality={10} // ✅ very low quality (because it's just blur)
+                    />
+                )}
 
-                {/* High-Quality Image */}
-                <img
+                {/* ✅ High-Quality Image */}
+                <Image
                     width={width}
                     height={height}
-                    src={imgData?.thumbnail || "/placeholder.jpg"} // Main image
-                    onLoad={() => setLoadedImg(true)}
+                    src={imgData?.thumbnail || "/placeholder.jpg"}
+                    onLoadingComplete={() => setLoadedImg(true)}
                     loading="lazy"
                     alt={imgData?.name || `Gallery ${i}`}
-                    className={clsx(
-                        "w-full max-lg:h-[150px] max-md:h-[100px] h-[200px] object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+                    quality={50}
 
+                    blurDataURL={imgData?.encodedUrl || "/placeholder.jpg"}
+                    className={clsx(
+                        "w-full h-[200px] max-lg:h-[150px] max-md:h-[100px] object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500"
                     )}
                     style={{
-                        display: !loadedImg ? "none" : "block",
+                        opacity: loadedImg ? 1 : 0,
                         transition: "opacity 0.5s ease-in-out",
                     }}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // ✅ better responsive sizing
                 />
             </Link>
+
 
 
             {/* Overlay for Icons */}
