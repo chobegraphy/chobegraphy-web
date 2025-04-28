@@ -175,10 +175,10 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
             src={imgData?.encodedUrl || "/placeholder.jpg"}
             alt="Blurred preview"
             fill // ✅ Automatically fill the parent div
-            className="object-cover object-center blur-sm transition-opacity duration-500"
+            className="object-cover object-center blur-sm "
             style={{
               opacity: loadedImg ? 0 : 1,
-              transition: "opacity 0.5s ease-in-out",
+
             }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // ✅ important for responsive
             quality={10} // ✅ very low quality (because it's just blur)
@@ -189,7 +189,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         <Image
           width={width}
           height={height}
-          src={imgData?.thumbnail || "/placeholder.jpg"}
+          src={imgData?.thumbnail}
           onLoadingComplete={() => setLoadedImg(true)}
           loading="lazy"
           alt={imgData?.name || `Gallery ${i}`}
@@ -197,11 +197,11 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
 
           blurDataURL={imgData?.encodedUrl || "/placeholder.jpg"}
           className={clsx(
-            "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+            "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg ",
           )}
           style={{
             opacity: loadedImg ? 1 : 0,
-            transition: "opacity 0.5s ease-in-out",
+
           }}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // ✅ better responsive sizing
         />

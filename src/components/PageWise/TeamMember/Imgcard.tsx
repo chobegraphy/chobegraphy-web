@@ -174,7 +174,7 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         <img
           src={imgData?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blur image
           alt="Blurred preview"
-          className="absolute blur-sm w-full h-full object-cover  transition-opacity duration-500"
+          className="absolute blur-sm w-full h-full object-cover  "
           style={{
             opacity: loadedImg ? 0 : 1,
             imageRendering: 'pixelated', // key change here
@@ -186,12 +186,12 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         <img
           width={width}
           height={height}
-          src={imgData?.thumbnail || "/placeholder.jpg"} // Main image
+          src={imgData?.thumbnail} // Main image
           onLoad={() => setLoadedImg(true)}
           loading="lazy"
           alt={imgData?.name || `Gallery ${i}`}
           className={clsx(
-            "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+            "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg ",
             loadedImg ? "opacity-100" : "opacity-0"
           )}
         />

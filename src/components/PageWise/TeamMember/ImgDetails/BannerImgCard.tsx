@@ -25,10 +25,10 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
           src={encodedUrl || "/placeholder.jpg"}
           alt="Blurred preview"
           fill
-          className="object-cover blur-sm transition-opacity duration-500"
+          className="object-cover blur-sm "
           style={{
             opacity: loadedImg ? 0 : 1,
-            transition: "opacity 0.5s ease-in-out",
+
           }}
           quality={10} // Very low for blur image
           sizes="100vw"
@@ -45,7 +45,7 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
         fetchPriority="high"
         onLoadingComplete={() => setLoadedImg(true)} // ✅ Mark as loaded
         className={clsx(
-          "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+          "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg ",
         )}
         style={{
           opacity: loadedImg ? 1 : 0,

@@ -53,7 +53,7 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
           className={clsx(
             "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-light-primary-color/10 shadow-lg",
             loadedImg
-              ? "opacity-100 transition-opacity duration-500"
+              ? "opacity-100 "
               : "opacity-0"
           )}
         />

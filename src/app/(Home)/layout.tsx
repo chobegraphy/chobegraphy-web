@@ -1,6 +1,7 @@
 "use client";
 import Footer from "@/components/shared/Footer/Footer";
 import Navbar from "@/components/shared/Navbar/Navbar";
+import LoadingAnimation from "@/components/ui/loadingAnimation/loadingAnimation";
 import { Analytics } from "@vercel/analytics/react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { usePathname } from "next/navigation";
@@ -24,14 +25,16 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Provider store={store}>
       <AuthProvider>
+        {loading && <LoadingAnimation />}
+        {!loading && (
+          <motion.div style={{ y }} className="min-h-screen">
+            {pathName !== "/SignUp" && pathName !== "/SignIn" && <Navbar />}
+            <Analytics />
+            {children}
 
-        <motion.div style={{ y }} className="min-h-screen">
-          {pathName !== "/SignUp" && pathName !== "/SignIn" && <Navbar />}
-          <Analytics />
-          {children}
-
-          {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />}
-        </motion.div>
+            {pathName !== "/SignUp" && pathName !== "/SignIn" && <Footer />}
+          </motion.div>
+        )}
       </AuthProvider>
     </Provider>
   );

@@ -17,7 +17,7 @@ const Banner = ({ BannerPicture }: any) => {
                     <img
                         src={BannerPicture?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blurred background
                         alt="Blurred preview"
-                        className="absolute inset-0 w-full max-lg:h-[200px] h-[300px] max-md:h-[150px] object-cover blur-xl transition-opacity duration-500"
+                        className="absolute inset-0 w-full max-lg:h-[200px] h-[300px] max-md:h-[150px] object-cover blur-xl "
                         style={{ opacity: loadedImg ? 0 : 1 }} // Hide blurred image when main image loads
                     />
 
@@ -29,7 +29,7 @@ const Banner = ({ BannerPicture }: any) => {
                         src={BannerPicture?.thumbnail || "/placeholder.jpg"} // Main image
                         alt={`Gallery `}
                         className={clsx(
-                            "w-full max-lg:h-[200px] h-[300px] max-md:h-[150px] object-cover object-center  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+                            "w-full max-lg:h-[200px] h-[300px] max-md:h-[150px] object-cover object-center  border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg ",
                             loadedImg ? "opacity-100" : "opacity-0"
                         )}
                     />

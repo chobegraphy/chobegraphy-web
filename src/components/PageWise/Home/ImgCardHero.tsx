@@ -56,12 +56,12 @@ const ImgCardHero = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
                     height={height}
                     onLoad={() => setLoadedImg(true)}
                     loading="lazy"
-                    src={imgData?.thumbnail || "/placeholder.jpg"} // Fallback if missing
+                    src={imgData?.thumbnail} // Fallback if missing
                     alt={imgData?.name || `Gallery ${i}`}
                     className={clsx(
                         "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg",
                         loadedImg
-                            ? "opacity-100 transition-opacity duration-500"
+                            ? "opacity-100 "
                             : "opacity-0"
                     )}
                 />
