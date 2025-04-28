@@ -34,11 +34,9 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
       <img
         src={encodedUrl || "/placeholder.jpg"}
         alt="Blurred preview"
-        className="absolute blur-2xl inset-0 w-full h-full object-cover transition-opacity duration-500"
+        className="absolute blur-sm inset-0 w-full h-full object-cover transition-opacity duration-500"
         style={{
-          opacity: loadedImg ? 0 : 1,
-          imageRendering: "pixelated",
-          transform: "scale(1)",
+          display: loadedImg ? "none" : "block",
           transition: "opacity 0.5s ease-in-out",
         }}
       />
@@ -51,9 +49,13 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
         fetchPriority="high"
         alt={`Gallery ${i}`}
         className={clsx(
-          "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
-          loadedImg ? "opacity-100" : "opacity-0"
+          "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+
         )}
+        style={{
+          display: !loadedImg ? "none" : "block",
+          transition: "opacity 0.5s ease-in-out",
+        }}
       />
     </div>
   );

@@ -142,11 +142,10 @@ const SuggestionImgCard = ({ imgData, i }: any) => {
                 <img
                     src={imgData?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blur image
                     alt="Blurred preview"
-                    className="absolute blur-2xl w-full h-full object-cover  transition-opacity duration-500"
+                    className="absolute blur-sm w-full h-full object-cover  transition-opacity duration-500"
                     style={{
-                        opacity: loadedImg ? 0 : 1,
-                        imageRendering: 'pixelated', // key change here
-                        transform: 'scale(1)',    // optional: gives a more retro pixel effect
+                        display: loadedImg ? "none" : "block",
+                        transition: "opacity 0.5s ease-in-out",
                     }}
                 />
                 <img
@@ -157,9 +156,13 @@ const SuggestionImgCard = ({ imgData, i }: any) => {
                     loading="lazy"
                     alt={imgData?.name || `Gallery ${i}`}
                     className={clsx(
-                        "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
-                        loadedImg ? "opacity-100" : "opacity-0"
+                        "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
+
                     )}
+                    style={{
+                        display: !loadedImg ? "none" : "block",
+                        transition: "opacity 0.5s ease-in-out",
+                    }}
                 />
                 <div className="rounded-2xl h-full bg-gradient-to-t from-black/10 to-black/0  absolute w-full  bottom-0 p-2 flex items-center justify-between text-sm text-white"></div>
             </Link>

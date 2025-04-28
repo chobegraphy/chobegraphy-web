@@ -171,11 +171,10 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
                 <img
                     src={imgData?.encodedUrl || "/placeholder.jpg"}
                     alt="Pixelated preview"
-                    className="absolute inset-0 w-full h-[200px] max-lg:h-[150px] blur-2xl max-md:h-[100px] object-center object-cover transition-opacity duration-500"
+                    className="absolute inset-0 w-full h-[200px] max-lg:h-[150px] blur-sm max-md:h-[100px] object-center object-cover transition-opacity duration-500"
                     style={{
-                        opacity: loadedImg ? 0 : 1,
-                        imageRendering: 'pixelated', // key change here
-                        transform: 'scale(1)',    // optional: gives a more retro pixel effect
+                        display: loadedImg ? "none" : "block",
+                        transition: "opacity 0.5s ease-in-out",
                     }}
                 />
 
@@ -189,8 +188,12 @@ const PopularImgCard = ({ imgData, i, setPopularImgData, PopularImgData }: any) 
                     alt={imgData?.name || `Gallery ${i}`}
                     className={clsx(
                         "w-full max-lg:h-[150px] max-md:h-[100px] h-[200px] object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg transition-opacity duration-500",
-                        loadedImg ? "opacity-100" : "opacity-0"
+
                     )}
+                    style={{
+                        display: !loadedImg ? "none" : "block",
+                        transition: "opacity 0.5s ease-in-out",
+                    }}
                 />
             </Link>
 

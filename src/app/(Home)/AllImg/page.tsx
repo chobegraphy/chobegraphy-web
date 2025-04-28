@@ -11,7 +11,7 @@ import { useGetPictureDataQuery } from "../../../../Redux/Features/Apis/DataRela
 const AllImgPage = () => {
   const params = useSearchParams();
   const filter = params.get("filter");
-  const [limit] = useState(window.innerWidth > 1024 ? 20 : 15);
+  const [limit] = useState(window.innerWidth > 1024 ? 30 : 30);
   const ParamsCurrentPage = params.get("CurrentPage");
   const [currentPage, setCurrentPage] = useState(parseInt(ParamsCurrentPage || "1"));
   const [loading, setLoading] = useState(false); // To manage the loading state manually
