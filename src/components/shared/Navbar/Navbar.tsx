@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useAuth } from "../../../../Provider/AuthProvider";
+import { useGetPictureStatusCountQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureStatusCount/ApiSlice";
 import {
   setLanguage,
   SetLanguageBN,
@@ -33,7 +34,14 @@ const Navbar = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const [languageOpen, setLanguageOpen] = useState(false);
   const { user, logOut } = useAuth();
-
+  const { data } = useGetPictureStatusCountQuery({})
+  const [getPictureStatusCount, setGetPictureStatusCount] = useState<any>({})
+  useEffect(() => {
+    if (data) {
+      setGetPictureStatusCount(data)
+    }
+  }, [data])
+  console.log(getPictureStatusCount)
   const { setTheme } = useTheme();
   const [showProfileRoutes, setShowProfileRoutes] = useState(window.screen.width < 1280 ? false : true);
   // Redux
@@ -361,6 +369,7 @@ const Navbar = () => {
                   >
                     <p className={`${Language === "BN" && "font-BanglaSubHeading font-bold"}`}>
                       {Language === "BN" ? route?.bnName : route?.enName}
+
                     </p>
                   </CustomButton>)
                 }</>
@@ -386,8 +395,9 @@ const Navbar = () => {
                     className={` text-2xl  hover:text-3xl  my-1 px-0 `}
                     path={route.path}
                   >
-                    <p className={`${Language === "BN" && "font-BanglaSubHeading font-bold"}`}>
+                    <p className={`${Language === "BN" && "font-BanglaSubHeading font-bold flex items-center"}`}>
                       {Language === "BN" ? route?.bnName : route?.enName}
+                      {getPictureStatusCount?.pending > 0 && route.enName === "Pending Uploads" && <div className="ms-2 rounded-full bg-red-500 w-3 h-3 flex justify-center items-center "></div>}
                     </p>
                   </CustomButton>)
                 }

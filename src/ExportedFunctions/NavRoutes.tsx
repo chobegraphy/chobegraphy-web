@@ -65,5 +65,9 @@ export const teamMemberRoutes: RouteType[] = [
         path: "/TeamMember/Pending?status=Pending&CurrentPage=1",
         enName: "Pending Uploads",
         bnName: "পেন্ডিং আপলোড",
+    }, {
+        path: "/TeamMember/Approved?status=Approved&CurrentPage=1",
+        enName: "Approved Uploads",
+        bnName: "অ্যাপ্রুভড করা ছবি",
     }
 ]

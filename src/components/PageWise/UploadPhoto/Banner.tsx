@@ -11,6 +11,7 @@ import { useAuth } from "../../../../Provider/AuthProvider";
 
 
 
+import { compressImg } from "@/components/shared/CompressImg/CompressImg";
 import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/AddUploadPictureData/ApiSlice";
 import { useUploadEncodedPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadEncodedPhoto/ApiSlice";
 import { useUploadMainPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadMainPhoto/ApiSlice";
@@ -217,22 +218,50 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
   const oneConnect = async (file: any) => {
     const fileType = file.type;
+
     if (!fileType.match(/image\/(jpeg|png|img)/)) {
       toast.error(Language === "EN" ? "Only JPEG, PNG, or IMG files are allowed." : "একটি JPEG, PNG, বা IMG ফাইল অপলোড করুন.");
       return;
     }
-    setSelectedImg(URL.createObjectURL(file));
-    extractExifData(file);
-    getDimensions(file);
 
-
+    // Check if the file is larger than 4MB, then compress
     const fileSizeInBytes = file.size;
     const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2);
-    setFileSize(fileSizeInMB);
+    extractExifData(file);
+    // If the file size is greater than 4MB, compress it
+    if (parseFloat(fileSizeInMB) > 25) {
+      toast.error(Language === "EN" ? "File size exceeds 25MB. Please upload a smaller file than 25MB." : "ফাইলের আকার 25MB এর বেশি। দয়া করে 25MB এর চেয়ে ছোট একটি ফাইল আপলোড করুন।")
+      resetForm();
+      return;
+    }
+    if (parseFloat(fileSizeInMB) > 20 && parseFloat(fileSizeInMB) <= 25) {
+      file = await compressImg({ file, quality: 0.7 }); // Compress the image
+    } else if (parseFloat(fileSizeInMB) > 15 && parseFloat(fileSizeInMB) <= 20) {
+      file = await compressImg({ file, quality: 0.8 });
+    }
+    else if (parseFloat(fileSizeInMB) > 10 && parseFloat(fileSizeInMB) <= 15) {
+      file = await compressImg({ file, quality: 0.9 });
+    }
+    else if (parseFloat(fileSizeInMB) > 4.5 && parseFloat(fileSizeInMB) <= 10) {
+      file = await compressImg({ file, quality: 0.95 });
+    }
+
+
+    // Calculate the size after compression
+    const compressedFileSizeInBytes = file.size;
+    const compressedFileSizeInMB = (compressedFileSizeInBytes / (1024 * 1024)).toFixed(2); // in MB
+    console.log('Compressed file size:', compressedFileSizeInMB + ' MB'); // You can log or show this value in the UI
+
+    // Set selected image and proceed with other functions
+    setSelectedImg(URL.createObjectURL(file));
+
+    getDimensions(file);
+
+    setFileSize(compressedFileSizeInMB);  // Update the state with the compressed size
+
     convertToBase64(file).then((base64) => { // Convert file to base64
       setBase64photo(base64 as string);
       extractColors(`data:image/jpeg;base64,${base64}`).then((col) => {
-
         const formattedColors = col.map(color => ({
           r: color.red,
           g: color.green,
@@ -249,8 +278,10 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
     setThumbnail(thumbnail);
     setEncodedPhoto(encodedPicture);
     setMainImgFile(file);
-    setUploadedTime(new Date().toISOString())
+    setUploadedTime(new Date().toISOString());
   }
+
+
   const handleImageChange = async (e: any) => {
     const file = e.target.files[0];
     if (file) {

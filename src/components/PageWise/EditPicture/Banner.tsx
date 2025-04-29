@@ -11,6 +11,7 @@ import { useAuth } from "../../../../Provider/AuthProvider";
 
 
 
+import { compressImg } from "@/components/shared/CompressImg/CompressImg";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUpdatePictureDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/UpdatePictureData/ApiSlice";
 import { useUpdateEncodedPictureMutation } from "../../../../Redux/Features/Apis/FileRelated/Apis/UpdateEncodedPhoto/ApiSlice";
@@ -255,7 +256,25 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
 
     const fileSizeInBytes = file.size;
     const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2);
-    setFileSize(fileSizeInMB);
+    if (parseFloat(fileSizeInMB) > 25) {
+      toast.error(Language === "EN" ? "File size exceeds 25MB. Please upload a smaller file than 25MB." : "ফাইলের আকার 25MB এর বেশি। দয়া করে 25MB এর চেয়ে ছোট একটি ফাইল আপলোড করুন।")
+      resetForm();
+      return;
+    }
+    if (parseFloat(fileSizeInMB) > 20 && parseFloat(fileSizeInMB) <= 25) {
+      file = await compressImg({ file, quality: 0.7 }); // Compress the image
+    } else if (parseFloat(fileSizeInMB) > 15 && parseFloat(fileSizeInMB) <= 20) {
+      file = await compressImg({ file, quality: 0.8 });
+    }
+    else if (parseFloat(fileSizeInMB) > 10 && parseFloat(fileSizeInMB) <= 15) {
+      file = await compressImg({ file, quality: 0.9 });
+    }
+    else if (parseFloat(fileSizeInMB) > 4.5 && parseFloat(fileSizeInMB) <= 10) {
+      file = await compressImg({ file, quality: 0.95 });
+    }
+    const compressedFileSizeInBytes = file.size;
+    const compressedFileSizeInMB = (compressedFileSizeInBytes / (1024 * 1024)).toFixed(2);
+    setFileSize(compressedFileSizeInMB);
     convertToBase64(file).then((base64) => { // Convert file to base64
       setBase64photo(base64 as string);
       extractColors(`data:image/jpeg;base64,${base64}`).then((col) => {

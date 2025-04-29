@@ -55,6 +55,11 @@ const UploadInfo = ({ colors }: any) => {
                         {Language === "BN" && "শুধুমাত্র আপনার নিজের তোলা ছবি বা যেগুলোর প্রকাশের অনুমতি রয়েছে সেগুলিই আপলোড করুন।"}
                     </span>{" "}
                         {Language === "EN" && "Upload only original images or those you have permission to share publicly."}</li>
+                    <li><span className="font-BanglaSubHeading">
+                        {Language === "BN" && "ছবির আকার ২৫ এমবি-র কম হওয়া উচিত"}
+                    </span>{" "}
+                        {Language === "EN" && "Picture size should be less than 25 MB"}</li>
+
 
                 </div> <div className={`${!showGuidelines && "hidden"} my-0 h-[1.5px] w-full bg-light-secondary-color  rounded-full opacity-50 `} /></section>
 

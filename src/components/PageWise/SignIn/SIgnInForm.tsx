@@ -1,4 +1,6 @@
+import { BaseApiUrl } from "@/ExportedFunctions/BaseApiUrl";
 import useAuthData from "@/ExportedFunctions/useAuthData";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,7 +12,7 @@ import { ImSpinner } from "react-icons/im";
 import { LuPlus } from "react-icons/lu";
 import "./SignUp.css";
 const SignInForm = () => {
-  const { GoogleSignIn, EmailPasswordLogin, passwordReset } = useAuthData();
+  const { GoogleSignIn, EmailPasswordLogin, passwordReset, setUser } = useAuthData();
   const [buttonLoading, setbuttonLoading] = useState(false);
   const [gbuttonLoading, setGbuttonLoadin] = useState(false);
   const [showPass, setShowpass] = useState(false);
@@ -57,9 +59,22 @@ const SignInForm = () => {
   const handleGoogleLogin = () => {
     setGbuttonLoadin(true);
     GoogleSignIn()
-      .then((data) => {
+      .then(async (data) => {
 
         setGbuttonLoadin(false);
+        const userData = {
+          name: data.user.displayName || "Unknown",
+          email: data.user.email,
+          picture: data.user.photoURL || "",
+        };
+        const response = await axios.post(
+          BaseApiUrl + "/add-user",
+          userData,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+        setUser(response.data.data);
         toast.success(
           Language === "BN" ? "সাইন ইন সফল হয়েছে" : "Sign In Successfull"
         );
