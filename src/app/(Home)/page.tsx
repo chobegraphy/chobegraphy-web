@@ -1,4 +1,5 @@
 "use client";
+import CollectionScrolling from "@/components/PageWise/Home/CollectionScrolling";
 import Hero from "@/components/PageWise/Home/Hero";
 import Info from "@/components/PageWise/Home/Info";
 import Popular from "@/components/PageWise/Home/Popular";
@@ -20,7 +21,7 @@ export default function Home() {
         <RecentImg />
         <div className=" w-full max-w-7xl mx-auto ">
           {/* <DistrictGallery /> */}
-
+          <CollectionScrolling />
         </div>
         {/* <LightroomPresets /> */}
       </div>
