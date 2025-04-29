@@ -57,7 +57,7 @@ const CollectionScrolling = () => {
     );
 
     return (
-        <div className="max-w-7xl xl:px-16 sm:px-10 px-5 pt-10 pb-20 w-full mx-auto space-y-4">
+        <div className="max-w-7xl xl:px-16 sm:px-10 px-5 pt-10 pb-20 w-full mx-auto space-y-2">
             <div className="w-full flex justify-between mb-5 items-center">
                 <h1
                     id="title"
