@@ -10,7 +10,7 @@ export const FileRelatedApiSlice = createApi({
         "Update-encoded-picture", "Update-Main-Photo", "Update-Thumbnail-Photo"
     ],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://chobegraphyserver.onrender.com/api",
+        baseUrl: "https://chobegraphy-server.vercel.app/api",
     }),
     endpoints: () => ({}),
 });

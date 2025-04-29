@@ -14,7 +14,7 @@ export const DataRelatedApiSlice = createApi({
     ],
     baseQuery: fetchBaseQuery({
         // baseUrl: "http://localhost:3000/api",
-        baseUrl: "https://chobegraphyserver.onrender.com/api",
+        baseUrl: "https://chobegraphy-server.vercel.app/api",
     }),
     endpoints: () => ({}),
 });

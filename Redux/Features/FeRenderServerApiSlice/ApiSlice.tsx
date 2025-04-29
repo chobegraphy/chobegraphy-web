@@ -10,7 +10,7 @@ export const FeRenderServerApiSlice = createApi({
         "Update-encoded-picture",
     ],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://chobegraphyserver.onrender.com/api",
+        baseUrl: "https://chobegraphy-server.vercel.app/api",
     }),
     endpoints: () => ({}),
 });

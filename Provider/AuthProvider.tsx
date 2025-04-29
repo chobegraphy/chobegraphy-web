@@ -92,7 +92,7 @@ const AuthProvider = ({ children }: AuthProviderDataProps) => {
           if (!email) return;
 
           // Get JWT token from backend
-          const JwtTokenReponse = await axios.post(`https://chobegraphyserver.onrender.com/api/jwt`, { email });
+          const JwtTokenReponse = await axios.post(`https://chobegraphy-server.vercel.app/api/jwt`, { email });
           if (JwtTokenReponse?.data && typeof window !== "undefined" && !localStorage.getItem("userData")) {
             typeof window !== "undefined" && localStorage.setItem("ChobegraphyAccess", JwtTokenReponse?.data);
             const userData = await fetchUserData({ email }).unwrap();

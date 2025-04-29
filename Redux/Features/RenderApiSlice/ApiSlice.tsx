@@ -6,7 +6,7 @@ export const RenderApiSlice = createApi({
         "UploadProfilePicture",
     ],
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://chobegraphyserver.onrender.com/api",
+        baseUrl: "https://chobegraphy-server.vercel.app/api",
     }),
     endpoints: () => ({}),
 });
