@@ -11,6 +11,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { ImSpinner } from "react-icons/im";
 import { LuPlus } from "react-icons/lu";
 
+import { compressImg } from "@/components/shared/CompressImg/CompressImg";
 import { useUploadProfilePictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadUserPhoto/ApiSlice";
 import "./SignUp.css";
 const RegisterForm = () => {
@@ -33,10 +34,34 @@ const RegisterForm = () => {
 
   const handleImageChange = async (e: any) => {
     const file = e.target.files[0];
-    if (file) {
-      setFileName(file.name);
-      setImgFile(file);
+    setFileName(file.name);
+    let compressedFile;
+    const fileSizeInBytes = file.size;
+    const fileSizeInMB = (fileSizeInBytes / (1024 * 1024)).toFixed(2);
+
+    // If the file size is greater than 4MB, compress it
+    if (parseFloat(fileSizeInMB) > 25) {
+      toast.error(Language === "EN" ? "File size exceeds 25MB. Please upload a smaller file than 25MB." : "ফাইলের আকার 25MB এর বেশি। দয়া করে 25MB এর চেয়ে ছোট একটি ফাইল আপলোড করুন।")
+      return;
     }
+    if (parseFloat(fileSizeInMB) > 20 && parseFloat(fileSizeInMB) <= 25) {
+      compressedFile = await compressImg({ file, quality: 0.7 }); // Compress the image
+    } else if (parseFloat(fileSizeInMB) > 15 && parseFloat(fileSizeInMB) <= 20) {
+      compressedFile = await compressImg({ file, quality: 0.8 });
+    }
+    else if (parseFloat(fileSizeInMB) > 10 && parseFloat(fileSizeInMB) <= 15) {
+      compressedFile = await compressImg({ file, quality: 0.9 });
+    }
+    else if (parseFloat(fileSizeInMB) > 4.5 && parseFloat(fileSizeInMB) <= 10) {
+      compressedFile = await compressImg({ file, quality: 0.95 });
+    }
+    else {
+      compressedFile = await compressImg({ file, quality: 1 });
+    }
+
+
+    // Set the compressed image file
+    setImgFile(compressedFile);
   };
 
   const {
