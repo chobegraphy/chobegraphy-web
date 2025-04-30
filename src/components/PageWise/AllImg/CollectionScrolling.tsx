@@ -41,7 +41,7 @@ const CollectionScrolling = () => {
             className={`max-lg:w-[100px] max-lg:h-[40px] w-[135px] border-2 max-lg:rounded-lg object-cover object-center overflow-hidden h-[50px] relative flex justify-center rounded-xl items-center max-md:text-[10px] text-xs me-2
                 ${collectionData?.label === collection ? "dark:border-dark-primary-color/80 border-light-primary-color" : "border-light-primary-color/10 dark:border-dark-primary-color/10"}`}
         >
-            {collectionData.label === "All" ? <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-green-500 via-green-800 to-light-primary-color"></div> : <Image placeholder="blur"
+            {collectionData.label === "All" ? <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div> : <Image placeholder="blur"
                 blurDataURL={collectionData?.examplePicture?.encodedUrl}
                 quality={70}
                 className="object-cover object-center h-full w-full"
