@@ -9,6 +9,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, setCurrentPage }: a
   const router = useRouter();
   const params = useSearchParams();
   const filter = params.get("filter");
+  const collection = params.get("collection");
   return (
     <>
       {/* page count */}
@@ -16,7 +17,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, setCurrentPage }: a
         {/* back arrow */}
         <button onClick={() => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          router.push(`/AllImg?filter=${filter}&CurrentPage=${currentPage - 1}&collection=All`);
+          router.push(`/AllImg?filter=${filter}&CurrentPage=${currentPage - 1}&collection=${collection}`);
           setCurrentPage(currentPage - 1)
         }} className={`${currentPage === 1 && "hidden"} transform duration-300 border-2 dark:border-dark-primary-color border-light-primary-color text-light-primary-color dark:text-dark-primary-color dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color hover:bg-light-primary-color hover:text-dark-primary-color p-2 rounded-xl`}>
           <FaAngleLeft />
@@ -25,7 +26,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, setCurrentPage }: a
           [...Array(totalPages)]?.map((page, i) => (
             <button key={i} onClick={() => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
-              router.push(`/AllImg?filter=${filter}&CurrentPage=${i + 1}&collection=All`);
+              router.push(`/AllImg?filter=${filter}&CurrentPage=${i + 1}&collection=${collection}`);
               setCurrentPage(i + 1)
             }} className={`${currentPage === i + 1 ? "border-2 dark:border-dark-primary-color border-light-primary-color dark:text-light-primary-color font-Righteous text-light-primary-color dark: bg-dark-primary-color p-2 rounded-xl" : "border-2 dark:border-dark-primary-color border-light-primary-color text-light-primary-color font-Righteous dark:text-dark-primary-color dark:hover:bg-dark-primary-color hover:bg-light-primary-color w-3.5 h-3.5 rounded-xl "}`}>
               {
@@ -43,7 +44,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, setCurrentPage }: a
         {/* forward arrow */}
         <button onClick={() => {
           window.scrollTo({ top: 0, behavior: 'smooth' });
-          router.push(`/AllImg?filter=${filter}&CurrentPage=${currentPage + 1}&collection=All`)
+          router.push(`/AllImg?filter=${filter}&CurrentPage=${currentPage + 1}&collection=${collection}`)
           setCurrentPage(currentPage + 1)
         }}
           className={`border-2 dark:border-dark-primary-color border-light-primary-color text-light-primary-color dark:text-dark-primary-color dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color
