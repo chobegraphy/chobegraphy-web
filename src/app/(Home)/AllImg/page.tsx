@@ -3,7 +3,7 @@ import CollectionScrolling from "@/components/PageWise/AllImg/CollectionScrollin
 import ImgMappingComponent from "@/components/PageWise/AllImg/ImgMappingComponent";
 import Pagination from "@/components/PageWise/AllImg/Pagination";
 import Title from "@/components/PageWise/AllImg/Title";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
 import { useGetImgCountQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetImgCount/ApiSlice";
@@ -14,18 +14,20 @@ const AllImgPage = () => {
   const filter = params.get("filter");
   const [limit] = useState(window.innerWidth > 1024 ? 30 : 30);
   const ParamsCurrentPage = params.get("CurrentPage");
+  const collection = params.get("collection");
   const [currentPage, setCurrentPage] = useState(parseInt(ParamsCurrentPage || "1"));
   const [loading, setLoading] = useState(false); // To manage the loading state manually
 
-
+  const router = useRouter();
 
   const { data, isFetching, isError, error, refetch } = useGetPictureDataQuery({
     filter: filter || "recent",
     page: currentPage,
     limit,
+    collection: collection || "All",
   });
   const [ImgData, setImgData] = useState([]);
-  const { data: imgCount } = useGetImgCountQuery({});
+  const { data: imgCount } = useGetImgCountQuery({ collection: collection || "All" }); // Fetching the total data count
 
   const isLoading = isFetching;
 
@@ -51,7 +53,14 @@ const AllImgPage = () => {
       refetch();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-  }, [currentPage, refetch]);
+  }, [currentPage, refetch, filter]);
+
+  useEffect(() => {
+    if (collection) {
+      setCurrentPage(1); // Reset to page 1 when collection changes
+      router.push(`/AllImg?filter=${filter}&CurrentPage=1&collection=${collection}`);
+    }
+  }, [collection]);
   useEffect(() => {
     const pageFromUrl = params.get("CurrentPage");
     if (pageFromUrl) {

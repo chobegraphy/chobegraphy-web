@@ -17,6 +17,7 @@ const RecentImg = () => {
     filter: "recent",
     page: 1,
     limit: window.innerWidth > 1024 ? 30 : 30,
+    collection: "All",
   });
 
   const [RecentImgData, setRecentImgData] = useState([]);

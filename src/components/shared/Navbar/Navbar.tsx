@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { LuSearch } from "react-icons/lu";
 import { useAuth } from "../../../../Provider/AuthProvider";
 import { useGetPictureStatusCountQuery } from "../../../../Redux/Features/Apis/DataRelated/Apis/GetPictureStatusCount/ApiSlice";
 import {
@@ -125,6 +126,18 @@ const Navbar = () => {
       document.documentElement.classList.toggle("dark", theme === "dark");
     }
   }, [theme]);
+  const searhBar = <><div className="relative ms-2">
+    <input
+      type="text"
+
+      placeholder={Language === "BN" ? "শব্দ/কীওয়ার্ড" : "word/keyword"}
+      className={`w-[180px] md:w-[250px] bg-transparent outline-none font-Space focus:outline-none px-3 rounded-2xl border-2 border-light-primary-color dark:border-dark-primary-color/10 py-2 ${Language === "BN" && "font-BanglaSubHeading"
+        }`}
+    />
+    <button className="absolute z-30 right-1 bg-light-primary-color dark:bg-light-secondary-color/30 rounded-xl text-dark-primary-color p-2 top-1">
+      <LuSearch className="text-xl" />
+    </button>
+  </div></>
   return (
     <div
       className={`flex ${isOpen2 || isOpen ? "" : "xl:backdrop-blur"}  bg-dark-primary-color/80 dark:bg-black/80 z-50 bg-black-100 justify-between w-full items-center overflow-hidden sticky -top-0.5 mx-auto  sm:p-5 p-5 h-[65px] `}
@@ -148,7 +161,9 @@ const Navbar = () => {
           height={500}
         />
       </div>
+
       <div className="w-fit max-xl:hidden flex items-center h-full">
+
         {
           NavRoutes.map((route, index) => <CustomButton key={index} className={"border-e-2 border-[#575757]"} path={route.path}>
             <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
@@ -156,7 +171,7 @@ const Navbar = () => {
             </p>
           </CustomButton>)
         }
-
+        {searhBar}
         <div className="flex items-center">
           <button
             onClick={() => {
@@ -246,16 +261,19 @@ const Navbar = () => {
       </div>
 
       {/* mobile Navebar */}
-      <div
-        role="button"
-        onClick={() => {
-          setIsOpen(!isOpen);
-          setIsOpen2(!isOpen2);
-        }}
-        className="xl:hidden"
-      >
-        <IoMenuSharp className="text-4xl" />
+      <div className="flex items-center xl:hidden ">
+        <div className="hidden  max-md:hidden max-xl:block">{searhBar}</div><div
+          role="button"
+          onClick={() => {
+            setIsOpen(!isOpen);
+            setIsOpen2(!isOpen2);
+          }}
+          className="xl:hidden"
+        >
+          <IoMenuSharp className="text-4xl" />
+        </div>
       </div>
+
       <div
         className={`${isOpen2 ? "h-[100dvh] w-screen opacity-100 " : "opacity-0"
           } fixed z-50 overflow-hidden top-0 left-0 bg-black/90`}

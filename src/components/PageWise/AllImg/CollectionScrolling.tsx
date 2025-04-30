@@ -15,16 +15,34 @@ const CollectionScrolling = () => {
     const collection = params.get("collection");
     useEffect(() => {
         if (collectionData) {
-            setCollectionImgData([{
+            const collectionLower = collection?.toLowerCase();
+            const matched = collectionData.find(
+                (item: any) => item.label?.toLowerCase() === collectionLower
+            );
+
+            const newCollection = [{
                 label: "All",
                 value: "সব",
                 examplePicture: {
                     thumbnail: "/images/All.png",
                     encodedUrl: "/images/All.png",
                 }
-            }, ...collectionData]);
+            }];
+
+            if (matched) {
+                newCollection.push(matched);
+            }
+
+            newCollection.push(
+                ...collectionData.filter(
+                    (item: any) => item.label?.toLowerCase() !== collectionLower
+                )
+            );
+
+            setCollectionImgData(newCollection);
         }
     }, [collectionData]);
+
 
 
 
@@ -34,14 +52,15 @@ const CollectionScrolling = () => {
 
     // Render each item
     const renderItem = (collectionData: any) => (
-        <div onClick={() => {
-            router.push(`/AllImg?filter=${filter}&CurrentPage=${currentPage}&collection=${collectionData?.label}`);
+        <div key={collectionData?.label} onClick={() => {
+            router.replace(`/AllImg?filter=${filter}&CurrentPage=${currentPage}&collection=${collectionData?.label}`);
+
         }}
-            key={collectionData?.label}
-            className={`max-lg:w-[100px] max-lg:h-[40px] w-[135px] border-2 max-lg:rounded-lg object-cover object-center overflow-hidden h-[50px] relative flex justify-center rounded-xl items-center max-md:text-[10px] text-xs me-2
+
+            className={`max-lg:w-[100px] max-lg:h-[40px] w-[135px] border-2 max-lg:rounded-lg object-cover object-center cursor-pointer overflow-hidden h-[50px] relative flex justify-center rounded-xl items-center max-md:text-[10px] text-xs me-2
                 ${collectionData?.label === collection ? "dark:border-dark-primary-color/80 border-light-primary-color" : "border-light-primary-color/10 dark:border-dark-primary-color/10"}`}
         >
-            {collectionData.label === "All" ? <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div> : <Image placeholder="blur"
+            {collectionData?.label === "All" ? <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"></div> : <Image placeholder="blur"
                 blurDataURL={collectionData?.examplePicture?.encodedUrl}
                 quality={70}
                 className="object-cover object-center h-full w-full"
@@ -52,7 +71,7 @@ const CollectionScrolling = () => {
             />}
             <div
                 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", color: "white" }}
-                className="absolute font-Space text-light-primary-color dark:text-dark-primary-color bg-black/20 w-full h-full flex items-center justify-center"
+                className="absolute font-Space text-light-primary-color dark:text-dark-primary-color bg-black/20 w-full text-center h-full flex items-center justify-center"
             >
                 <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
                     {Language === "BN" ? collectionData?.value : collectionData?.label}
@@ -74,7 +93,7 @@ const CollectionScrolling = () => {
                 </h1>
 
             </div>
-            <div className="flex overflow-x-auto   example w-full">
+            <div style={{ scrollBehavior: "smooth", scrollbarWidth: "none" }} className="flex overflow-x-auto    w-full">
                 {collectionImgData?.map((item: any) => (
                     <div className="w-[130px] max-lg:w-[100px] max-lg:mx-0.5 mx-1 flex-shrink-0" key={item?.label}>
                         {renderItem(item)}

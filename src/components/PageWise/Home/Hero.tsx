@@ -7,7 +7,10 @@ import { TbBorderCornerSquare } from "react-icons/tb";
 import { useSelector } from "react-redux";
 
 import SharedHero from "@/components/shared/Hero/SharedHero";
+import AOS from "aos";
+import { LuSearch } from "react-icons/lu";
 import "./Home.css";
+AOS.init();
 const Hero = () => {
   // redux writing
   const Language = useSelector((state: any) => state.Language.value);
@@ -67,17 +70,28 @@ const Hero = () => {
                 </p>
               </span>
             </Link>
-            <button
+            <Link href={"/AllImg?filter=recent&CurrentPage=1&collection=All"}
               className={
-                "border-2 py-1 xl:py-1.5 max-lg:flex hidden mt-6 px-6  xl:text-lg bg-light-primary-color dark:bg-dark-primary-color dark:text-light-primary-color dark:border-dark-primary-color   hover:text-dark-primary-color transform duration-300 rounded  items-center gap-x-2 text-dark-primary-color justify-center border-light-primary-color"
+                "border-2 py-1 w-fit xl:py-1.5 max-lg:flex hidden mt-6 px-6  xl:text-lg bg-light-primary-color dark:bg-dark-primary-color dark:text-light-primary-color dark:border-dark-primary-color   hover:text-dark-primary-color transform duration-300 rounded-md  items-center gap-x-2 text-dark-primary-color justify-center border-light-primary-color"
               }
             >
               {" "}
               <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
                 {Language === "BN" ? "গ্যালারি" : "Gallery"}
               </p>
-            </button>
+            </Link>
+            <div className="relative max-md:block hidden mt-6 -mb-4 ">
+              <input
+                type="text"
 
+                placeholder={Language === "BN" ? "শব্দ/কীওয়ার্ড" : "word/keyword"}
+                className={`w-full  bg-transparent outline-none font-Space focus:outline-none px-3 rounded-2xl border-2 border-light-primary-color dark:border-dark-primary-color/10 py-3 ${Language === "BN" && "font-BanglaSubHeading"
+                  }`}
+              />
+              <button className="absolute z-30 right-1 bg-light-primary-color dark:bg-light-secondary-color/30 rounded-xl text-dark-primary-color p-3 top-1">
+                <LuSearch className="text-xl" />
+              </button>
+            </div>
             <div className="w-full mt-12 min-h-[154px] border border-light-primary-color dark:border-dark-primary-color/30 relative p-4">
               <div className=" max-md:grid-cols-1 grid grid-cols-2 w-full h-full ">
                 <div className="max-md:border-b-2 max-md:mb-5 max-md:border-e-0 border-e-2 border-light-primary-color dark:border-dark-primary-color w-full h-full">
@@ -137,7 +151,7 @@ const Hero = () => {
             </div>
           </div>
 
-          <SharedHero />
+          <div data-aos="zoom-in"><SharedHero /></div>
 
         </div>
       </div>

@@ -104,7 +104,7 @@ const Info = () => {
             className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color"
           >
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">{convertToBanglaNum(roundedImgCount)}+</span>&nbsp;
+              <span className="font-Bayon">{Language === "BN" ? convertToBanglaNum(roundedImgCount) : roundedImgCount}+</span>&nbsp;
               {Language === "BN" ? "ইমেজ/ছবি" : " Images/Photos"}
             </p>
           </motion.pre></Link>
@@ -120,7 +120,7 @@ const Info = () => {
           <Lottie className="max-w-[200px]" animationData={peopleAnimation} />
           <h1 className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color">
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">{convertToBanglaNum(roundedUserCount)}+</span>&nbsp;
+              <span className="font-Bayon">{Language === "BN" ? convertToBanglaNum(roundedUserCount) : roundedUserCount}+</span>&nbsp;
               {Language === "BN" ? "সদস্য/অ্যাকাউন্ট" : " Members/Accounts"}
             </p>
           </h1>
@@ -140,7 +140,7 @@ const Info = () => {
           </div>
           <h1 className="text-2xl font-Righteous text-light-primary-color dark:text-dark-primary-color">
             <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-              <span className="font-Bayon">{convertToBanglaNum(roundedPhotographerCount)}+</span>&nbsp;
+              <span className="font-Bayon">{Language === "BN" ? convertToBanglaNum(roundedPhotographerCount) : roundedPhotographerCount}+</span>&nbsp;
               {Language === "BN" ? "দক্ষ ফটোগ্রাফার" : "skilled Photographer"}
             </p>
           </h1>

@@ -16,6 +16,7 @@ const Popular = () => {
         filter: "popular",
         page: 1,
         limit: window.innerWidth > 1024 ? 15 : window.innerWidth > 425 ? 12 : 12,
+        collection: "All",
     });
     const [PopularImgData, setPopularImgData] = useState([]);
     useEffect(() => {
@@ -35,7 +36,7 @@ const Popular = () => {
                 </p>
                 <p>{Language === "EN" && "Most Popular"}</p>
             </h1>
-                <Link href={`/AllImg?filter=popular&CurrentPage=1`}>
+                <Link href={`/AllImg?filter=popular&CurrentPage=1&collection=All`}>
                     <button
                         className={
                             " py-3 transform duration-300 dark:hover:bg-dark-primary-color dark:hover:text-light-primary-color hover:bg-light-primary-color hover:text-dark-primary-color  text-light-primary-color rounded-2xl hover:px-6 mx-auto xl:text-lg  flex items-center font-Righteous gap-x-2 dark:text-dark-primary-color justify-center "

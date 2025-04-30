@@ -5,8 +5,8 @@ export const GetPictureDataApiSlice = DataRelatedApiSlice.injectEndpoints({
     endpoints: (builder) => ({
         // Standard query hook
         GetPictureData: builder.query({
-            query: ({ filter, page, limit }) => ({
-                url: `get-picture-data?filter=${filter}&page=${page}&limit=${limit}`,
+            query: ({ filter, page, limit, collection }) => ({
+                url: `get-picture-data?filter=${filter}&page=${page}&limit=${limit}&collection=${collection || "All"}`,
                 method: "GET",
                 fetchOptions: {
                     mode: "cors",
