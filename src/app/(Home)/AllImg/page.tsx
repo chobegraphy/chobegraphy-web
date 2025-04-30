@@ -1,4 +1,5 @@
 "use client";
+import CollectionScrolling from "@/components/PageWise/AllImg/CollectionScrolling";
 import ImgMappingComponent from "@/components/PageWise/AllImg/ImgMappingComponent";
 import Pagination from "@/components/PageWise/AllImg/Pagination";
 import Title from "@/components/PageWise/AllImg/Title";
@@ -63,8 +64,7 @@ const AllImgPage = () => {
     <>
       {/* Fade-in fade-out effect on the page content */}
       <div
-        className="min-h-[100dvh] dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color relative"
-
+        className="min-h-dvh"
       >
         {isFetching && !isLoading && !ImgData ? (
           <div className="w-full my-10 h-dvh flex items-center justify-center absolute right-0 left-0 top-0 bottom-0 dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color z-50">
@@ -76,6 +76,7 @@ const AllImgPage = () => {
 
             {/* title component */}
             <Title />
+            <CollectionScrolling />
             {/* filter search button components */}
             {/* <FilterSearch /> */}
             {/* ImgMappingComponent with ref */}

@@ -10,7 +10,7 @@ export const NavRoutes: RouteType[] = [
         bnName: "হোম",
     },
     {
-        path: "/AllImg?filter=recent&CurrentPage=1",
+        path: "/AllImg?filter=recent&CurrentPage=1&collection=All",
         enName: "Gallery",
         bnName: "গ্যালারি",
     },

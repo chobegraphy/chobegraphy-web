@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import { LuSearch } from "react-icons/lu";
@@ -10,6 +11,7 @@ const CollectionScrolling = () => {
     const { data: collectionData } = useGetCollectionsDataWithPictureQuery({});
     const [collectionImgData, setCollectionImgData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const router = useRouter();
 
     useEffect(() => {
         if (collectionData) {
@@ -32,7 +34,7 @@ const CollectionScrolling = () => {
 
     // Render each item
     const renderItem = (collectionData: any) => (
-        <div
+        <div onClick={() => { router.push(`/AllImg?filter=recent&CurrentPage=1&collection=${collectionData?.label}`); }}
             key={collectionData?.label}
             className="w-[145px] border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 object-cover object-center overflow-hidden h-[100px] relative flex justify-center rounded-2xl items-center text-sm mx-2"
         >
@@ -49,7 +51,7 @@ const CollectionScrolling = () => {
                 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)", color: "white" }}
                 className="absolute font-Space text-light-primary-color dark:text-dark-primary-color bg-black/20 w-full h-full flex items-center justify-center"
             >
-                <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
+                <p className={`${Language === "BN" && "font-BanglaSubHeading"}`}>
                     {Language === "BN" ? collectionData?.value : collectionData?.label}
                 </p>
             </div>
@@ -64,7 +66,7 @@ const CollectionScrolling = () => {
                     className="font-Righteous text-lg xl:text-3xl text-start text-black dark:text-dark-primary-color"
                 >
                     <p className={`${Language === "BN" && "font-BanglaHeading"}`}>
-                        {Language === "BN" ? "ক্যাটাগরি" : "Collections"}
+                        {Language === "BN" ? "ক্যাটাগরি :" : "Collections :"}
                     </p>
                 </h1>
                 <div className="relative">
