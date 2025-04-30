@@ -175,41 +175,48 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         className="relative w-full rounded-2xl overflow-hidden block"
 
       >
-        {/* ✅ Blurred Low-Quality Image (using next/image) */}
         {!loadedImg && (
           <Image
             src={imgData?.encodedUrl || "/placeholder.jpg"}
-            alt="Blurred preview"
-            fill // ✅ Automatically fill the parent div
-            className="object-cover object-center blur-sm "
-            style={{
-              opacity: loadedImg ? 0 : 1,
-
-            }}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // ✅ important for responsive
-            quality={10} // ✅ very low quality (because it's just blur)
+            alt="Blur preview"
+            fill
+            className="object-cover blur-sm "
+            quality={10}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         )}
 
-        {/* ✅ High-Quality Image */}
+        {/* 👇 Low-quality thumbnail before high-res loads */}
+        {!loadedImg && (
+          <Image
+            src={imgData?.thumbnail || "/placeholder.jpg"}
+            alt={imgData?.name || `Low Res ${i}`}
+            width={width}
+            height={height}
+            quality={20}
+            className={clsx(
+              "absolute inset-0 w-full h-full object-cover blur-[1px] ",
+              loadedImg ? "opacity-0" : "opacity-100"
+            )}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        )}
+
+        {/* 👇 High-Quality final image */}
         <Image
           width={width}
           height={height}
-          src={imgData?.thumbnail}
+          src={imgData?.thumbnail || "/placeholder.jpg"}
           onLoadingComplete={() => setLoadedImg(true)}
           loading="lazy"
           alt={imgData?.name || `Gallery ${i}`}
-          quality={50}
-
+          quality={80}
           blurDataURL={imgData?.encodedUrl || "/placeholder.jpg"}
           className={clsx(
-            "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg ",
+            "w-full object-cover object-center rounded-2xl ",
+            loadedImg ? "opacity-100" : "opacity-0"
           )}
-          style={{
-            opacity: loadedImg ? 1 : 0,
-
-          }}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // ✅ better responsive sizing
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </Link>
 

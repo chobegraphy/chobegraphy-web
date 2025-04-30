@@ -1,9 +1,9 @@
 import clsx from "clsx";
-import Image from "next/image"; // ✅ Important!
+import Image from "next/image";
 import { useState } from "react";
 
 const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
-  const [loadedImg, setLoadedImg] = useState(false);
+  const [loadedHighQuality, setLoadedHighQuality] = useState(false);
 
   const [width, height] = dimensions
     ? dimensions.split(" x ").map((num: string) => parseInt(num, 10))
@@ -11,46 +11,52 @@ const BannerImgCard = ({ mainImgLink, encodedUrl, dimensions, i }: any) => {
 
   return (
     <div
-      className={clsx(
-        i !== 0 && "my-2",
-        "block relative overflow-hidden rounded-2xl"
-      )}
+      className={clsx("relative overflow-hidden rounded-2xl")}
       style={{ aspectRatio: `${width}/${height}` }}
     >
-      {/* ✅ Blurred Low-Quality Image */}
-      {!loadedImg && (
+      {/* 👇 Blurred placeholder using encodedUrl */}
+      {!loadedHighQuality && encodedUrl && (
         <Image
-          src={encodedUrl || "/placeholder.jpg"}
-          alt="Blurred preview"
+          src={encodedUrl}
+          alt="Blur preview"
           fill
           className="object-cover blur-sm "
-          style={{
-            opacity: loadedImg ? 0 : 1,
-
-          }}
-          quality={10} // Very low for blur image
+          quality={25}
           sizes="100vw"
         />
       )}
 
-      {/* ✅ High-Quality Image */}
+      {/* 👇 Low-Quality version of main image */}
+      {!loadedHighQuality && (
+        <Image
+          src={mainImgLink}
+          alt="Low quality"
+          width={width}
+          height={height}
+          quality={20}
+          className={clsx(
+            "absolute inset-0 w-full h-full object-cover blur-[1px]  ",
+            loadedHighQuality ? "opacity-0" : "opacity-100"
+          )}
+          sizes="100vw"
+          priority={i === 0}
+        />
+      )}
+
+      {/* 👇 High-Quality version */}
       <Image
-        src={mainImgLink || "/placeholder.jpg"}
+        src={mainImgLink}
         alt={`Gallery ${i}`}
         width={width}
         height={height}
-        loading="eager" // Load immediately
-        fetchPriority="high"
-        onLoadingComplete={() => setLoadedImg(true)} // ✅ Mark as loaded
+        quality={100}
+        onLoadingComplete={() => setLoadedHighQuality(true)}
         className={clsx(
-          "w-full object-cover object-center rounded-2xl dark:border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg ",
+          "w-full h-full object-cover object-center rounded-2xl ",
+          loadedHighQuality ? "opacity-100" : "opacity-0"
         )}
-        style={{
-          opacity: loadedImg ? 1 : 0,
-
-        }}
-        quality={75} // 75% quality for better banner image
-        sizes="100vw" // full width
+        sizes="100vw"
+        priority={i === 0}
       />
     </div>
   );

@@ -12,6 +12,7 @@ import { useAuth } from "../../../../Provider/AuthProvider";
 
 
 import { compressImg } from "@/components/shared/CompressImg/CompressImg";
+import { ImSpinner } from "react-icons/im";
 import { useAddUploadedPictureDataMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/AddUploadPictureData/ApiSlice";
 import { useUploadEncodedPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadEncodedPhoto/ApiSlice";
 import { useUploadMainPictureMutation } from "../../../../Redux/Features/FeRenderServerApiSlice/Apis/UploadMainPhoto/ApiSlice";
@@ -148,8 +149,16 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
           canvas.width = maxWidth;
           canvas.height = img.height * scaleFactor;
 
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL("image/jpeg", quality).split(",")[1]); // Convert to Base64 (JPEG, 70% quality)
+          compressImg({ file, quality, maxWidth: canvas.width, maxHeight: canvas.height }).then((compressedFile: Blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onload = () => {
+              if (reader.result) {
+                resolve(reader.result.toString().split(",")[1]);
+              }
+            };
+            reader.onerror = (error) => reject(error);
+          });
         };
         img.onerror = (error) => reject(error);
       };
@@ -176,8 +185,16 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
           canvas.width = maxWidth;
           canvas.height = img.height * scaleFactor;
 
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL("image/jpeg", 0.7).split(",")[1]); // Convert to Base64 (JPEG, 70% quality)
+          compressImg({ file, quality: 0.7, maxWidth: canvas.width, maxHeight: canvas.height }).then((compressedFile: Blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onload = () => {
+              if (reader.result) {
+                resolve(reader.result.toString().split(",")[1]);
+              }
+            };
+            reader.onerror = (error) => reject(error);
+          });
         };
         img.onerror = (error) => reject(error);
       };
@@ -215,14 +232,15 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
     SetFileName(finalFileName);
   }, [description, mainImgFile]);
-
+  const [imgLoading, setImgLoading] = useState(false)
   const oneConnect = async (file: any) => {
     const fileType = file.type;
-
+    setImgLoading
     if (!fileType.match(/image\/(jpeg|png|img)/)) {
       toast.error(Language === "EN" ? "Only JPEG, PNG, or IMG files are allowed." : "একটি JPEG, PNG, বা IMG ফাইল অপলোড করুন.");
       return;
     }
+    setImgLoading(true)
 
     // Check if the file is larger than 4MB, then compress
     const fileSizeInBytes = file.size;
@@ -254,6 +272,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
 
     // Set selected image and proceed with other functions
     setSelectedImg(URL.createObjectURL(file));
+    setImgLoading(false)
 
     getDimensions(file);
 
@@ -673,7 +692,7 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
             accept="image/*"
             onChange={handleImageChange}
           />
-          {selectedImg ? (
+          {!imgLoading ? <>{selectedImg ? (
             <img src={selectedImg} alt="Selected" className="w-auto  h-auto max-md:max-h-[300px] max-h-[400px] " />
           ) : (
             <div className="flex flex-col justify-center items-center">
@@ -692,7 +711,10 @@ const Banner = ({ exifData, setExifData, setSelectedCategory, selectedCategory, 
               <button className="px-3 mt-3 bg-light-primary-color text-dark-primary-color dark:bg-dark-primary-color dark:text-light-primary-color rounded py-1">{Language === "EN" && "Browse File"}
                 {Language === "BN" && <span className="font-BanglaHeading ">ফাইল ব্রাউজ করুন</span>}</button>
             </div>
-          )}
+          )}</> : <><div className="flex  my-10 min-h-[300px] max-md:min-h-[200px] w-full items-center justify-center">
+            <ImSpinner className="dark:text-white text-2xl text-light-primary-color animate-spin" />
+          </div></>}
+
         </div>
 
 

@@ -155,6 +155,8 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
       reader.onerror = (error) => reject(error);
     });
   };
+
+
   // Convert file to thumbnail compressed
   const convertToCompressed = (file: File, maxWidth = 1080, quality = 0.7): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -175,8 +177,16 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
           canvas.width = maxWidth;
           canvas.height = img.height * scaleFactor;
 
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL("image/jpeg", quality).split(",")[1]); // Convert to Base64 (JPEG, 70% quality)
+          compressImg({ file, quality, maxWidth: canvas.width, maxHeight: canvas.height }).then((compressedFile: Blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onload = () => {
+              if (reader.result) {
+                resolve(reader.result.toString().split(",")[1]);
+              }
+            };
+            reader.onerror = (error) => reject(error);
+          });
         };
         img.onerror = (error) => reject(error);
       };
@@ -203,8 +213,16 @@ const Banner = ({ imgData, exifData, setExifData, setSelectedCategory, selectedC
           canvas.width = maxWidth;
           canvas.height = img.height * scaleFactor;
 
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(canvas.toDataURL("image/jpeg", 0.7).split(",")[1]); // Convert to Base64 (JPEG, 70% quality)
+          compressImg({ file, quality: 0.7, maxWidth: canvas.width, maxHeight: canvas.height }).then((compressedFile: Blob) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(compressedFile);
+            reader.onload = () => {
+              if (reader.result) {
+                resolve(reader.result.toString().split(",")[1]);
+              }
+            };
+            reader.onerror = (error) => reject(error);
+          });
         };
         img.onerror = (error) => reject(error);
       };

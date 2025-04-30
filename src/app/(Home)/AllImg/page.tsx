@@ -63,6 +63,7 @@ const AllImgPage = () => {
     <>
       {/* Fade-in fade-out effect on the page content */}
       <div
+        className="min-h-[100dvh] dark:bg-gradient-to-br from-black to-light-primary-color bg-dark-primary-color relative"
 
       >
         {isFetching && !isLoading && !ImgData ? (
@@ -90,7 +91,7 @@ const AllImgPage = () => {
             </div>
 
             {/* pagination component */}
-            {!isLoading && <Pagination
+            {!isLoading && ImgData && <Pagination
               currentPage={currentPage}
               totalPages={totalPages} // Pass totalPages to Pagination component
               setCurrentPage={setCurrentPage}

@@ -1,7 +1,7 @@
 "use client";
 
 import ImgMappingComponent from "@/components/PageWise/TeamMember/ImgMappingComponent";
-import Pagination from "@/components/PageWise/TeamMember/Pagination";
+import PaginationPending from "@/components/PageWise/TeamMember/PaginationPending";
 import Title from "@/components/PageWise/TeamMember/Title";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -74,7 +74,7 @@ const Pending = () => {
                     <ImgMappingComponent ImgData={prevImgData} />
                 )}
                 {!isLoading && prevImgData.length > 0 && (
-                    <Pagination
+                    <PaginationPending
                         currentPage={currentPage}
                         totalPages={totalPages}
                         setCurrentPage={setCurrentPage}

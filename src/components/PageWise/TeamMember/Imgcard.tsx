@@ -14,6 +14,7 @@ import {
   usePictureUnLikeMutation,
 } from "../../../../Redux/Features/Apis/PictureLike/ApiSlice";
 
+import Image from "next/image";
 import { RiHourglassFill } from "react-icons/ri";
 import { TbEditCircle } from "react-icons/tb";
 import { usePictureLikeCountDecreaseMutation, usePictureLikeCountIncreaseMutation } from "../../../../Redux/Features/Apis/DataRelated/Apis/PictureLikeCountIncreaseDecrease/ApiSlice";
@@ -170,30 +171,48 @@ const ImgCard = ({ imgData, i, setRecentImgData, RecentImgData }: any) => {
         className="relative w-full rounded-2xl overflow-hidden block"
         style={{ aspectRatio: `${width}/${height}` }} // Maintain aspect ratio
       >
-        {/* Blurred Low-Quality Image */}
-        <img
-          src={imgData?.encodedUrl || "/placeholder.jpg"} // Use encodedUrl as the blur image
-          alt="Blurred preview"
-          className="absolute blur-sm w-full h-full object-cover  "
-          style={{
-            opacity: loadedImg ? 0 : 1,
-            imageRendering: 'pixelated', // key change here
-            transform: 'scale(1)',    // optional: gives a more retro pixel effect
-          }}
-        />
+        {!loadedImg && (
+          <Image
+            src={imgData?.encodedUrl || "/placeholder.jpg"}
+            alt="Blur preview"
+            fill
+            className="object-cover blur-sm "
+            quality={10}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        )}
 
-        {/* High-Quality Image */}
-        <img
+        {/* 👇 Low-quality thumbnail before high-res loads */}
+        {!loadedImg && (
+          <Image
+            src={imgData?.thumbnail || "/placeholder.jpg"}
+            alt={imgData?.name || `Low Res ${i}`}
+            width={width}
+            height={height}
+            quality={20}
+            className={clsx(
+              "absolute inset-0 w-full h-full object-cover blur-[1px] ",
+              loadedImg ? "opacity-0" : "opacity-100"
+            )}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        )}
+
+        {/* 👇 High-Quality final image */}
+        <Image
           width={width}
           height={height}
-          src={imgData?.thumbnail} // Main image
-          onLoad={() => setLoadedImg(true)}
+          src={imgData?.thumbnail || "/placeholder.jpg"}
+          onLoadingComplete={() => setLoadedImg(true)}
           loading="lazy"
           alt={imgData?.name || `Gallery ${i}`}
+          quality={80}
+          blurDataURL={imgData?.encodedUrl || "/placeholder.jpg"}
           className={clsx(
-            "w-full object-cover object-center rounded-2xl border-2 border-light-primary-color/10 dark:border-dark-primary-color/10 shadow-lg ",
+            "w-full object-cover object-center rounded-2xl ",
             loadedImg ? "opacity-100" : "opacity-0"
           )}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </Link>
 

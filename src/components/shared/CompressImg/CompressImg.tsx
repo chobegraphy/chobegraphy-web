@@ -1,10 +1,10 @@
 import Compressor from 'compressorjs';
 
-export async function compressImg({ file, quality }: any) {
+export async function compressImg({ file, quality, maxWidth, maxHeight }: any) {
     const options = {
         quality: quality,  // Set quality to 90%
-        maxWidth: Infinity,  // Maximum width of the image (rescale if larger than 1024px)
-        maxHeight: Infinity,  // Maximum height of the image (rescale if larger than 1024px)
+        maxWidth: maxWidth || Infinity,  // Maximum width of the image (rescale if larger than 1024px)
+        maxHeight: maxHeight || Infinity,  // Maximum height of the image (rescale if larger than 1024px)
         maxSize: 4 * 1024 * 1024,  // Max size in bytes (4MB)
         success(result: Blob) {
             // Return the compressed file (Blob) from the success callback

@@ -1,7 +1,7 @@
 "use client";
 
 import ImgMappingComponent from "@/components/PageWise/TeamMember/ImgMappingComponent";
-import Pagination from "@/components/PageWise/TeamMember/Pagination";
+import PaginationApproved from "@/components/PageWise/TeamMember/PaginationApproved";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ImSpinner } from "react-icons/im";
@@ -87,7 +87,7 @@ const Approved = () => {
                     </div>
                 ) : (<ImgMappingComponent ImgData={prevImgData} />)}
                 {!isLoading && prevImgData.length > 0 && (
-                    <Pagination
+                    <PaginationApproved
                         currentPage={currentPage}
                         totalPages={totalPages}
                         setCurrentPage={setCurrentPage}
